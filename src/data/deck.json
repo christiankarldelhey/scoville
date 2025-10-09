@@ -1,0 +1,322 @@
+[
+    {
+        "id": 0,
+        "value": 0,
+        "suit": "thai",
+        "image_url": "0_thai.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 1,
+        "value": 1,
+        "suit": "thai",
+        "image_url": "1_thai.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 2,
+        "value": 2,
+        "suit": "thai",
+        "image_url": "2_thai.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 3,
+        "value": 2,
+        "suit": "thai",
+        "image_url": "2_thai.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 4,
+        "value": 3,
+        "suit": "thai",
+        "image_url": "3_thai.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 5,
+        "value": 3,
+        "suit": "thai",
+        "image_url": "3_thai.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 6,
+        "value": 4,
+        "suit": "thai",
+        "image_url": "4_thai.jpg",
+        "state": "in_deck",
+        "owner": null
+    }, 
+    {
+        "id": 7,
+        "value": 4,
+        "suit": "thai",
+        "image_url": "4_thai.jpg",
+        "state": "in_deck",
+        "owner": null
+    }, 
+    {
+        "id": 8,
+        "value": 5,
+        "suit": "thai",
+        "image_url": "5_thai.jpg",
+        "state": "in_deck",
+        "owner": null
+    }, 
+    {
+        "id": 9,
+        "value": 5,
+        "suit": "thai",
+        "image_url": "5_thai.jpg",
+        "state": "in_deck",
+        "owner": null
+    }, 
+    {
+        "id": 10,
+        "value": 6,
+        "suit": "thai",
+        "image_url": "6_thai.jpg",
+        "state": "in_deck",
+        "owner": null
+    }, 
+    {
+        "id": 11,
+        "value": 7,
+        "suit": "thai",
+        "image_url": "7_thai.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 12,
+        "value": 0,
+        "suit": "hindu",
+        "image_url": "0_hindu.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 13,
+        "value": 1,
+        "suit": "hindu",
+        "image_url": "1_hindu.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 14,
+        "value": 2,
+        "suit": "hindu",
+        "image_url": "2_hindu.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 15,
+        "value": 2,
+        "suit": "hindu",
+        "image_url": "2_hindu.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 16,
+        "value": 3,
+        "suit": "hindu",
+        "image_url": "3_hindu.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 17,
+        "value": 3,
+        "suit": "hindu",
+        "image_url": "3_hindu.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 18,
+        "value": 4,
+        "suit": "hindu",
+        "image_url": "4_hindu.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 19,
+        "value": 4,
+        "suit": "hindu",
+        "image_url": "4_hindu.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 20,
+        "value": 5,
+        "suit": "hindu",
+        "image_url": "5_hindu.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 21,
+        "value": 5,
+        "suit": "hindu",
+        "image_url": "5_hindu.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 22,
+        "value": 6,
+        "suit": "hindu",
+        "image_url": "6_hindu.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 23,
+        "value": 7,
+        "suit": "hindu",
+        "image_url": "7_hindu.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 24,
+        "value": 0,
+        "suit": "chinese",
+        "image_url": "0_chinese.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 25,
+        "value": 1,
+        "suit": "chinese",
+        "image_url": "1_chinese.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 26,
+        "value": 2,
+        "suit": "chinese",
+        "image_url": "2_chinese.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 27,
+        "value": 2,
+        "suit": "chinese",
+        "image_url": "2_chinese.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 28,
+        "value": 3,
+        "suit": "chinese",
+        "image_url": "3_chinese.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 29,
+        "value": 3,
+        "suit": "chinese",
+        "image_url": "3_chinese.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 30,
+        "value": 4,
+        "suit": "chinese",
+        "image_url": "4_chinese.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 31,
+        "value": 4,
+        "suit": "chinese",
+        "image_url": "4_chinese.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 32,
+        "value": 5,
+        "suit": "chinese",
+        "image_url": "5_chinese.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 33,
+        "value": 5,
+        "suit": "chinese",
+        "image_url": "5_chinese.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 34,
+        "value": 6,
+        "suit": "chinese",
+        "image_url": "6_chinese.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 35,
+        "value": 7,
+        "suit": "chinese",
+        "image_url": "7_chinese.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 36,
+        "value": 8,
+        "suit": "special",
+        "image_url": "8_special.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 37,
+        "value": 8,
+        "suit": "special",
+        "image_url": "8_special.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 38,
+        "value": 0.5,
+        "suit": "special",
+        "image_url": "0.5_special.jpg",
+        "state": "in_deck",
+        "owner": null
+    },
+    {
+        "id": 39,
+        "value": 0.5,
+        "suit": "special",
+        "image_url": "0.5_special.jpg",
+        "state": "in_deck",
+        "owner": null
+    }
+]
