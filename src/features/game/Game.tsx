@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import backgroundImage from '../../assets/ background.jpg'
 import { PlayerBoard } from '../player/PlayerBoard'
 import { useGameStore } from '../../store/gameStore'
-import { CommonBoard } f../common-board/Dishesoard/CommonBoard'
+import { CommonBoard } from '../common-board/CommonBoard'
 import styles from './Game.module.css'
 
 export const Game = () => {

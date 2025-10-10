@@ -1,0 +1,51 @@
+.container {
+  position: absolute;
+  display: flex;
+  z-index: 15;
+  padding: 1rem;
+}
+
+/* Posiciones del contenedor */
+.top {
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: row;
+  gap: -15px;
+}
+
+.left {
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  flex-direction: column;
+  gap: -15px;
+}
+
+.right {
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  flex-direction: column;
+  gap: -15px;
+}
+
+/* Estilos de las cartas */
+.card {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  margin: -10px;
+}
+
+.card_top {
+  transform: rotate(0deg);
+}
+
+.card_left {
+  transform: rotate(90deg);
+}
+
+.card_right {
+  transform: rotate(-90deg);
+}
