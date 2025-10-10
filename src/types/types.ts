@@ -1,6 +1,6 @@
 
 export type PlayerId = {
-    player_id: 1 | 2 | 3 | 4,
+    player_id: 'Player_1' | 'Player_2' | 'Player_3' | 'Player_4',
 }
 
 export interface PlayingCard {
@@ -9,7 +9,7 @@ export interface PlayingCard {
     suit: 'thai' | 'hindu' | 'chinese' | 'special',
     image_url: string,
     owner: PlayerId | null,
-    state: 'in_deck' | 'in_play' | 'in_hand' | 'in_discard_pile' | 'in_played_pile'
+    state: 'in_deck' | 'in_dish_1' | 'in_dish_2' | 'in_hand' | 'in_discard_pile' 
 };
 
 export interface DishCard {
@@ -33,22 +33,22 @@ export interface finishedDishes {
 
 export const AVAILABLE_PLAYERS = [
     {
-        id: 1 as const,
+        id: 'Player_1' as const,
         color: '#FF5733' as const, // Rojo
         defaultAvatar: 'avatar1.png'
     },
     {
-        id: 2 as const,
+        id: 'Player_2' as const,
         color: '#3498DB' as const, // Azul
         defaultAvatar: 'avatar2.png'
     },
     {
-        id: 3 as const,
+        id: 'Player_3' as const,
         color: '#2ECC71' as const, // Verde
         defaultAvatar: 'avatar3.png'
     },
     {
-        id: 4 as const,
+        id: 'Player_4' as const,
         color: '#F39C12' as const, // Naranja
         defaultAvatar: 'avatar4.png'
     }
