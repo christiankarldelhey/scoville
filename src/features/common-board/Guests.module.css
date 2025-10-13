@@ -1,9 +1,0 @@
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    width: 55%;
-    padding-top: 50px;
-    margin: 0 auto;
-}

@@ -17,11 +17,8 @@ export const RoomCard: React.FC<RoomCardProps> = ({
     <img
       src={getImagePath('room-cards', card.image_url)}
       alt={`${card.image_url}`}
-      style={{
-        height: `${height}px`,
-        width: 'auto',
-        objectFit: 'contain'
-      }}
+      className="w-auto object-contain"
+      style={{ height: `${height}px` }}
     />
   )
 }

@@ -17,11 +17,8 @@ export const PlayingCard: React.FC<PlayingCardProps> = ({
     <img
       src={getImagePath('cards-inn', card.image_url)}
       alt={`${card.value} ${card.suit}`}
-      style={{
-        height: `${height}px`,
-        width: 'auto',
-        objectFit: 'contain'
-      }}
+      className="w-auto object-contain"
+      style={{ height: `${height}px` }}
     />
   )
 }

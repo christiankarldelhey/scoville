@@ -3,7 +3,6 @@ import backgroundImage from '../../assets/ background.jpg'
 import { PlayerBoard } from '../player/PlayerBoard'
 import { useGameStore } from '../../store/gameStore'
 import { CommonBoard } from '../common-board/CommonBoard'
-import styles from './Game.module.css'
 
 export const Game = () => {
   const { player, deck, initializeDeck, dealCards } = useGameStore()
@@ -22,7 +21,7 @@ export const Game = () => {
 
   return (
     <div 
-      className={styles.container}
+      className="w-screen h-screen max-w-screen max-h-screen overflow-hidden bg-cover bg-center bg-no-repeat relative before:content-[''] before:absolute before:inset-0 before:bg-black/50 before:z-0 before:pointer-events-none"
       style={{
         backgroundImage: `url(${backgroundImage})`
       }}

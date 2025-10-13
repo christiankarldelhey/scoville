@@ -16,11 +16,8 @@ export const GuestCard: React.FC<GuestProps> = ({
     <img
       src={getImagePath('characters-cards', guest.image_url)}
       alt={guest.name}
-      style={{
-        height: `${height}px`,
-        width: 'auto',
-        objectFit: 'contain'
-      }}
+      className="w-auto object-contain"
+      style={{ height: `${height}px` }}
     />
   )
 }
