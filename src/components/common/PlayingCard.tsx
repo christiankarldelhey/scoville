@@ -15,7 +15,7 @@ export const PlayingCard: React.FC<PlayingCardProps> = ({
 
   return (
     <img
-      src={getImagePath('cards', card.image_url)}
+      src={getImagePath('cards-inn', card.image_url)}
       alt={`${card.value} ${card.suit}`}
       style={{
         height: `${height}px`,

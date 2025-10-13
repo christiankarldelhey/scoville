@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dishes } from './Dishes'
+import { Guests } from './Guests'
 import { OtherPlayerHand } from './OtherPlayerHand'
 import styles from './CommonBoard.module.css'
 
@@ -10,7 +10,7 @@ export const CommonBoard = () => {
       <OtherPlayerHand cardCount={5} position="top" />
       <OtherPlayerHand cardCount={5} position="left" />
       <OtherPlayerHand cardCount={5} position="right" />
-      <Dishes />
+      <Guests />
     </div>
   )
 }

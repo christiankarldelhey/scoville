@@ -1,21 +1,21 @@
 import React from 'react'
 import { getImagePath } from '../../utils/utils'
-import type { DishCard } from '../../types/types'
+import type { GuestCard as GuestType } from '../../types/types'
 
-interface DishProps {
-  dish: DishCard
+interface GuestProps {
+  guest: GuestType
   height?: number
 }
 
-export const Dish: React.FC<DishProps> = ({ 
-  dish, 
+export const GuestCard: React.FC<GuestProps> = ({ 
+  guest, 
   height = 200 
 }) => {
 
   return (
     <img
-      src={getImagePath('dishes', dish.image_url)}
-      alt={dish.name}
+      src={getImagePath('characters-cards', guest.image_url)}
+      alt={guest.name}
       style={{
         height: `${height}px`,
         width: 'auto',
