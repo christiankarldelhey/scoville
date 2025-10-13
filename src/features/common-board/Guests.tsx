@@ -8,8 +8,8 @@ export const Guests = () => {
 
   return (
     <div className="flex justify-center items-center gap-4 w-[55%] pt-[50px] mx-auto">  
-        <GuestCard guest={Guests[9]} height={230} />
-        <GuestCard guest={Guests[18]} height={230} />
+        <GuestCard guest={Guests[10]} height={230} />
+        <GuestCard guest={Guests[28]} height={230} />
     </div>
 
   )

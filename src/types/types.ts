@@ -57,10 +57,6 @@ export interface GuestCard {
     state: State,
 }
 
-export interface AccomadatedGuests {
-    dishes: GuestCard[]
-}
-
 export type AvailablePlayer = typeof AVAILABLE_PLAYERS[number];
 export type PlayerColor = AvailablePlayer['color'];
 
@@ -95,8 +91,9 @@ export interface PlayersInGame {
 
 export interface PlayerScore {
     player_id: PlayerId,
-    my_guests: GuestCard[]
-    events:
+    former_guests: GuestCard[]
+    events: Event[],
+    points: number,
 }
 
 

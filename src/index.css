@@ -3,6 +3,20 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Player Colors */
+    --color-player-1: #637481;
+    --color-player-2: #4d4f3c;
+    --color-player-3: #c1b2a1;
+    --color-player-4: #ae4d32;
+    
+    /* Guest Category Colors */
+    --color-travelers: #a76d17;
+    --color-nobles: #6165a5;
+    --color-locals: #3f552f;
+    --color-money: #ceaa03;
+  }
+
   html, body, #root {
     @apply w-full h-full overflow-hidden;
   }
