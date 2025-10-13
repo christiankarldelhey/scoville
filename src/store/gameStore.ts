@@ -43,7 +43,7 @@ export const useGameStore = create<GameState>()(
         avatar: 'avatar1.png',
         color: '#FF5733',
         name: 'Player 1',
-        rooms: getRoomsFromPlayer({ player_id: 'player_1' }),
+        rooms: getRoomsFromPlayer('player_1'),
         hand: []
       },
 
@@ -65,18 +65,15 @@ export const useGameStore = create<GameState>()(
               hand: dealtCards
             }
           }
-        }, false, 'dealCards')
+        })
       },
 
       // Inicializar y mezclar el deck
       initializeDeck: () => {
         const shuffledDeck = shuffleArray(deckData as PlayingCard[])
-        set({ deck: shuffledDeck }, false, 'initializeDeck')
+        set({ deck: shuffledDeck })
       }
     }),
-    { 
-      name: 'GameStore',
-      enabled: true
-    }
+    { name: 'GameStore' }
   )
 )

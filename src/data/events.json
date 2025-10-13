@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "initial": "F",
+        "name": "Fiesta",
+        "requirements": ["juegos", "musica", "whisky"],
+        "completed": false
+    },
+    {
+        "id": 2,
+        "initial": "A",
+        "name": "Almuerzo",
+        "requirements": ["cerveza", "comida", "fuego"],
+        "completed": false
+    },
+    {
+        "id": 3,
+        "initial": "C",
+        "name": "Cena",
+        "requirements": ["comida", "torta", "whisky"],
+        "completed": false
+    },
+    {
+        "id": 4,
+        "initial": "T",
+        "name": "Te",
+        "requirements": ["sofa", "torta", "te"],
+        "completed": false
+    },
+    {
+        "id": 5,
+        "initial": "J",
+        "name": "Noche de juegos",
+        "requirements": ["juegos", "sofa", "cerveza"],
+        "completed": false
+    },
+    {
+        "id": 6,
+        "initial": "R",
+        "name": "Relax",
+        "requirements": ["musica", "fuego", "te"],
+        "completed": false
+    }
+]

@@ -1,42 +1,3 @@
-
-export type PlayerId = {
-    player_id: 'player_1' | 'player_2' | 'player_3' | 'player_4',
-}
-
-export interface PlayingCard {
-    id: number,
-    value: 'cerveza' | 'comida' | 'fuego' | 'juegos' | 'musica' | 'sofa' | 'te' | 'torta' | 'whisky',
-    suit: 'local' | 'noble' | 'viajero' | 'descuento',
-    image_url: string,
-    owner: PlayerId | null,
-    state: 'in_deck' | 'in_table' | 'in_hand' | 'in_discard_pile' 
-};
-
-export interface RoomCard {
-    id: number,
-    image_url: string,
-    quality: number,
-    owner: PlayerId | null,
-    state: 'in_deck' | 'in_table' | 'in_hand' | 'in_discard_pile',
-    guest: GuestCard | null,
-};
-
-export interface GuestCard {
-    id: number,
-    name: string,
-    used_nights: number,
-    total_nights: number,
-    value: 'cerveza' | 'comida' | 'fuego' | 'juegos' | 'musica' | 'sofa' | 'te' | 'torta' | 'whisky',
-    suit: 'local' | 'noble' | 'viajero' | 'descuento',
-    image_url: string,
-    owner: PlayerId | null,
-    state: 'in_deck' | 'in_play' | 'in_player_collection',
-}
-
-export interface AccomadatedGuests {
-    dishes: GuestCard[]
-}
-
 export const AVAILABLE_PLAYERS = [
     {
         id: 'player_1' as const,
@@ -59,6 +20,46 @@ export const AVAILABLE_PLAYERS = [
         defaultAvatar: 'avatar4.png'
     }
 ] as const;
+
+export type PlayerId =  'player_1' | 'player_2' | 'player_3' | 'player_4'
+export type Suit = 'local' | 'noble' | 'viajero' | 'descuento'
+export type Product = 'cerveza' | 'comida' | 'fuego' | 'juegos' | 'musica' | 'sofa' | 'te' | 'torta' | 'whisky'
+export type State = 'in_deck' | 'in_table' | 'in_hand' | 'in_discard_pile'
+
+
+export interface PlayingCard {
+    id: number,
+    product: Product,
+    suit: Suit,
+    image_url: string,
+    owner: PlayerId | null,
+    state: State 
+};
+
+export interface RoomCard {
+    id: number,
+    image_url: string,
+    quality: number,
+    owner: PlayerId | null,
+    state: State,
+    guest: GuestCard | null,
+};
+
+export interface GuestCard {
+    id: number,
+    name: string,
+    used_nights: number,
+    total_nights: number,
+    product: Product,
+    suit: Suit,
+    image_url: string,
+    owner: PlayerId | null,
+    state: State,
+}
+
+export interface AccomadatedGuests {
+    dishes: GuestCard[]
+}
 
 export type AvailablePlayer = typeof AVAILABLE_PLAYERS[number];
 export type PlayerColor = AvailablePlayer['color'];
@@ -94,8 +95,8 @@ export interface PlayersInGame {
 
 export interface PlayerScore {
     player_id: PlayerId,
-    points: number,
-    completed_dishes: GuestCard[]
+    my_guests: GuestCard[]
+    events:
 }
 
 

@@ -16,7 +16,7 @@ export const Game = () => {
   // Repartir cartas después de mezclar
   useEffect(() => {
     if (deck.length > 0 && player.hand.length === 0) {
-      dealCards(5)
+      dealCards(6)
     }
   }, [deck, player.hand.length, dealCards])
 

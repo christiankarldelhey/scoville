@@ -15,18 +15,25 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
 }) => {
   return (
     <div className={styles.container}>
-      <div className={styles.cardsContainer}>
-        {/* <RoomCard 
-          card={player.rooms[0]} 
-          height={230} 
-        /> */}
-        {player.hand.map((card) => (
-          <PlayingCard 
-            key={card.id} 
-            card={card} 
-            height={230} 
-          />
-        ))}
+      <div className={styles.rowContainer}>
+        <div className={styles.cardsContainer}>
+          {player.hand.map((card) => (
+            <PlayingCard 
+              key={card.id} 
+              card={card} 
+              height={180} 
+            />
+          ))}
+        </div>
+        <div className={styles.roomsContainer}>
+          {player.rooms?.map((room) => (
+            <RoomCard 
+              key={room.id} 
+              card={room} 
+              height={180} 
+            />
+          ))}
+        </div>
       </div>
     </div>
   )

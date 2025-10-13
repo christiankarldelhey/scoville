@@ -9,8 +9,8 @@ export const Guests = () => {
 
   return (
     <div className={styles.container}>  
-        <GuestCard guest={Guests[6]} height={280} />
-        {/* <GuestCard guest={Guests[18]} height={280} /> */}
+        <GuestCard guest={Guests[9]} height={230} />
+        <GuestCard guest={Guests[18]} height={230} />
     </div>
 
   )
