@@ -10,8 +10,8 @@ interface OtherPlayerHandProps {
 export const OtherPlayerHand: React.FC<OtherPlayerHandProps> = ({ cardCount, position }) => {
   const containerClasses = {
     top: 'top-0 left-1/2 -translate-x-1/2 -translate-y-[80%] flex-row',
-    left: 'left-0 top-50 -translate-x-[80%] flex-col',
-    right: 'right-0 top-50 translate-x-[80%] flex-col'
+    left: 'left-0 top-60 -translate-x-[80%] flex-col',
+    right: 'right-0 top-60 translate-x-[80%] flex-col'
   }
 
   const cardImage = position === 'top' ? cardBack : rotatedCardBack

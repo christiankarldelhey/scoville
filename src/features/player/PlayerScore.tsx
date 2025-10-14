@@ -1,8 +1,29 @@
 import PlayerScoreExample from '../../data/player-score-example.json'
 import type { GuestCard } from '../../types/types';
 import type { Suit } from '../../types/types';
-import monedaImage from '../../assets/moneda.png';
+import cerveza from '../../assets/simbolos/cerveza.png';
+import comida from '../../assets/simbolos/comida.png';
+import fuego from '../../assets/simbolos/fuego.png';
+import juegos from '../../assets/simbolos/juego.png';
+import musica from '../../assets/simbolos/musica.png';
+import sofa from '../../assets/simbolos/sofa.png';
+import te from '../../assets/simbolos/te.png';
+import torta from '../../assets/simbolos/torta.png';
+import whisky from '../../assets/simbolos/whisky.png';
+import discount from '../../assets/simbolos/dinero.png';
 
+const symbolMap: Record<string, string> = {
+  cerveza,
+  comida,
+  fuego,
+  juegos,
+  musica,
+  sofa,
+  te,
+  torta,
+  whisky,
+  discount
+};
 
 export default function PlayerScore() {
   const guests = PlayerScoreExample[0].former_guests;
@@ -13,28 +34,16 @@ export default function PlayerScore() {
   }
 
   return (
-    <div className="fixed top-0 left-0 flex flex-col gap-2 pt-4 opacity-80">
-        <div className="w-[25px] h-[25px] rounded-full bg-[#ceaa03]">  
-        </div>
-        <div 
-          className="h-[30px] rounded-r-lg" 
-          style={{ 
-            width: `${pointsBySuit('locals').length * 50}px`,
-            backgroundColor: 'var(--color-locals)' }}
-        />
-        <div 
-          className="h-[30px] rounded-r-lg" 
-          style={{ 
-            width: `${pointsBySuit('travelers').length * 50}px`, 
-            backgroundColor: 'var(--color-travelers)' }}
-        />
-        <div 
-          className="h-[30px] rounded-r-lg" 
-          style={{ 
-            width: `${pointsBySuit('nobles').length * 50}px`,
-            backgroundColor: 'var(--color-nobles)' }}
-        />
-        
+    <div className="fixed top-0 left-0 flex flex-col items-start gap-2 pt-4 pr-2 opacity-80">
+        {pointsBySuit('locals').length > 0 && <div className="inline-flex gap-2 py-2 pl-2 pr-3 rounded-r-lg" style={{ backgroundColor: 'var(--color-locals)' }}>{pointsBySuit('locals').map((product, index) => 
+          <img key={index} src={symbolMap[product]} alt={product} className="h-[20px] w-[20px]" />)}
+        </div>}
+        {pointsBySuit('travelers').length > 0 && <div className="inline-flex gap-2 py-2 pl-2 pr-3 rounded-r-lg" style={{ backgroundColor: 'var(--color-travelers)' }}>{pointsBySuit('travelers').map((product, index) => 
+          <img key={index} src={symbolMap[product]} alt={product} className="h-[20px] w-[20px]" />)}
+        </div>}
+        {pointsBySuit('nobles').length > 0 && <div className="inline-flex gap-2 py-2 pl-2 pr-3 rounded-r-lg" style={{ backgroundColor: 'var(--color-nobles)' }}>{pointsBySuit('nobles').map((product, index) => 
+          <img key={index} src={symbolMap[product]} alt={product} className="h-[20px] w-[20px]" />)}
+        </div>}
     </div>
   );
 }

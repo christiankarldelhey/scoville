@@ -24,6 +24,17 @@
                 "owner": "player_1"
             },
             {
+                "id": 3,
+                "name": "Henry Blackwood",
+                "used_nights": 0,
+                "total_nights": 3,
+                "value": "fuego",
+                "suit": "locals",
+                "image_url": "l-fuego.jpg",
+                "state": "in_deck",
+                "owner": null
+            },
+            {
                 "id": 16,
                 "name": "Amelia Worthington",
                 "used_nights": 4,
