@@ -3,6 +3,7 @@ import { Guests } from './Guests'
 import PlayerScore from '../player/PlayerScore'
 import { OtherPlayerHand } from './OtherPlayerHand'
 import EventScore from '../player/EventScore'
+import PlayerScoreExample from '../../data/player-score-example.json'
 
 export const CommonBoard = () => {
   
@@ -14,8 +15,8 @@ export const CommonBoard = () => {
       <div className="flex items-center justify-center w-full px-8">
         <Guests />
       </div>
-      <PlayerScore />
-      <EventScore />
+      <PlayerScore guests={PlayerScoreExample[0].former_guests} />
+      <EventScore events={PlayerScoreExample[0].events} />
     </div>
   )
 }

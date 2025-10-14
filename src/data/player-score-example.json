@@ -71,6 +71,13 @@
                     "name": "Cena",
                     "requirements": ["comida", "torta", "whisky"],
                     "completed": true
+                },
+                {
+                    "id": 1,
+                    "initial": "F",
+                    "name": "Fiesta",
+                    "requirements": ["juegos", "musica", "whisky"],
+                    "completed": true
                 }
         ],
         "money": 10
