@@ -11,8 +11,8 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
   player,
 }) => {
   return (
-    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/4 bg-transparent z-10">
-      <div className="flex flex-row gap-2 w-full items-center justify-center">
+    <div className="relative flex-1 w-full bg-transparent">
+      <div className="flex flex-row gap-2 w-full h-full items-center justify-center">
         <div className="flex gap-2 p-4 overflow-x-auto items-center justify-center">
           {player.hand.map((card) => (
             <PlayingCard 

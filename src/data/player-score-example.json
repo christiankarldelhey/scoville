@@ -1,0 +1,67 @@
+[
+    {
+        "former_guests": [
+            {
+                "id": 1,
+                "name": "Oliver Callaway",
+                "used_nights": 2,
+                "total_nights": 2,
+                "value": "cerveza",
+                "suit": "locals",
+                "image_url": "l-cerveza.jpg",
+                "state": "in_deck",
+                "owner": "player_1"
+            },
+            {
+                "id": 2,
+                "name": "Charlotte Pemberton",
+                "used_nights": 2,
+                "total_nights": 2,
+                "value": "comida",
+                "suit": "locals",
+                "image_url": "l-comida.jpg",
+                "state": "in_deck",
+                "owner": "player_1"
+            },
+            {
+                "id": 16,
+                "name": "Amelia Worthington",
+                "used_nights": 4,
+                "total_nights": 4,
+                "value": "sofa",
+                "suit": "nobles",
+                "image_url": "n-sofa.jpg",
+                "state": "in_deck",
+                "owner": "player_1"
+            },
+            {
+                "id": 30,
+                "name": "Rosalind Fairweather",
+                "used_nights": 0,
+                "total_nights": 3,
+                "value": "discount",
+                "suit": "travelers",
+                "image_url": "v-descuento.jpg",
+                "state": "in_deck",
+                "owner": null
+            }
+        ],
+        "events": [
+                {
+                    "id": 2,
+                    "initial": "A",
+                    "name": "Almuerzo",
+                    "requirements": ["cerveza", "comida", "fuego"],
+                    "completed": true
+                },
+                {
+                    "id": 3,
+                    "initial": "C",
+                    "name": "Cena",
+                    "requirements": ["comida", "torta", "whisky"],
+                    "completed": true
+                }
+        ],
+        "money": 10
+    }
+]

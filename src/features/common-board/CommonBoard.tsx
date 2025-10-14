@@ -1,15 +1,21 @@
 import React from 'react'
 import { Guests } from './Guests'
+import PlayerScore from '../player/PlayerScore'
 import { OtherPlayerHand } from './OtherPlayerHand'
+import EventScore from '../player/EventScore'
 
 export const CommonBoard = () => {
   
   return (
-    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-3/4 bg-transparent z-10 flex items-center justify-between px-8">
+    <div className="relative flex-[3] w-full bg-transparent flex items-center justify-center">
       <OtherPlayerHand cardCount={6} position="top" />
       <OtherPlayerHand cardCount={6} position="left" />
       <OtherPlayerHand cardCount={6} position="right" />
-      <Guests />
+      <div className="flex items-center justify-center w-full px-8">
+        <Guests />
+      </div>
+      <PlayerScore />
+      <EventScore />
     </div>
   )
 }

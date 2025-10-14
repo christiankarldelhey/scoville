@@ -22,7 +22,7 @@ export const AVAILABLE_PLAYERS = [
 ] as const;
 
 export type PlayerId =  'player_1' | 'player_2' | 'player_3' | 'player_4'
-export type Suit = 'local' | 'noble' | 'viajero' | 'descuento'
+export type Suit = 'locals' | 'nobles' | 'travelers' | 'money'
 export type Product = 'cerveza' | 'comida' | 'fuego' | 'juegos' | 'musica' | 'sofa' | 'te' | 'torta' | 'whisky'
 export type State = 'in_deck' | 'in_table' | 'in_hand' | 'in_discard_pile'
 
@@ -67,12 +67,14 @@ export interface Player {
     name: string,
     hand: PlayingCard[],
     rooms: RoomCard[],
+    score: PlayerScore,
 }
 
 export interface Turn {
     id: number,
     number: number,
     player_id_turn: PlayerId,
+    current_guest: GuestCard | null,
 };
 
 export interface PlayerState {
@@ -84,16 +86,23 @@ export interface PlayerState {
     state: 'in_progress' | 'finished'
 }
 
+export interface Event {
+    id: number,
+    initial: string,
+    name: string,
+    requirements: Product[],
+    completed: boolean,
+}
+
 export interface PlayersInGame {
     players: PlayerId[],
     player_turn: PlayerId,
 }
 
 export interface PlayerScore {
-    player_id: PlayerId,
     former_guests: GuestCard[]
     events: Event[],
-    points: number,
+    money: number,
 }
 
 

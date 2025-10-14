@@ -26,8 +26,10 @@ export const Game = () => {
         backgroundImage: `url(${backgroundImage})`
       }}
     >
-      <CommonBoard />
-      <PlayerBoard player={player} />
+      <div className="relative z-10 w-full h-full flex flex-col">
+        <CommonBoard />
+        <PlayerBoard player={player} />
+      </div>
     </div>
   )
 }

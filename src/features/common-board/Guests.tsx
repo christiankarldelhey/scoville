@@ -7,9 +7,9 @@ export const Guests = () => {
   const Guests = guestsData as GuestType[]
 
   return (
-    <div className="flex justify-center items-center gap-4 w-[55%] pt-[50px] mx-auto">  
-        <GuestCard guest={Guests[10]} height={230} />
-        <GuestCard guest={Guests[28]} height={230} />
+    <div className="flex justify-center items-center gap-4 w-[30%] pt-[15px] mx-auto">  
+        <GuestCard guest={Guests[12]} height={230} />
+        <GuestCard guest={Guests[23]} height={230} />
     </div>
 
   )

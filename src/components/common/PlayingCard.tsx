@@ -17,7 +17,7 @@ export const PlayingCard: React.FC<PlayingCardProps> = ({
     <img
       src={getImagePath('cards-inn', card.image_url)}
       alt={`${card.value} ${card.suit}`}
-      className="w-auto object-contain"
+      className="w-auto object-contain rounded-sm"
       style={{ height: `${height}px` }}
     />
   )

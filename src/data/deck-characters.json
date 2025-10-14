@@ -5,7 +5,7 @@
         "used_nights": 0,
         "total_nights": 2,
         "value": "cerveza",
-        "suit": "local",
+        "suit": "locals",
         "image_url": "l-cerveza.jpg",
         "state": "in_deck",
         "owner": null
@@ -16,7 +16,7 @@
         "used_nights": 0,
         "total_nights": 2,
         "value": "comida",
-        "suit": "local",
+        "suit": "locals",
         "image_url": "l-comida.jpg",
         "state": "in_deck",
         "owner": null
@@ -27,7 +27,7 @@
         "used_nights": 0,
         "total_nights": 3,
         "value": "fuego",
-        "suit": "local",
+        "suit": "locals",
         "image_url": "l-fuego.jpg",
         "state": "in_deck",
         "owner": null
@@ -38,7 +38,7 @@
         "used_nights": 0,
         "total_nights": 3,
         "value": "juegos",
-        "suit": "local",
+        "suit": "locals",
         "image_url": "l-juegos.jpg",
         "state": "in_deck",
         "owner": null
@@ -49,7 +49,7 @@
         "used_nights": 0,
         "total_nights": 4,
         "value": "musica",
-        "suit": "local",
+        "suit": "locals",
         "image_url": "l-musica.jpg",
         "state": "in_deck",
         "owner": null
@@ -60,7 +60,7 @@
         "used_nights": 0,
         "total_nights": 4,
         "value": "sofa",
-        "suit": "local",
+        "suit": "locals",
         "image_url": "l-sofa.jpg",
         "state": "in_deck",
         "owner": null
@@ -71,7 +71,7 @@
         "used_nights": 0,
         "total_nights": 2,
         "value": "te",
-        "suit": "local",
+        "suit": "locals",
         "image_url": "l-te.jpg",
         "state": "in_deck",
         "owner": null
@@ -82,7 +82,7 @@
         "used_nights": 0,
         "total_nights": 3,
         "value": "torta",
-        "suit": "local",
+        "suit": "locals",
         "image_url": "l-torta.jpg",
         "state": "in_deck",
         "owner": null
@@ -93,7 +93,7 @@
         "used_nights": 0,
         "total_nights": 4,
         "value": "whisky",
-        "suit": "local",
+        "suit": "locals",
         "image_url": "l-whisky.jpg",
         "state": "in_deck",
         "owner": null
@@ -104,7 +104,7 @@
         "used_nights": 0,
         "total_nights": 3,
         "value": "discount",
-        "suit": "discount",
+        "suit": "localslocalss",
         "image_url": "l-descuento.jpg",
         "state": "in_deck",
         "owner": null
@@ -115,7 +115,7 @@
         "used_nights": 0,
         "total_nights": 2,
         "value": "cerveza",
-        "suit": "noble",
+        "suit": "nobles",
         "image_url": "n-cerveza.jpg",
         "state": "in_deck",
         "owner": null
@@ -126,7 +126,7 @@
         "used_nights": 0,
         "total_nights": 2,
         "value": "comida",
-        "suit": "noble",
+        "suit": "nobles",
         "image_url": "n-comida.jpg",
         "state": "in_deck",
         "owner": null
@@ -137,7 +137,7 @@
         "used_nights": 0,
         "total_nights": 3,
         "value": "fuego",
-        "suit": "noble",
+        "suit": "nobles",
         "image_url": "n-fuego.jpg",
         "state": "in_deck",
         "owner": null
@@ -148,7 +148,7 @@
         "used_nights": 0,
         "total_nights": 3,
         "value": "juegos",
-        "suit": "noble",
+        "suit": "nobles",
         "image_url": "n-juego.jpg",
         "state": "in_deck",
         "owner": null
@@ -159,7 +159,7 @@
         "used_nights": 0,
         "total_nights": 4,
         "value": "musica",
-        "suit": "noble",
+        "suit": "nobles",
         "image_url": "n-musica.jpg",
         "state": "in_deck",
         "owner": null
@@ -170,7 +170,7 @@
         "used_nights": 0,
         "total_nights": 4,
         "value": "sofa",
-        "suit": "noble",
+        "suit": "nobles",
         "image_url": "n-sofa.jpg",
         "state": "in_deck",
         "owner": null
@@ -181,7 +181,7 @@
         "used_nights": 0,
         "total_nights": 2,
         "value": "te",
-        "suit": "noble",
+        "suit": "nobles",
         "image_url": "n-te.jpg",
         "state": "in_deck",
         "owner": null
@@ -192,7 +192,7 @@
         "used_nights": 0,
         "total_nights": 3,
         "value": "torta",
-        "suit": "noble",
+        "suit": "nobles",
         "image_url": "n-torta.jpg",
         "state": "in_deck",
         "owner": null
@@ -203,7 +203,7 @@
         "used_nights": 0,
         "total_nights": 4,
         "value": "whisky",
-        "suit": "noble",
+        "suit": "nobles",
         "image_url": "n-whisky.jpg",
         "state": "in_deck",
         "owner": null
@@ -214,7 +214,7 @@
         "used_nights": 0,
         "total_nights": 3,
         "value": "discount",
-        "suit": "discount",
+        "suit": "nobles",
         "image_url": "n-descuento.jpg",
         "state": "in_deck",
         "owner": null
@@ -225,7 +225,7 @@
         "used_nights": 0,
         "total_nights": 2,
         "value": "cerveza",
-        "suit": "viajero",
+        "suit": "travelers",
         "image_url": "v-cerveza.jpg",
         "state": "in_deck",
         "owner": null
@@ -236,7 +236,7 @@
         "used_nights": 0,
         "total_nights": 2,
         "value": "comida",
-        "suit": "viajero",
+        "suit": "travelers",
         "image_url": "v-comida.jpg",
         "state": "in_deck",
         "owner": null
@@ -247,7 +247,7 @@
         "used_nights": 0,
         "total_nights": 3,
         "value": "fuego",
-        "suit": "viajero",
+        "suit": "travelers",
         "image_url": "v-fuego.jpg",
         "state": "in_deck",
         "owner": null
@@ -258,7 +258,7 @@
         "used_nights": 0,
         "total_nights": 3,
         "value": "juegos",
-        "suit": "viajero",
+        "suit": "travelers",
         "image_url": "v-juego.jpg",
         "state": "in_deck",
         "owner": null
@@ -269,7 +269,7 @@
         "used_nights": 0,
         "total_nights": 4,
         "value": "musica",
-        "suit": "viajero",
+        "suit": "travelers",
         "image_url": "v-musica.jpg",
         "state": "in_deck",
         "owner": null
@@ -280,7 +280,7 @@
         "used_nights": 0,
         "total_nights": 4,
         "value": "sofa",
-        "suit": "viajero",
+        "suit": "travelers",
         "image_url": "v-sofa.jpg",
         "state": "in_deck",
         "owner": null
@@ -291,7 +291,7 @@
         "used_nights": 0,
         "total_nights": 2,
         "value": "te",
-        "suit": "viajero",
+        "suit": "travelers",
         "image_url": "v-te.jpg",
         "state": "in_deck",
         "owner": null
@@ -302,7 +302,7 @@
         "used_nights": 0,
         "total_nights": 3,
         "value": "torta",
-        "suit": "viajero",
+        "suit": "travelers",
         "image_url": "v-torta.jpg",
         "state": "in_deck",
         "owner": null
@@ -313,7 +313,7 @@
         "used_nights": 0,
         "total_nights": 4,
         "value": "whisky",
-        "suit": "viajero",
+        "suit": "travelers",
         "image_url": "v-whisky.jpg",
         "state": "in_deck",
         "owner": null
@@ -324,7 +324,7 @@
         "used_nights": 0,
         "total_nights": 3,
         "value": "discount",
-        "suit": "discount",
+        "suit": "travelers",
         "image_url": "v-descuento.jpg",
         "state": "in_deck",
         "owner": null
