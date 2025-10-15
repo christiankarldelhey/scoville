@@ -42,7 +42,7 @@ export default function PlayerScore({ guests }: PlayerScoreProps) {
         <img src={score} alt="puntaje" className="w-[60px] px-2" />
         <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-lg">27</span>
       </div>
-        {pointsBySuit('locals').length > 0 && <div className="inline-flex gap-2 py-2 pl-2 pr-3 rounded-r-lg" style={{ backgroundColor: 'var(--color-locals)' }}>{pointsBySuit('locals').map((product, index) => 
+        {pointsBySuit('locals').length > 0 && <div className="inline-flex gap-2 py-2 pl-2 mt-2 pr-3 rounded-r-lg" style={{ backgroundColor: 'var(--color-locals)' }}>{pointsBySuit('locals').map((product, index) => 
           <img key={index} src={symbolMap[product]} alt={product} className="w-[20px]" />)}
         </div>}
         {pointsBySuit('travelers').length > 0 && <div className="inline-flex gap-2 py-2 pl-2 pr-3 rounded-r-lg" style={{ backgroundColor: 'var(--color-travelers)' }}>{pointsBySuit('travelers').map((product, index) => 

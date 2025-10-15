@@ -63,26 +63,25 @@ const Icon = ({ src, alt, active }: { src: string; alt: string; active: boolean 
 );
 
 const EventGrid = ({ events }: EventGridProps) => {
-  // Función para verificar si un producto está activo en algún evento completado
-  const isProductActive = (product: Product, rowLabel: string, colIndex: number): boolean => {
-    // Verificar eventos horizontales (por fila: A, T, F)
-    const isHorizontalActive = events.some(event => 
+  // Función para verificar si un producto está activo horizontalmente
+  const isProductActiveHorizontal = (product: Product, rowLabel: string): boolean => {
+    return events.some(event => 
       event.completed && 
       event.initial === rowLabel && 
       event.requirements.includes(product)
     );
+  };
 
-    // Verificar eventos verticales (por columna: J, C, R)
+  // Función para verificar si un producto está activo verticalmente
+  const isProductActiveVertical = (product: Product, colIndex: number): boolean => {
     const columnLabel = columnLabels[colIndex];
-    const isVerticalActive = events.some(event => {
+    return events.some(event => {
       if (!event.completed || event.initial !== columnLabel) return false;
       
       // Obtener los productos de esta columna en todas las filas
       const columnProducts = gridStructure.map(([_, products]) => products[colIndex]);
       return event.requirements.includes(product) && columnProducts.includes(product);
     });
-
-    return isHorizontalActive || isVerticalActive;
   };
 
   // Función para verificar si una etiqueta de fila está activa
@@ -120,25 +119,32 @@ const EventGrid = ({ events }: EventGridProps) => {
             <LeftLabel char={rowLabel} active={isRowLabelActive(rowLabel)} />
           </Cell>
           {products.map((product, colIdx) => {
-            const isActive = isProductActive(product, rowLabel, colIdx);
-            const borderOpacity = isActive ? 1 : 0;
+            const isHorizontalActive = isProductActiveHorizontal(product, rowLabel);
+            const isVerticalActive = isProductActiveVertical(product, colIdx);
+            const isActive = isHorizontalActive || isVerticalActive;
+            
+            // Opacidad separada para cada borde
+            const bottomOpacity = isHorizontalActive ? 1 : 0;
+            const rightOpacity = isVerticalActive ? 1 : 0;
+            
             return (
-              <Cell 
-                key={product} 
-                w={colWidths[colIdx]} 
-                h={rowHeights[rowIdx]} 
-                border="border-b border-r"
-                opacity={borderOpacity}
+              <div 
+                key={product}
+                className={`${cell} ${colWidths[colIdx]} ${rowHeights[rowIdx]} border-b border-r relative`}
+                style={{
+                  borderBottomColor: `rgba(255, 255, 255, ${bottomOpacity})`,
+                  borderRightColor: `rgba(255, 255, 255, ${rightOpacity})`
+                }}
               >
                 <Icon src={symbolMap[product]} alt={product} active={isActive} />
-              </Cell>
+              </div>
             );
           })}
           <Cell 
             w="w-[30px]" 
             h={rowHeights[rowIdx]} 
             border="border-b"
-            opacity={0.3}
+            opacity={isRowLabelActive(rowLabel) ? 1 : 0}
           />
         </div>
       ))}
