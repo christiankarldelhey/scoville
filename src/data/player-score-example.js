@@ -1,6 +1,5 @@
-[
-    {
-        "former_guests": [
+export const PlayerScoreExample = {
+    "former_guests": [
             {
                 "id": 1,
                 "name": "Oliver Callaway",
@@ -87,4 +86,3 @@
             "product": ["cerveza", "comida"]
         }
     }
-]

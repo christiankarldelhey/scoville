@@ -5,19 +5,22 @@ import { useGameStore } from '../../store/gameStore'
 import { CommonBoard } from '../common-board/CommonBoard'
 
 export const Game = () => {
-  const { player, deck, initializeDeck, dealCards } = useGameStore()
+  const { game, players, initializeGame, dealCardsToAllPlayers } = useGameStore()
+  
+  // Nuestro jugador es player_1
+  const myPlayer = players.player_1
 
   // Inicializar el juego al montar el componente
   useEffect(() => {
-    initializeDeck()
-  }, [initializeDeck])
+    initializeGame()
+  }, [initializeGame])
 
-  // Repartir cartas después de mezclar
+  // Repartir cartas después de mezclar (solo si nadie tiene cartas aún)
   useEffect(() => {
-    if (deck.length > 0 && player.hand.length === 0) {
-      dealCards(6)
+    if (game.deck.length > 0 && myPlayer.hand.length === 0) {
+      dealCardsToAllPlayers(6)
     }
-  }, [deck, player.hand.length, dealCards])
+  }, [game.deck.length, myPlayer.hand.length, dealCardsToAllPlayers])
 
   return (
     <div 
@@ -28,7 +31,7 @@ export const Game = () => {
     >
       <div className="relative z-10 w-full h-full flex flex-col">
         <CommonBoard />
-        <PlayerBoard player={player} />
+        <PlayerBoard player={myPlayer} />
       </div>
     </div>
   )

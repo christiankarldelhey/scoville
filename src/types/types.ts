@@ -53,7 +53,7 @@ export interface GuestCard {
     name: string,
     used_nights: number,
     total_nights: number,
-    product: Product,
+    value: Product,
     suit: Suit,
     image_url: string,
     owner: PlayerId | null,
@@ -98,6 +98,8 @@ export interface Player {
     color: PlayerColor,
     name: string,
     hand: PlayingCard[],
+    selected_card: PlayingCard | null,
+    suggested_cards: PlayingCard[] | null,
     rooms: RoomCard[],
     score: PlayerScore,
 }
