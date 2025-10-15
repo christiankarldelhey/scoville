@@ -80,6 +80,11 @@
                     "completed": true
                 }
         ],
-        "money": 10
+        "score": 17,
+        "secret_score": 9,
+        "secret_objective": {
+            "suit": "locals",
+            "product": ["cerveza", "comida"]
+        }
     }
 ]

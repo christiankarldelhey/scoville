@@ -1,3 +1,9 @@
+export type PlayerId =  'player_1' | 'player_2' | 'player_3' | 'player_4'
+export type Suit = 'locals' | 'nobles' | 'travelers' | 'money'
+export type Product = 'cerveza' | 'comida' | 'fuego' | 'juegos' | 'musica' | 'sofa' | 'te' | 'torta' | 'whisky'
+export type State = 'in_deck' | 'in_table' | 'in_hand' | 'in_discard_pile'
+
+
 export const AVAILABLE_PLAYERS = [
     {
         id: 'player_1' as const,
@@ -21,11 +27,8 @@ export const AVAILABLE_PLAYERS = [
     }
 ] as const;
 
-export type PlayerId =  'player_1' | 'player_2' | 'player_3' | 'player_4'
-export type Suit = 'locals' | 'nobles' | 'travelers' | 'money'
-export type Product = 'cerveza' | 'comida' | 'fuego' | 'juegos' | 'musica' | 'sofa' | 'te' | 'torta' | 'whisky'
-export type State = 'in_deck' | 'in_table' | 'in_hand' | 'in_discard_pile'
 
+// CARDS
 
 export interface PlayingCard {
     id: number,
@@ -60,6 +63,35 @@ export interface GuestCard {
 export type AvailablePlayer = typeof AVAILABLE_PLAYERS[number];
 export type PlayerColor = AvailablePlayer['color'];
 
+// GAME
+
+export type RoundPhase = 'game_preparation' | 'checkout' | 'guest_selection' | 'bid' | 'scoring';
+
+export const ROUND_PHASE_ORDER: readonly RoundPhase[] = [
+    'game_preparation',
+    'checkout',
+    'guest_selection',
+    'bid',
+    'scoring'
+] as const;
+
+export interface Game {
+    round: number,
+    roundPhaseOrder: readonly RoundPhase[],
+    roundPhase: RoundPhase,
+    active_players: PlayerId[],
+    key_owner: PlayerId,
+    player_turn: PlayerId,
+    deck: PlayingCard[],
+    discard_pile: PlayingCard[],
+    guest_deck: GuestCard[],
+    bid: GuestCard[] | null,
+    table_plays: Record<PlayerId, PlayingCard[] | null>;
+}
+
+
+// PLAYER
+
 export interface Player {
     player_id: PlayerId,
     avatar: string,
@@ -70,21 +102,30 @@ export interface Player {
     score: PlayerScore,
 }
 
-export interface Turn {
-    id: number,
-    number: number,
-    player_id_turn: PlayerId,
-    current_guest: GuestCard | null,
-};
+// export interface Turn {
+//     id: number,
+//     number: number,
+//     player_id_turn: PlayerId,
+//     current_guest: GuestCard | null,
+// };
 
-export interface PlayerState {
-    player: PlayerId,
-    is_my_turn: boolean,
-    hand: PlayingCard[],
-    played_cards_in_turn: PlayingCard[],
-    turn: Turn,
-    state: 'in_progress' | 'finished'
-}
+// export interface PlayerState {
+//     player: PlayerId,
+//     is_my_turn: boolean,
+//     hand: PlayingCard[],
+//     played_cards_in_turn: PlayingCard[],
+//     turn: Turn,
+//     state: 'in_progress' | 'finished'
+// }
+
+// export interface PlayersInGame {
+//     players: PlayerId[],
+//     player_turn: PlayerId,
+// }
+
+
+
+// SCORE
 
 export interface Event {
     id: number,
@@ -94,15 +135,12 @@ export interface Event {
     completed: boolean,
 }
 
-export interface PlayersInGame {
-    players: PlayerId[],
-    player_turn: PlayerId,
-}
-
 export interface PlayerScore {
     former_guests: GuestCard[]
     events: Event[],
-    money: number,
+    secret_objective: {suit: Suit, product: Product[]},
+    secret_score: number,
+    score: number,
 }
 
 
