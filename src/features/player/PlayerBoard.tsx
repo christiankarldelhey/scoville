@@ -22,7 +22,7 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
             />
           ))}
         </div>
-        <div className="flex gap-0 p-4 overflow-x-auto items-center justify-center">
+        {/* <div className="flex gap-0 p-4 overflow-x-auto items-center justify-center">
           {player.rooms?.map((room) => (
             <RoomCard 
               key={room.id} 
@@ -30,7 +30,7 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
               height={180} 
             />
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   )
