@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
-import type { PlayingCard, Player, Game, PlayerId, PlayerScore, GuestCard } from '../types/types'
+import type { PlayingCard, Player, Game, PlayerId, PlayerScore, GuestCard, Initial } from '../types/types'
 import { AVAILABLE_PLAYERS, ROUND_PHASE_ORDER } from '../types/types'
 import deckData from '../data/deck-inn.json'
 import roomsData from '../data/deck-rooms.json'
@@ -17,6 +17,8 @@ interface GameState {
   // Acciones
   initializeGame: () => void
   dealCardsToAllPlayers: (cardsPerPlayer: number) => void
+  selectCard: (playerId: PlayerId, cardId: number) => void
+  deselectCards: (playerId: PlayerId) => void
 }
 
 const getRoomsFromPlayer = (player_id: PlayerId): RoomCard[] => {
@@ -85,10 +87,14 @@ export const useGameStore = create<GameState>()(
       // Estado inicial de los 4 jugadores
       players: initializePlayers(),
 
-      // Inicializar el juego: mezclar decks
+      // Inicializar el juego: mezclar decks y agregar campos de selección
       initializeGame: () => {
         set((state) => {
-          const shuffledDeck = shuffleArray(deckData as PlayingCard[])
+          const shuffledDeck = shuffleArray(deckData as PlayingCard[]).map(card => ({
+            ...card,
+            is_selected: false,
+            has_coincidence: null
+          }))
           const shuffledGuestDeck = shuffleArray(guestDeckData as GuestCard[])
           
           return {
@@ -124,6 +130,77 @@ export const useGameStore = create<GameState>()(
               deck: remainingDeck
             },
             players: updatedPlayers
+          }
+        })
+      },
+
+      // Seleccionar una carta y calcular coincidencias
+      selectCard: (playerId: PlayerId, cardId: number) => {
+        set((state) => {
+          const player = state.players[playerId]
+          const selectedCard = player.hand.find(c => c.id === cardId)
+          
+          if (!selectedCard) return state
+          
+          // Actualizar todas las cartas de la mano
+          const updatedHand = player.hand.map(card => {
+            if (card.id === cardId) {
+              // Esta es la carta seleccionada
+              return {
+                ...card,
+                is_selected: true,
+                has_coincidence: null
+              }
+            } else {
+              // Calcular coincidencias con la carta seleccionada
+              const coincidences: Initial[] = []
+              
+              if (card.first_row === selectedCard.first_row) {
+                coincidences.push(card.first_row as Initial)
+              }
+              if (card.second_row === selectedCard.second_row) {
+                coincidences.push(card.second_row as Initial)
+              }
+              
+              return {
+                ...card,
+                is_selected: false,
+                has_coincidence: coincidences.length > 0 ? coincidences : null
+              }
+            }
+          })
+          
+          return {
+            players: {
+              ...state.players,
+              [playerId]: {
+                ...player,
+                hand: updatedHand
+              }
+            }
+          }
+        })
+      },
+
+      // Deseleccionar todas las cartas
+      deselectCards: (playerId: PlayerId) => {
+        set((state) => {
+          const player = state.players[playerId]
+          
+          const updatedHand = player.hand.map(card => ({
+            ...card,
+            is_selected: false,
+            has_coincidence: null
+          }))
+          
+          return {
+            players: {
+              ...state.players,
+              [playerId]: {
+                ...player,
+                hand: updatedHand
+              }
+            }
           }
         })
       }

@@ -1,5 +1,6 @@
 export type PlayerId =  'player_1' | 'player_2' | 'player_3' | 'player_4'
 export type Suit = 'locals' | 'nobles' | 'travelers' | 'money'
+export type Initial = 'J' | 'C' | 'R' | 'A' | 'T' | 'F'
 export type Product = 'cerveza' | 'comida' | 'fuego' | 'juegos' | 'musica' | 'sofa' | 'te' | 'torta' | 'whisky'
 export type State = 'in_deck' | 'in_table' | 'in_hand' | 'in_discard_pile'
 
@@ -34,7 +35,11 @@ export interface PlayingCard {
     id: number,
     product: Product,
     suit: Suit,
+    first_row: string,
+    second_row: string,
     image_url: string,
+    is_selected: boolean,
+    has_coincidence: Initial[] | null,
     owner: PlayerId | null,
     state: State 
 };
@@ -98,8 +103,6 @@ export interface Player {
     color: PlayerColor,
     name: string,
     hand: PlayingCard[],
-    selected_card: PlayingCard | null,
-    suggested_cards: PlayingCard[] | null,
     rooms: RoomCard[],
     score: PlayerScore,
 }
@@ -131,7 +134,7 @@ export interface Player {
 
 export interface Event {
     id: number,
-    initial: string,
+    initial: Initial,
     name: string,
     requirements: Product[],
     completed: boolean,
