@@ -20,6 +20,12 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
     selectCard(player.player_id, cardId)
   }
 
+  // Manejar inicio de drag
+  const handleDragStart = (_cardId: number) => {
+    // Opcional: podrías deseleccionar al empezar a arrastrar
+    // deselectCards(player.player_id)
+  }
+
   // Manejar click fuera de las cartas
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -47,6 +53,8 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
               card={card} 
               height={180}
               onClick={() => handleCardClick(card.id)}
+              draggable={true}
+              onDragStart={handleDragStart}
             />
           ))}
         </div>

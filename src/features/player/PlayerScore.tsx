@@ -1,5 +1,4 @@
 import type { GuestCard } from '../../types/types';
-import type { Suit } from '../../types/types';
 import cerveza from '../../assets/simbolos/cerveza.png';
 import comida from '../../assets/simbolos/comida.png';
 import fuego from '../../assets/simbolos/fuego.png';
@@ -11,9 +10,10 @@ import torta from '../../assets/simbolos/torta.png';
 import whisky from '../../assets/simbolos/whisky.png';
 import discount from '../../assets/simbolos/dinero.png';
 import score from '../../assets/simbolos/puntaje.png';
+import type { Suit, PlayerScore } from '../../types/types';
 
 interface PlayerScoreProps {
-  guests: GuestCard[];
+  Myscore: PlayerScore;
 }
 
 const symbolMap: Record<string, string> = {
@@ -29,8 +29,9 @@ const symbolMap: Record<string, string> = {
   discount
 };
 
-export default function PlayerScore({ guests }: PlayerScoreProps) {
+export default function PlayerScore({ Myscore }: PlayerScoreProps) {
   const pointsBySuit = (suit: Suit) => {
+  const guests = Myscore.former_guests;
   return guests
     .filter((guest) => guest.suit === suit)
     .map((guest) => guest.value);
@@ -40,7 +41,7 @@ export default function PlayerScore({ guests }: PlayerScoreProps) {
     <div className="fixed top-0 left-0 flex flex-col items-start gap-2 pt-4 pr-2 opacity-80">
       <div className="flex flex-row gap-4 relative">
         <img src={score} alt="puntaje" className="w-[60px] px-2" />
-        <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-lg">27</span>
+        <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-lg">{Myscore.score}</span>
       </div>
         {pointsBySuit('locals').length > 0 && <div className="inline-flex gap-2 py-2 pl-2 mt-2 pr-3 rounded-r-lg" style={{ backgroundColor: 'var(--color-locals)' }}>{pointsBySuit('locals').map((product, index) => 
           <img key={index} src={symbolMap[product]} alt={product} className="w-[20px]" />)}

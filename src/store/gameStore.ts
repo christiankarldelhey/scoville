@@ -19,6 +19,7 @@ interface GameState {
   dealCardsToAllPlayers: (cardsPerPlayer: number) => void
   selectCard: (playerId: PlayerId, cardId: number) => void
   deselectCards: (playerId: PlayerId) => void
+  playCard: (playerId: PlayerId, cardId: number) => void
 }
 
 const getRoomsFromPlayer = (player_id: PlayerId): RoomCard[] => {
@@ -194,6 +195,51 @@ export const useGameStore = create<GameState>()(
           }))
           
           return {
+            players: {
+              ...state.players,
+              [playerId]: {
+                ...player,
+                hand: updatedHand
+              }
+            }
+          }
+        })
+      },
+
+      // Jugar una carta (moverla de hand a table_plays)
+      playCard: (playerId: PlayerId, cardId: number) => {
+        set((state) => {
+          const player = state.players[playerId]
+          const cardToPlay = player.hand.find(c => c.id === cardId)
+          
+          if (!cardToPlay) return state
+          
+          // Remover carta de la mano y resetear su estado de selección
+          const updatedHand = player.hand
+            .filter(c => c.id !== cardId)
+            .map(card => ({
+              ...card,
+              is_selected: false,
+              has_coincidence: null
+            }))
+          
+          // Agregar carta a table_plays
+          const currentTablePlays = state.game.table_plays[playerId] || []
+          const updatedTablePlays = [...currentTablePlays, {
+            ...cardToPlay,
+            is_selected: false,
+            has_coincidence: null,
+            state: 'in_table' as const
+          }]
+          
+          return {
+            game: {
+              ...state.game,
+              table_plays: {
+                ...state.game.table_plays,
+                [playerId]: updatedTablePlays
+              }
+            },
             players: {
               ...state.players,
               [playerId]: {

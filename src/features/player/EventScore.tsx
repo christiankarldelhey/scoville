@@ -1,7 +1,8 @@
 import EventGrid from '../../components/common/EventGrid';
+import type { Event as GameEvent } from '../../types/types';
 
 interface EventScoreProps {
-  events: Event[];
+  events: GameEvent[];
 }
 
 const EventScore = ({ events }: EventScoreProps) => {
