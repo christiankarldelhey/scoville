@@ -5,9 +5,11 @@ import type { GuestCard as GuestType } from '../../types/types'
 interface GuestProps {
   guest: GuestType
   height?: number
+  opacity?: number
 }
 
 export const GuestCard: React.FC<GuestProps> = ({ 
+  opacity,
   guest, 
   height = 200 
 }) => {
@@ -18,6 +20,7 @@ export const GuestCard: React.FC<GuestProps> = ({
         src={getImagePath('characters-cards', guest.image_url)}
         alt={guest.name}
         className="w-auto h-full object-contain rounded-sm"
+        style={{ opacity }}
       />
       
       {/* Total nights - top right corner */}

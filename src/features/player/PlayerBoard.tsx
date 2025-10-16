@@ -1,8 +1,8 @@
 import React, { useRef, useEffect } from 'react'
 import type { Player } from '../../types/types'
 import { PlayingCard } from '../../components/common/PlayingCard'
-import { RoomCard } from '../../components/common/RoomCard'
 import { useGameStore } from '../../store/gameStore'
+import PlayerControls from './PlayerControls'
 
 interface PlayerBoardProps {
   player: Player
@@ -58,15 +58,7 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
             />
           ))}
         </div>
-        {/* <div className="flex gap-0 p-4 overflow-x-auto items-center justify-center">
-          {player.rooms?.map((room) => (
-            <RoomCard 
-              key={room.id} 
-              card={room} 
-              height={180} 
-            />
-          ))}
-        </div> */}
+        <PlayerControls rooms={player.rooms} />
       </div>
     </div>
   )

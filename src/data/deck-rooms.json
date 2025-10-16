@@ -4,14 +4,36 @@
         "image_url": "1-azul.jpg",
         "quality": 1,
         "owner": "player_1",
-        "guest": null
+        "guest": {
+            "id": 1,
+            "name": "Oliver Callaway",
+            "used_nights": 0,
+            "total_nights": 2,
+            "value": "cerveza",
+            "suit": "locals",
+            "image_url": "l-cerveza.jpg",
+            "portrait_url": "20.png",
+            "state": "in_deck",
+            "owner": null
+        }
     },
     {
         "id": 2,
         "image_url": "2-azul.jpg",
         "quality": 2,
         "owner": "player_1",
-        "guest": null
+        "guest": {
+            "id": 2,
+            "name": "Charlotte Pemberton",
+            "used_nights": 1,
+            "total_nights": 2,
+            "value": "comida",
+            "suit": "nobles",
+            "image_url": "l-comida.jpg",
+            "portrait_url": "8.png",
+            "state": "in_deck",
+            "owner": null
+        }
     },
     {
         "id": 3,
@@ -25,7 +47,18 @@
         "image_url": "4-azul.jpg",
         "quality": 4,
         "owner": "player_1",
-        "guest": null
+        "guest": {
+            "id": 4,
+            "name": "Eleanor Ashford",
+            "used_nights": 0,
+            "total_nights": 3,
+            "value": "juegos",
+            "suit": "travelers",
+            "image_url": "l-juegos.jpg",
+            "portrait_url": "6.png",
+            "state": "in_deck",
+            "owner": null
+        }
     },
     {
         "id": 5,

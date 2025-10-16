@@ -61,6 +61,7 @@ export interface GuestCard {
     value: Product,
     suit: Suit,
     image_url: string,
+    portrait_url: string,
     owner: PlayerId | null,
     state: State,
 }
@@ -106,29 +107,6 @@ export interface Player {
     rooms: RoomCard[],
     score: PlayerScore,
 }
-
-// export interface Turn {
-//     id: number,
-//     number: number,
-//     player_id_turn: PlayerId,
-//     current_guest: GuestCard | null,
-// };
-
-// export interface PlayerState {
-//     player: PlayerId,
-//     is_my_turn: boolean,
-//     hand: PlayingCard[],
-//     played_cards_in_turn: PlayingCard[],
-//     turn: Turn,
-//     state: 'in_progress' | 'finished'
-// }
-
-// export interface PlayersInGame {
-//     players: PlayerId[],
-//     player_turn: PlayerId,
-// }
-
-
 
 // SCORE
 
