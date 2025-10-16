@@ -29,7 +29,7 @@ export const GuestCard: React.FC<GuestProps> = ({
       <div 
         className="absolute bottom-[7px] left-0 right-0 font-light text-center text-grey text-sm px-2 py-2 opacity-80"
         style={{ 
-          fontFamily: "'Balthazar', serif",
+          fontFamily: '"Old Standard TT", bold',
         }}
       >
         {guest.name}

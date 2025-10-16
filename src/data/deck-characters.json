@@ -7,6 +7,7 @@
         "value": "cerveza",
         "suit": "locals",
         "image_url": "l-cerveza.jpg",
+        "portrait_url": "3.png",
         "state": "in_deck",
         "owner": null
     },
@@ -18,6 +19,7 @@
         "value": "comida",
         "suit": "locals",
         "image_url": "l-comida.jpg",
+        "portrait_url": "4.png",
         "state": "in_deck",
         "owner": null
     },
@@ -29,6 +31,7 @@
         "value": "fuego",
         "suit": "locals",
         "image_url": "l-fuego.jpg",
+        "portrait_url": "5.png",
         "state": "in_deck",
         "owner": null
     },
@@ -40,6 +43,7 @@
         "value": "juegos",
         "suit": "locals",
         "image_url": "l-juegos.jpg",
+        "portrait_url": "6.png",
         "state": "in_deck",
         "owner": null
     },
@@ -51,6 +55,7 @@
         "value": "musica",
         "suit": "locals",
         "image_url": "l-musica.jpg",
+        "portrait_url": "7.png",
         "state": "in_deck",
         "owner": null
     },
@@ -62,6 +67,7 @@
         "value": "sofa",
         "suit": "locals",
         "image_url": "l-sofa.jpg",
+        "portrait_url": "8.png",
         "state": "in_deck",
         "owner": null
     },
@@ -73,6 +79,7 @@
         "value": "te",
         "suit": "locals",
         "image_url": "l-te.jpg",
+        "portrait_url": "9.png",
         "state": "in_deck",
         "owner": null
     },
@@ -84,6 +91,7 @@
         "value": "torta",
         "suit": "locals",
         "image_url": "l-torta.jpg",
+        "portrait_url": "10.png",
         "state": "in_deck",
         "owner": null
     },
@@ -95,6 +103,7 @@
         "value": "whisky",
         "suit": "locals",
         "image_url": "l-whisky.jpg",
+        "portrait_url": "11.png",
         "state": "in_deck",
         "owner": null
     },
@@ -106,6 +115,7 @@
         "value": "discount",
         "suit": "locals",
         "image_url": "l-descuento.jpg",
+        "portrait_url": "12.png",
         "state": "in_deck",
         "owner": null
     },
@@ -117,6 +127,7 @@
         "value": "cerveza",
         "suit": "nobles",
         "image_url": "n-cerveza.jpg",
+        "portrait_url": "13.png",
         "state": "in_deck",
         "owner": null
     },
@@ -128,6 +139,7 @@
         "value": "comida",
         "suit": "nobles",
         "image_url": "n-comida.jpg",
+        "portrait_url": "14.png",
         "state": "in_deck",
         "owner": null
     },
@@ -139,6 +151,7 @@
         "value": "fuego",
         "suit": "nobles",
         "image_url": "n-fuego.jpg",
+        "portrait_url": "15.png",
         "state": "in_deck",
         "owner": null
     },
@@ -150,6 +163,7 @@
         "value": "juegos",
         "suit": "nobles",
         "image_url": "n-juego.jpg",
+        "portrait_url": "16.png",
         "state": "in_deck",
         "owner": null
     },
@@ -161,6 +175,7 @@
         "value": "musica",
         "suit": "nobles",
         "image_url": "n-musica.jpg",
+        "portrait_url": "17.png",
         "state": "in_deck",
         "owner": null
     },
@@ -172,6 +187,7 @@
         "value": "sofa",
         "suit": "nobles",
         "image_url": "n-sofa.jpg",
+        "portrait_url": "18.png",
         "state": "in_deck",
         "owner": null
     },
@@ -183,6 +199,7 @@
         "value": "te",
         "suit": "nobles",
         "image_url": "n-te.jpg",
+        "portrait_url": "19.png",
         "state": "in_deck",
         "owner": null
     },
@@ -194,6 +211,7 @@
         "value": "torta",
         "suit": "nobles",
         "image_url": "n-torta.jpg",
+        "portrait_url": "20.png",
         "state": "in_deck",
         "owner": null
     },
@@ -205,6 +223,7 @@
         "value": "whisky",
         "suit": "nobles",
         "image_url": "n-whisky.jpg",
+        "portrait_url": "21.png",
         "state": "in_deck",
         "owner": null
     },
@@ -216,6 +235,7 @@
         "value": "discount",
         "suit": "nobles",
         "image_url": "n-descuento.jpg",
+        "portrait_url": "22.png",
         "state": "in_deck",
         "owner": null
     },
@@ -227,6 +247,7 @@
         "value": "cerveza",
         "suit": "travelers",
         "image_url": "v-cerveza.jpg",
+        "portrait_url": "23.png",
         "state": "in_deck",
         "owner": null
     },
@@ -238,6 +259,7 @@
         "value": "comida",
         "suit": "travelers",
         "image_url": "v-comida.jpg",
+        "portrait_url": "24.png",
         "state": "in_deck",
         "owner": null
     },
@@ -249,6 +271,7 @@
         "value": "fuego",
         "suit": "travelers",
         "image_url": "v-fuego.jpg",
+        "portrait_url": "25.png",
         "state": "in_deck",
         "owner": null
     },
@@ -260,6 +283,7 @@
         "value": "juegos",
         "suit": "travelers",
         "image_url": "v-juego.jpg",
+        "portrait_url": "26.png",
         "state": "in_deck",
         "owner": null
     },
@@ -271,6 +295,7 @@
         "value": "musica",
         "suit": "travelers",
         "image_url": "v-musica.jpg",
+        "portrait_url": "27.png",
         "state": "in_deck",
         "owner": null
     },
@@ -282,6 +307,7 @@
         "value": "sofa",
         "suit": "travelers",
         "image_url": "v-sofa.jpg",
+        "portrait_url": "28.png",
         "state": "in_deck",
         "owner": null
     },
@@ -293,6 +319,7 @@
         "value": "te",
         "suit": "travelers",
         "image_url": "v-te.jpg",
+        "portrait_url": "29.png",
         "state": "in_deck",
         "owner": null
     },
@@ -304,6 +331,7 @@
         "value": "torta",
         "suit": "travelers",
         "image_url": "v-torta.jpg",
+        "portrait_url": "30.png",
         "state": "in_deck",
         "owner": null
     },
@@ -315,6 +343,7 @@
         "value": "whisky",
         "suit": "travelers",
         "image_url": "v-whisky.jpg",
+        "portrait_url": "1.png",
         "state": "in_deck",
         "owner": null
     },
@@ -326,6 +355,7 @@
         "value": "discount",
         "suit": "travelers",
         "image_url": "v-descuento.jpg",
+        "portrait_url": "2.png",
         "state": "in_deck",
         "owner": null
     }
