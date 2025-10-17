@@ -3,6 +3,7 @@ import type { Player } from '../../types/types'
 import { PlayingCard } from '../../components/common/PlayingCard'
 import { useGameStore } from '../../store/gameStore'
 import PlayerControls from './PlayerControls'
+import type { Initial } from '../../types/types'
 
 interface PlayerBoardProps {
   player: Player
@@ -18,6 +19,11 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
   // Manejar click en una carta
   const handleCardClick = (cardId: number) => {
     selectCard(player.player_id, cardId)
+  }
+
+  // Manejar click en un EventMarker
+  const handleMarkerClick = (cardId: number, initial: string) => {
+    selectCard(player.player_id, cardId, [initial as Initial])
   }
 
   // Manejar inicio de drag
@@ -41,8 +47,8 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
   }, [player.player_id, deselectCards])
 
   return (
-    <div className="relative flex-1 w-full bg-transparent">
-      <div className="flex flex-row gap-2 w-full h-full items-center justify-center">
+    <div className="relative flex-[1.2] w-full bg-transparent">
+      <div className="flex flex-row gap-2 h-full items-center justify-center bg-[#697b8f]/40 border border-[#697b8f]/10 rounded-t-md px-8 w-fit mx-auto">
         <div 
           ref={handRef}
           className="flex gap-2 p-4 overflow-x-auto items-center justify-center"
@@ -53,6 +59,7 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
               card={card} 
               height={180}
               onClick={() => handleCardClick(card.id)}
+              onMarkerClick={handleMarkerClick}
               draggable={true}
               onDragStart={handleDragStart}
             />

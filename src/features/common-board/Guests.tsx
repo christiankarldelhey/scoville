@@ -9,7 +9,7 @@ export const Guests = () => {
   return (
     <div className="flex justify-center items-center gap-4 w-[100%] pt-[15px] mx-auto">  
         <GuestCard guest={Guests[16]} height={230} />
-        <GuestCard guest={Guests[22]} height={230} />
+        {/* <GuestCard guest={Guests[22]} height={230} /> */}
     </div>
 
   )

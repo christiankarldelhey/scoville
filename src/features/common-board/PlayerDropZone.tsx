@@ -31,13 +31,13 @@ export const PlayerDropZone: React.FC<PlayerDropZoneProps> = ({
   const positionStyles = {
     top: 'absolute top-4 left-1/2 -translate-x-1/2',
     bottom: 'absolute bottom-4 left-1/2 -translate-x-1/2',
-    left: 'absolute left-4 top-1/2 -translate-y-1/2 rotate-90',
-    right: 'absolute right-4 top-1/2 -translate-y-1/2 -rotate-90'
+    left: 'absolute left-0 top-1/2 -translate-y-1/2',
+    right: 'absolute right-0 top-1/2 -translate-y-1/2'
   }
 
-  const isVertical = position === 'left' || position === 'right'
-  const dropZoneClasses = isVertical
-    ? 'w-[400px] h-[180px]' // Rotated, so width becomes visual height
+  const isHorizontalSide = position === 'left' || position === 'right'
+  const dropZoneClasses = isHorizontalSide
+    ? 'w-[650px] h-[150px]'
     : 'w-[500px] h-[150px]'
 
   return (

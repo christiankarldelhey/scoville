@@ -17,7 +17,7 @@ interface GameState {
   // Acciones
   initializeGame: () => void
   dealCardsToAllPlayers: (cardsPerPlayer: number) => void
-  selectCard: (playerId: PlayerId, cardId: number) => void
+  selectCard: (playerId: PlayerId, cardId: number, initials?: Initial[]) => void
   deselectCards: (playerId: PlayerId) => void
   playCard: (playerId: PlayerId, cardId: number) => void
 }
@@ -136,12 +136,40 @@ export const useGameStore = create<GameState>()(
       },
 
       // Seleccionar una carta y calcular coincidencias
-      selectCard: (playerId: PlayerId, cardId: number) => {
+      selectCard: (playerId: PlayerId, cardId: number, initials?: Initial[]) => {
+        console.log(playerId, cardId, initials)
         set((state) => {
           const player = state.players[playerId]
           const selectedCard = player.hand.find(c => c.id === cardId)
           
           if (!selectedCard) return state
+          
+          // Si no hay initials, calcular qué initials de la carta seleccionada tienen coincidencias
+          let selectedCardCoincidences: Initial[] | null = null
+          
+          if (!initials) {
+            const tempCoincidences: Initial[] = []
+            
+            // Revisar si first_row tiene coincidencias con otras cartas
+            const hasFirstRowMatch = player.hand.some(
+              c => c.id !== cardId && (c.first_row === selectedCard.first_row || c.second_row === selectedCard.first_row)
+            )
+            if (hasFirstRowMatch) {
+              tempCoincidences.push(selectedCard.first_row as Initial)
+            }
+            
+            // Revisar si second_row tiene coincidencias con otras cartas
+            const hasSecondRowMatch = player.hand.some(
+              c => c.id !== cardId && (c.first_row === selectedCard.second_row || c.second_row === selectedCard.second_row)
+            )
+            if (hasSecondRowMatch) {
+              tempCoincidences.push(selectedCard.second_row as Initial)
+            }
+            
+            selectedCardCoincidences = tempCoincidences.length > 0 ? tempCoincidences : null
+          } else {
+            selectedCardCoincidences = initials
+          }
           
           // Actualizar todas las cartas de la mano
           const updatedHand = player.hand.map(card => {
@@ -150,16 +178,17 @@ export const useGameStore = create<GameState>()(
               return {
                 ...card,
                 is_selected: true,
-                has_coincidence: null
+                has_coincidence: selectedCardCoincidences
               }
             } else {
               // Calcular coincidencias con la carta seleccionada
               const coincidences: Initial[] = []
-              
-              if (card.first_row === selectedCard.first_row) {
+              const selectedCardInitials = initials || [selectedCard.first_row, selectedCard.second_row]
+
+              if (selectedCardInitials.includes(card.first_row as Initial)) {
                 coincidences.push(card.first_row as Initial)
               }
-              if (card.second_row === selectedCard.second_row) {
+              if (selectedCardInitials.includes(card.second_row as Initial)) {
                 coincidences.push(card.second_row as Initial)
               }
               

@@ -64,6 +64,7 @@ interface EventMarkerProps {
   color?: string
   size?: number
   glow?: boolean
+  onClick?: () => void
 }
 
 export const EventMarker: React.FC<EventMarkerProps> = ({ 
@@ -74,16 +75,27 @@ export const EventMarker: React.FC<EventMarkerProps> = ({
   rotation = 0,
   color = '#000000',
   size = 45,
-  glow = false
+  glow = false,
+  onClick
 }) => {
+  const handleClick = (e: React.MouseEvent) => {
+    if (onClick) {
+      e.stopPropagation() // Evita que el click se propague a la imagen
+      onClick()
+    }
+  }
+
   return (
     <div 
-      className="absolute pointer-events-none flex items-center"
+      className={`absolute flex items-center ${
+        onClick ? 'pointer-events-auto cursor-pointer hover:opacity-80' : 'pointer-events-none'
+      }`}
       style={{ 
         right: position,
         top: 0,
         transform: `translateY(${offsetY})`
       }}
+      onClick={handleClick}
     >
       <EventMarkerIcon rotation={rotation} color={color} size={size} glow={glow} />
       <span 
