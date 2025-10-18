@@ -17,10 +17,30 @@ export const CommonBoard = () => {
       <OtherPlayerHand cardCount={players.player_3.hand.length || 0} position="left" />
       <OtherPlayerHand cardCount={players.player_4.hand.length || 0} position="right" />
       <PlayZone 
-        topPlayer={{ playerId: 'player_2', cards: game.table_plays.player_2 || [] }}
-        bottomPlayer={{ playerId: 'player_1', cards: game.table_plays.player_1 || [] }}
-        leftPlayer={{ playerId: 'player_3', cards: game.table_plays.player_3 || [] }}
-        rightPlayer={{ playerId: 'player_4', cards: game.table_plays.player_4 || [] }}
+        topPlayer={{ 
+          playerId: 'player_2', 
+          cards: game.table_plays.player_2?.played_cards || [],
+          allowedCards: game.table_plays.player_2?.allowed_cards || [],
+          meldScore: game.table_plays.player_2?.meld_score || 0
+        }}
+        bottomPlayer={{ 
+          playerId: 'player_1', 
+          cards: game.table_plays.player_1?.played_cards || [],
+          allowedCards: game.table_plays.player_1?.allowed_cards || [],
+          meldScore: game.table_plays.player_1?.meld_score || 0
+        }}
+        leftPlayer={{ 
+          playerId: 'player_3', 
+          cards: game.table_plays.player_3?.played_cards || [],
+          allowedCards: game.table_plays.player_3?.allowed_cards || [],
+          meldScore: game.table_plays.player_3?.meld_score || 0
+        }}
+        rightPlayer={{ 
+          playerId: 'player_4', 
+          cards: game.table_plays.player_4?.played_cards || [],
+          allowedCards: game.table_plays.player_4?.allowed_cards || [],
+          meldScore: game.table_plays.player_4?.meld_score || 0
+        }}
         onCardDrop={handleCardDrop}
       />
       <PlayerScore Myscore={players.player_1.score} />

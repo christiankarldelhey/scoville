@@ -10,6 +10,7 @@ interface PlayingCardProps {
   onMarkerClick?: (cardId: number, initial: string) => void
   draggable?: boolean
   onDragStart?: (cardId: number) => void
+  disabled?: boolean
 }
 
 export const PlayingCard: React.FC<PlayingCardProps> = ({ 
@@ -18,12 +19,17 @@ export const PlayingCard: React.FC<PlayingCardProps> = ({
   onClick,
   onMarkerClick,
   draggable = false,
-  onDragStart
+  onDragStart,
+  disabled = false
 }) => {
   // Determinar si la carta debe estar elevada
   const isElevated = card.is_selected || card.has_coincidence !== null
 
   const handleDragStart = (e: React.DragEvent) => {
+    if (disabled) {
+      e.preventDefault()
+      return
+    }
     e.dataTransfer.effectAllowed = 'move'
     e.dataTransfer.setData('cardId', card.id.toString())
     if (onDragStart) {
@@ -36,8 +42,16 @@ export const PlayingCard: React.FC<PlayingCardProps> = ({
   }
 
   const handleMarkerClick = (initial: string) => {
+    if (disabled) return
     if (onMarkerClick) {
       onMarkerClick(card.id, initial)
+    }
+  }
+
+  const handleCardClick = () => {
+    if (disabled) return
+    if (onClick) {
+      onClick()
     }
   }
 
@@ -53,15 +67,17 @@ export const PlayingCard: React.FC<PlayingCardProps> = ({
           <img
             src={getImagePath('cards-inn', card.image_url)}
             alt={`${card.product} ${card.suit}`}
-            draggable={draggable}
+            draggable={draggable && !disabled}
             onDragStart={handleDragStart}
-            className={`w-auto object-contain rounded-md opacity-90 ${
-              onClick ? 'cursor-pointer hover:brightness-110' : ''
+            className={`w-auto object-contain rounded-md transition-all ${
+              disabled ? 'opacity-70 grayscale cursor-not-allowed' : 'opacity-90'
             } ${
-              draggable ? 'cursor-grab active:cursor-grabbing' : ''
+              !disabled && onClick ? 'cursor-pointer hover:brightness-110' : ''
+            } ${
+              !disabled && draggable ? 'cursor-grab active:cursor-grabbing' : ''
             }`}
             style={{ height: `${height}px` }}
-            onClick={onClick}
+            onClick={handleCardClick}
           />
 
           {card.suit !== 'discount' && 

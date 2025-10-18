@@ -1,11 +1,13 @@
 import React from 'react'
 import { Guests } from './Guests'
 import { PlayerDropZone } from './PlayerDropZone'
-import type { PlayingCard } from '../../types/types'
+import type { PlayingCard, Initial } from '../../types/types'
 
 interface PlayerPlayArea {
   playerId: string
   cards: PlayingCard[]
+  allowedCards: Initial[]
+  meldScore: number
 }
 
 interface PlayZoneProps {
@@ -27,48 +29,9 @@ export const PlayZone: React.FC<PlayZoneProps> = ({
     <div className="relative w-[80%] h-[80%] min-h-[600px] flex items-center justify-center">
       <PlayerDropZone
         playerId={topPlayer?.playerId}
-        cards={[
-          {
-        "id": 21,
-        "first_row": "R",
-        "second_row": "A",
-        "value": "fuego",
-        "suit": "viajero",
-        "image_url": "v-fuego-RA.png",
-        "state": "in_deck",
-        "owner": null
-    },
-    {
-        "id": 22,
-        "first_row": "J",
-        "second_row": "F",
-        "value": "juegos",
-        "suit": "viajero",
-        "image_url": "v-juegos-JF.png",
-        "state": "in_deck",
-        "owner": null
-    },
-    {
-        "id": 23,
-        "first_row": "R",
-        "second_row": "F",
-        "value": "musica",
-        "suit": "viajero",
-        "image_url": "v-musica-RF.png",
-        "state": "in_deck",
-        "owner": null
-    },
-    {
-        "id": 24,
-        "first_row": "J",
-        "second_row": "T",
-        "value": "sofa",
-        "suit": "viajero",
-        "image_url": "v-sofa-JT.png",
-        "state": "in_deck",
-        "owner": null
-    }
-        ]}
+        cards={topPlayer?.cards || []}
+        allowedCards={topPlayer?.allowedCards}
+        meldScore={topPlayer?.meldScore}
         position="top"
         onCardDrop={onCardDrop}
       />
@@ -76,44 +39,17 @@ export const PlayZone: React.FC<PlayZoneProps> = ({
       <PlayerDropZone
         playerId={bottomPlayer?.playerId}
         cards={bottomPlayer?.cards || []}
+        allowedCards={bottomPlayer?.allowedCards}
+        meldScore={bottomPlayer?.meldScore}
         position="bottom"
         onCardDrop={onCardDrop}
       />
       
       <PlayerDropZone
         playerId={leftPlayer?.playerId}
-        cards={[
-          {
-        "id": 18,
-        "first_row": "C",
-        "second_row": "F",
-        "value": "whisky",
-        "suit": "noble",
-        "image_url": "n-whisky-CF.png",
-        "state": "in_deck",
-        "owner": null
-    },
-    {
-        "id": 19,
-        "first_row": "J",
-        "second_row": "A",
-        "value": "cerveza",
-        "suit": "viajero",
-        "image_url": "v-cerveza-JA.png",
-        "state": "in_deck",
-        "owner": null
-    },
-    {
-        "id": 20,
-        "first_row": "C",
-        "second_row": "A",
-        "value": "comida",
-        "suit": "viajero",
-        "image_url": "v-comida-CA.png",
-        "state": "in_deck",
-        "owner": null
-    }
-        ]}
+        cards={leftPlayer?.cards || []}
+        allowedCards={leftPlayer?.allowedCards}
+        meldScore={leftPlayer?.meldScore}
         position="left"
         onCardDrop={onCardDrop}
       />
@@ -121,6 +57,8 @@ export const PlayZone: React.FC<PlayZoneProps> = ({
       <PlayerDropZone
         playerId={rightPlayer?.playerId}
         cards={rightPlayer?.cards || []}
+        allowedCards={rightPlayer?.allowedCards}
+        meldScore={rightPlayer?.meldScore}
         position="right"
         onCardDrop={onCardDrop}
       />

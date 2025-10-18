@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
-import type { PlayingCard, Player, Game, PlayerId, PlayerScore, GuestCard, Initial } from '../types/types'
+import type { PlayingCard, Player, Game, PlayerId, PlayerScore, GuestCard, Initial, TablePlay } from '../types/types'
 import { AVAILABLE_PLAYERS, ROUND_PHASE_ORDER } from '../types/types'
 import deckData from '../data/deck-inn.json'
 import roomsData from '../data/deck-rooms.json'
@@ -320,21 +320,55 @@ export const useGameStore = create<GameState>()(
               has_coincidence: null
             }))
           
-          // Agregar carta a table_plays
-          const currentTablePlays = state.game.table_plays[playerId] || []
-          const updatedTablePlays = [...currentTablePlays, {
+          // Obtener el TablePlay actual o crear uno nuevo
+          const currentTablePlay = state.game.table_plays[playerId]
+          const currentPlayedCards = currentTablePlay?.played_cards || []
+          const currentAllowedCards = currentTablePlay?.allowed_cards || []
+          
+          // Agregar carta a played_cards
+          const updatedPlayedCards = [...currentPlayedCards, {
             ...cardToPlay,
             is_selected: false,
             has_coincidence: null,
             state: 'in_table' as const
           }]
           
+          // Calcular allowed_cards contando ocurrencias de cada initial
+          const initialCounts: Record<string, number> = {}
+          
+          updatedPlayedCards.forEach(card => {
+            const firstRow = card.first_row as Initial
+            const secondRow = card.second_row as Initial
+            
+            initialCounts[firstRow] = (initialCounts[firstRow] || 0) + 1
+            initialCounts[secondRow] = (initialCounts[secondRow] || 0) + 1
+          })
+          
+          // Encontrar la cantidad máxima
+          const maxCount = Math.max(...Object.values(initialCounts))
+          
+          // Filtrar solo las iniciales con la cantidad máxima
+          const newAllowedCards = Object.entries(initialCounts)
+            .filter(([_, count]) => count === maxCount)
+            .map(([initial, _]) => initial as Initial)
+          
+          // Calcular meld_score sumando todos los pointsInThisBid
+          const meldScore = updatedPlayedCards.reduce((sum, card) => {
+            return sum + (card.pointsInThisBid || 0)
+          }, 0)
+          
+          const updatedTablePlay: TablePlay = {
+            played_cards: updatedPlayedCards,
+            allowed_cards: newAllowedCards,
+            meld_score: meldScore
+          }
+          
           return {
             game: {
               ...state.game,
               table_plays: {
                 ...state.game.table_plays,
-                [playerId]: updatedTablePlays
+                [playerId]: updatedTablePlay
               }
             },
             players: {

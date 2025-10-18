@@ -14,7 +14,33 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
 }) => {
   const selectCard = useGameStore((state) => state.selectCard)
   const deselectCards = useGameStore((state) => state.deselectCards)
+  const game = useGameStore((state) => state.game)
   const handRef = useRef<HTMLDivElement>(null)
+
+  // Obtener allowed_cards y played_cards del jugador actual
+  const tablePlay = game.table_plays[player.player_id]
+  const allowedCards = tablePlay?.allowed_cards || []
+  const hasPlayedCards = (tablePlay?.played_cards.length || 0) > 0
+
+  // Función para determinar si una carta debe estar deshabilitada
+  const isCardDisabled = (card: typeof player.hand[0]) => {
+    const playedCardsCount = tablePlay?.played_cards.length || 0
+    
+    // Si ya hay 3 cartas jugadas, todas están deshabilitadas
+    if (playedCardsCount >= 3) return true
+    
+    // Si no hay cartas jugadas, todas están habilitadas
+    if (!hasPlayedCards) return false
+    
+    // Las cartas discount siempre están habilitadas (a menos que ya haya 3 cartas)
+    if (card.suit === 'discount') return false
+    
+    // La carta está habilitada si alguno de sus initials está en allowed_cards
+    const hasAllowedInitial = allowedCards.includes(card.first_row as Initial) || 
+                               allowedCards.includes(card.second_row as Initial)
+    
+    return !hasAllowedInitial
+  }
 
   // Manejar click en una carta
   const handleCardClick = (cardId: number) => {
@@ -62,6 +88,7 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
               onMarkerClick={handleMarkerClick}
               draggable={true}
               onDragStart={handleDragStart}
+              disabled={isCardDisabled(card)}
             />
           ))}
         </div>

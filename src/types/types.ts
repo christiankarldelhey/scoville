@@ -74,6 +74,12 @@ export type PlayerColor = AvailablePlayer['color'];
 
 export type RoundPhase = 'game_preparation' | 'checkout' | 'guest_selection' | 'bid' | 'scoring';
 
+export interface TablePlay {
+    played_cards: PlayingCard[];
+    allowed_cards: Initial[];
+    meld_score: number;
+}
+
 export const ROUND_PHASE_ORDER: readonly RoundPhase[] = [
     'game_preparation',
     'checkout',
@@ -93,7 +99,7 @@ export interface Game {
     discard_pile: PlayingCard[],
     guest_deck: GuestCard[],
     bid: GuestCard[] | null,
-    table_plays: Record<PlayerId, PlayingCard[] | null>;
+    table_plays: Record<PlayerId, TablePlay | null>;
 }
 
 
