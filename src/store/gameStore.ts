@@ -20,6 +20,8 @@ interface GameState {
   selectCard: (playerId: PlayerId, cardId: number, initials?: Initial[]) => void
   deselectCards: (playerId: PlayerId) => void
   playCard: (playerId: PlayerId, cardId: number) => void
+  updateBid: (newBid: GuestCard[] | null) => void
+  calculateCardPoints: (card: PlayingCard, bid: GuestCard | null) => 1 | 2 | 3 | 4
 }
 
 const getRoomsFromPlayer = (player_id: PlayerId): RoomCard[] => {
@@ -36,6 +38,41 @@ const shuffleArray = <T,>(items: T[]): T[] => {
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
   }
   return shuffled
+}
+
+// Calcular puntos de una carta basándose en el bid
+const calculateCardPoints = (card: PlayingCard, bid: GuestCard | null): 1 | 2 | 3 | 4 => {
+  if (!bid) return 1
+  
+  const suitMatches = card.suit === bid.suit
+  const productMatches = card.product === bid.product
+  
+  if (suitMatches && productMatches) return 4
+  if (productMatches && !suitMatches) return 3
+  if (!productMatches && suitMatches) return 2
+  return 1
+}
+
+// Actualizar puntos de todas las cartas en las manos de los jugadores
+const updateAllPlayersCardPoints = (
+  players: Record<PlayerId, Player>,
+  bid: GuestCard | null
+): Record<PlayerId, Player> => {
+  const updatedPlayers = { ...players }
+  const bidCard = bid
+  
+  Object.keys(updatedPlayers).forEach((playerId) => {
+    const player = updatedPlayers[playerId as PlayerId]
+    updatedPlayers[playerId as PlayerId] = {
+      ...player,
+      hand: player.hand.map(card => ({
+        ...card,
+        pointsInThisBid: calculateCardPoints(card, bidCard)
+      }))
+    }
+  })
+  
+  return updatedPlayers
 }
 
 // Crear el score inicial vacío para un jugador
@@ -94,15 +131,21 @@ export const useGameStore = create<GameState>()(
           const shuffledDeck = shuffleArray(deckData as PlayingCard[]).map(card => ({
             ...card,
             is_selected: false,
-            has_coincidence: null
+            has_coincidence: null,
+            pointsInThisBid: 1
           }))
           const shuffledGuestDeck = shuffleArray(guestDeckData as GuestCard[])
+          
+          // Repartir la primera carta del guest deck al bid
+          const bidCard = shuffledGuestDeck.length > 0 ? shuffledGuestDeck[0] : null
+          const remainingGuestDeck = shuffledGuestDeck.slice(1)
           
           return {
             game: {
               ...state.game,
               deck: shuffledDeck,
-              guest_deck: shuffledGuestDeck
+              guest_deck: remainingGuestDeck,
+              bid: bidCard ? [bidCard] : null
             }
           }
         })
@@ -113,10 +156,14 @@ export const useGameStore = create<GameState>()(
         set((state) => {
           const updatedPlayers = { ...state.players }
           let remainingDeck = [...state.game.deck]
+          const bidCard = state.game.bid?.[0] || null
           
           // Repartir cartas a cada jugador en orden
           state.game.active_players.forEach((playerId) => {
-            const dealtCards = remainingDeck.slice(0, cardsPerPlayer)
+            const dealtCards = remainingDeck.slice(0, cardsPerPlayer).map(card => ({
+              ...card,
+              pointsInThisBid: calculateCardPoints(card, bidCard)
+            }))
             remainingDeck = remainingDeck.slice(cardsPerPlayer)
             
             updatedPlayers[playerId] = {
@@ -233,6 +280,27 @@ export const useGameStore = create<GameState>()(
             }
           }
         })
+      },
+
+      // Actualizar el bid y recalcular puntos de todas las cartas
+      updateBid: (newBid: GuestCard[] | null) => {
+        set((state) => {
+          const bidCard = newBid?.[0] || null
+          const updatedPlayers = updateAllPlayersCardPoints(state.players, bidCard)
+          
+          return {
+            game: {
+              ...state.game,
+              bid: newBid
+            },
+            players: updatedPlayers
+          }
+        })
+      },
+
+      // Función helper para calcular puntos (expuesta para uso externo si es necesario)
+      calculateCardPoints: (card: PlayingCard, bid: GuestCard | null) => {
+        return calculateCardPoints(card, bid)
       },
 
       // Jugar una carta (moverla de hand a table_plays)

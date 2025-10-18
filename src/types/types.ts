@@ -41,6 +41,7 @@ export interface PlayingCard {
     is_selected: boolean,
     has_coincidence: Initial[] | null,
     owner: PlayerId | null,
+    pointsInThisBid?: 1 | 2 | 3 | 4 | null,
     state: State 
 };
 
@@ -58,7 +59,7 @@ export interface GuestCard {
     name: string,
     used_nights: number,
     total_nights: number,
-    value: Product,
+    product: Product,
     suit: Suit,
     image_url: string,
     portrait_url: string,

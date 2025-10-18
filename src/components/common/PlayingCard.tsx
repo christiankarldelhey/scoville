@@ -42,7 +42,6 @@ export const PlayingCard: React.FC<PlayingCardProps> = ({
   }
 
 
-
   return (
     <div className="relative inline-block">
       {/* Wrapper que aplica el movimiento de elevación a todo el contenido */}
@@ -86,12 +85,20 @@ export const PlayingCard: React.FC<PlayingCardProps> = ({
               offsetY="-40%"
               textOffsetY="50%"
               rotation={-92}
-              color={isMarkerSelected(card.first_row) ? "red" : "#575758"}
+              color={isMarkerSelected(card.first_row) ? "green" : "#575758"}
               size={40}
             />
           </div>
-          
-        }  
+        }
+        {(card.has_coincidence || card.is_selected) && card.pointsInThisBid &&
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+            <div className="w-6 h-6 bg-red-400 rounded-full flex items-center justify-center">
+              <span className="text-white text-md" style={{ fontFamily: '"Old Standard TT", serif' }}>
+                {card.pointsInThisBid}
+              </span>
+            </div>
+          </div>  
+        }
         </div>
       </div>
     </div>

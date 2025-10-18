@@ -1,15 +1,15 @@
 import React from 'react'
 import { GuestCard } from '../../components/common/GuestCard'
-import guestsData from '../../data/deck-characters.json'
-import type { GuestCard as GuestType } from '../../types/types'
+import { useGameStore } from '../../store/gameStore'
 
 export const Guests = () => {
-  const Guests = guestsData as GuestType[]
+  const bid = useGameStore((state) => state.game.bid)
 
   return (
     <div className="flex justify-center items-center gap-4 w-[100%] pt-[15px] mx-auto">  
-        <GuestCard guest={Guests[16]} height={230} />
-        {/* <GuestCard guest={Guests[22]} height={230} /> */}
+        {bid && bid.length > 0 && (
+          <GuestCard guest={bid[0]} height={230} />
+        )}
     </div>
 
   )
