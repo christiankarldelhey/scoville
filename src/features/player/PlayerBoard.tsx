@@ -76,7 +76,7 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
   return (
     <div className="relative flex-[1.2] w-full bg-transparent">
       <div className="flex flex-row gap-2 h-full items-center justify-center bg-[#697b8f]/40 border border-[#697b8f]/10 rounded-t-md px-8 w-fit mx-auto">
-        <PlayerRooms rooms={player.rooms} />
+      <PlayerRooms rooms={player.rooms} />
         <div 
           ref={handRef}
           className="flex gap-2 p-4 overflow-x-auto items-center justify-center"
@@ -94,7 +94,7 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
             />
           ))}
         </div>
-        <PlayerControls player={player} />
+      <PlayerControls player={player} />
       </div>
     </div>
   )

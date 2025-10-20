@@ -11,40 +11,50 @@ export const CommonBoard = () => {
     playCard(playerId as any, cardId)
   }
   
+  // Calcular las posiciones de los jugadores basándose en player_turn
+  // El jugador con el turno siempre es bottom, los demás rotan en sentido horario
+  const currentTurnIndex = game.active_players.indexOf(game.player_turn)
+  
+  // Rotación: bottom -> left -> top -> right -> bottom
+  const bottomPlayerId = game.active_players[currentTurnIndex]
+  const leftPlayerId = game.active_players[(currentTurnIndex + 1) % game.active_players.length]
+  const topPlayerId = game.active_players[(currentTurnIndex + 2) % game.active_players.length]
+  const rightPlayerId = game.active_players[(currentTurnIndex + 3) % game.active_players.length]
+  
   return (
     <div className="relative flex-[3] w-full bg-transparent flex items-center justify-center">
-      <OtherPlayerHand cardCount={players.player_2.hand.length || 0} position="top" />
-      <OtherPlayerHand cardCount={players.player_3.hand.length || 0} position="left" />
-      <OtherPlayerHand cardCount={players.player_4.hand.length || 0} position="right" />
+      <OtherPlayerHand cardCount={players[topPlayerId].hand.length || 0} position="top" />
+      <OtherPlayerHand cardCount={players[leftPlayerId].hand.length || 0} position="left" />
+      <OtherPlayerHand cardCount={players[rightPlayerId].hand.length || 0} position="right" />
       <PlayZone 
         topPlayer={{ 
-          playerId: 'player_2', 
-          cards: game.table_plays.player_2?.played_cards || [],
-          allowedCards: game.table_plays.player_2?.allowed_cards || [],
-          meldScore: game.table_plays.player_2?.meld_score || 0
+          playerId: topPlayerId, 
+          cards: game.table_plays[topPlayerId]?.played_cards || [],
+          allowedCards: game.table_plays[topPlayerId]?.allowed_cards || [],
+          meldScore: game.table_plays[topPlayerId]?.meld_score || 0
         }}
         bottomPlayer={{ 
-          playerId: 'player_1', 
-          cards: game.table_plays.player_1?.played_cards || [],
-          allowedCards: game.table_plays.player_1?.allowed_cards || [],
-          meldScore: game.table_plays.player_1?.meld_score || 0
+          playerId: bottomPlayerId, 
+          cards: game.table_plays[bottomPlayerId]?.played_cards || [],
+          allowedCards: game.table_plays[bottomPlayerId]?.allowed_cards || [],
+          meldScore: game.table_plays[bottomPlayerId]?.meld_score || 0
         }}
         leftPlayer={{ 
-          playerId: 'player_3', 
-          cards: game.table_plays.player_3?.played_cards || [],
-          allowedCards: game.table_plays.player_3?.allowed_cards || [],
-          meldScore: game.table_plays.player_3?.meld_score || 0
+          playerId: leftPlayerId, 
+          cards: game.table_plays[leftPlayerId]?.played_cards || [],
+          allowedCards: game.table_plays[leftPlayerId]?.allowed_cards || [],
+          meldScore: game.table_plays[leftPlayerId]?.meld_score || 0
         }}
         rightPlayer={{ 
-          playerId: 'player_4', 
-          cards: game.table_plays.player_4?.played_cards || [],
-          allowedCards: game.table_plays.player_4?.allowed_cards || [],
-          meldScore: game.table_plays.player_4?.meld_score || 0
+          playerId: rightPlayerId, 
+          cards: game.table_plays[rightPlayerId]?.played_cards || [],
+          allowedCards: game.table_plays[rightPlayerId]?.allowed_cards || [],
+          meldScore: game.table_plays[rightPlayerId]?.meld_score || 0
         }}
         onCardDrop={handleCardDrop}
       />
-      <PlayerScore Myscore={players.player_1.score} />
-      <EventScore events={players.player_1.score.events} />
+      <PlayerScore Myscore={players[bottomPlayerId].score} />
+      <EventScore events={players[bottomPlayerId].score.events} />
     </div>
   )
 }

@@ -1,5 +1,8 @@
 import React from 'react'
 import type { Player } from '../../types/types'
+import { useGameStore } from '../../store/gameStore'
+import playBtnImg from '../../assets/game-controls/play_btn.png'
+import passBtnImg from '../../assets/game-controls/pass_btn.png'
 
 interface PlayerControlsProps {
   player: Player
@@ -8,13 +11,25 @@ interface PlayerControlsProps {
 export const PlayerControls: React.FC<PlayerControlsProps> = ({
   player,
 }) => {
+  const nextTurn = useGameStore((state) => state.nextTurn)
+
+  const handleButtonClick = () => {
+    nextTurn()
+  }
+
   return (
     <div className="flex flex-col gap-4 h-[200px] justify-center">
-      <button className="bg-[#f5f5f0] hover:bg-[#eeeee8] text-[#2c2c2c] font-['Old_Standard_TT'] text-lg font-semibold rounded-md px-8 py-3 transition-colors border border-[#3c3c3c]/60 shadow-md">
-        Aceptar
+      <button 
+        onClick={handleButtonClick}
+        className="w-[90px] h-[90px] transition-all grayscale hover:grayscale-0"
+      >
+        <img src={playBtnImg} alt="Aceptar" className="w-full h-full object-contain rounded-md" />
       </button>
-      <button className="bg-[#f5f5f0] hover:bg-[#eeeee8] text-[#2c2c2c] font-['Old_Standard_TT'] text-lg font-semibold rounded-md px-8 py-3 transition-colors border border-[#3c3c3c]/60 shadow-md">
-        Pasar
+      <button 
+        onClick={handleButtonClick}
+        className="w-[90px] h-[90px] transition-all grayscale hover:grayscale-0 rounded-md"
+      >
+        <img src={passBtnImg} alt="Pasar" className="w-full h-full object-contain rounded-md" />
       </button>
     </div>
   )

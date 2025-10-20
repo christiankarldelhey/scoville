@@ -22,6 +22,7 @@ interface GameState {
   playCard: (playerId: PlayerId, cardId: number) => void
   updateBid: (newBid: GuestCard[] | null) => void
   calculateCardPoints: (card: PlayingCard, bid: GuestCard | null) => 1 | 2 | 3 | 4
+  nextTurn: () => void
 }
 
 const getRoomsFromPlayer = (player_id: PlayerId): RoomCard[] => {
@@ -301,6 +302,22 @@ export const useGameStore = create<GameState>()(
       // Función helper para calcular puntos (expuesta para uso externo si es necesario)
       calculateCardPoints: (card: PlayingCard, bid: GuestCard | null) => {
         return calculateCardPoints(card, bid)
+      },
+
+      // Avanzar al siguiente turno (rotación circular)
+      nextTurn: () => {
+        set((state) => {
+          const currentIndex = state.game.active_players.indexOf(state.game.player_turn)
+          const nextIndex = (currentIndex + 1) % state.game.active_players.length
+          const nextPlayerId = state.game.active_players[nextIndex]
+          
+          return {
+            game: {
+              ...state.game,
+              player_turn: nextPlayerId
+            }
+          }
+        })
       },
 
       // Jugar una carta (moverla de hand a table_plays)

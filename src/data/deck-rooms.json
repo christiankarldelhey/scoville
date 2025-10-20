@@ -23,17 +23,17 @@
         "quality": 2,
         "owner": "player_1",
         "guest": {
-        "id": 23,
-        "name": "Edmund Fairchild",
-        "used_nights": 0,
-        "total_nights": 3,
-        "product": "fuego",
-        "suit": "travelers",
-        "image_url": "v-fuego.jpg",
-        "portrait_url": "25.png",
-        "state": "in_deck",
-        "owner": null
-    }
+            "id": 23,
+            "name": "Edmund Fairchild",
+            "used_nights": 0,
+            "total_nights": 3,
+            "product": "fuego",
+            "suit": "travelers",
+            "image_url": "v-fuego.jpg",
+            "portrait_url": "25.png",
+            "state": "in_deck",
+            "owner": null
+        }
     },
     {
         "id": 3,
@@ -48,17 +48,17 @@
         "quality": 4,
         "owner": "player_1",
         "guest": {
-        "id": 30,
-        "name": "Rosalind Fairweather",
-        "used_nights": 0,
-        "total_nights": 3,
-        "product": "discount",
-        "suit": "travelers",
-        "image_url": "v-descuento.jpg",
-        "portrait_url": "2.png",
-        "state": "in_deck",
-        "owner": null
-    }
+            "id": 30,
+            "name": "Rosalind Fairweather",
+            "used_nights": 0,
+            "total_nights": 3,
+            "product": "discount",
+            "suit": "travelers",
+            "image_url": "v-descuento.jpg",
+            "portrait_url": "2.png",
+            "state": "in_deck",
+            "owner": null
+        }
     },
     {
         "id": 5,
@@ -72,7 +72,18 @@
         "image_url": "2-verde.jpg",
         "quality": 2,
         "owner": "player_2",
-        "guest": null
+        "guest": {
+            "id": 12,
+            "name": "Catherine Beaumont",
+            "used_nights": 1,
+            "total_nights": 2,
+            "product": "comida",
+            "suit": "nobles",
+            "image_url": "n-comida.jpg",
+            "portrait_url": "14.png",
+            "state": "in_deck",
+            "owner": null
+        }
     },
     {
         "id": 7,
@@ -86,14 +97,36 @@
         "image_url": "4-verde.jpg",
         "quality": 4,
         "owner": "player_2",
-        "guest": null
+        "guest": {
+            "id": 5,
+            "name": "William Thornton",
+            "used_nights": 2,
+            "total_nights": 4,
+            "product": "musica",
+            "suit": "locals",
+            "image_url": "l-musica.jpg",
+            "portrait_url": "7.png",
+            "state": "in_deck",
+            "owner": null
+        }
     },
     {
         "id": 9,
         "image_url": "1-pardo.jpg",
         "quality": 1,
         "owner": "player_3",
-        "guest": null
+        "guest": {
+            "id": 27,
+            "name": "Reginald Blackwell",
+            "used_nights": 0,
+            "total_nights": 2,
+            "product": "te",
+            "suit": "travelers",
+            "image_url": "v-te.jpg",
+            "portrait_url": "29.png",
+            "state": "in_deck",
+            "owner": null
+        }
     },
     {
         "id": 10,
@@ -107,7 +140,18 @@
         "image_url": "3-pardo.jpg",
         "quality": 3,
         "owner": "player_3",
-        "guest": null
+        "guest": {
+            "id": 16,
+            "name": "Amelia Worthington",
+            "used_nights": 3,
+            "total_nights": 4,
+            "product": "sofa",
+            "suit": "nobles",
+            "image_url": "n-sofa.jpg",
+            "portrait_url": "18.png",
+            "state": "in_deck",
+            "owner": null
+        }
     },
     {
         "id": 12,
@@ -128,7 +172,18 @@
         "image_url": "2-rojo.jpg",
         "quality": 2,
         "owner": "player_4",
-        "guest": null
+        "guest": {
+            "id": 8,
+            "name": "Victoria Winslow",
+            "used_nights": 1,
+            "total_nights": 3,
+            "product": "torta",
+            "suit": "locals",
+            "image_url": "l-torta.jpg",
+            "portrait_url": "10.png",
+            "state": "in_deck",
+            "owner": null
+        }
     },
     {
         "id": 15,
@@ -142,6 +197,17 @@
         "image_url": "4-rojo.jpg",
         "quality": 4,
         "owner": "player_4",
-        "guest": null
+        "guest": {
+            "id": 24,
+            "name": "Florence Ashbury",
+            "used_nights": 0,
+            "total_nights": 3,
+            "product": "juegos",
+            "suit": "travelers",
+            "image_url": "v-juego.jpg",
+            "portrait_url": "26.png",
+            "state": "in_deck",
+            "owner": null
+        }
     }
 ]

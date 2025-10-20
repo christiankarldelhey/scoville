@@ -7,8 +7,8 @@ import { CommonBoard } from '../common-board/CommonBoard'
 export const Game = () => {
   const { game, players, initializeGame, dealCardsToAllPlayers } = useGameStore()
   
-  // Nuestro jugador es player_1
-  const myPlayer = players.player_1
+  // El jugador actual es el que tiene el turno
+  const currentPlayer = players[game.player_turn]
 
   // Inicializar el juego al montar el componente
   useEffect(() => {
@@ -17,10 +17,10 @@ export const Game = () => {
 
   // Repartir cartas después de mezclar (solo si nadie tiene cartas aún)
   useEffect(() => {
-    if (game.deck.length > 0 && myPlayer.hand.length === 0) {
+    if (game.deck.length > 0 && currentPlayer.hand.length === 0) {
       dealCardsToAllPlayers(6)
     }
-  }, [game.deck.length, myPlayer.hand.length, dealCardsToAllPlayers])
+  }, [game.deck.length, currentPlayer.hand.length, dealCardsToAllPlayers])
 
   return (
     <div 
@@ -31,7 +31,7 @@ export const Game = () => {
     >
       <div className="relative z-10 w-full h-full flex flex-col">
         <CommonBoard />
-        <PlayerBoard player={myPlayer} />
+        <PlayerBoard player={currentPlayer} />
       </div>
     </div>
   )
