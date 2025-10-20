@@ -11,6 +11,7 @@ interface PlayingCardProps {
   draggable?: boolean
   onDragStart?: (cardId: number) => void
   disabled?: boolean
+  style?: React.CSSProperties
 }
 
 export const PlayingCard: React.FC<PlayingCardProps> = ({ 
@@ -20,7 +21,8 @@ export const PlayingCard: React.FC<PlayingCardProps> = ({
   onMarkerClick,
   draggable = false,
   onDragStart,
-  disabled = false
+  disabled = false,
+  style
 }) => {
   // Determinar si la carta debe estar elevada
   const isElevated = card.is_selected || card.has_coincidence !== null
@@ -57,7 +59,7 @@ export const PlayingCard: React.FC<PlayingCardProps> = ({
 
 
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block" style={style}>
       {/* Wrapper que aplica el movimiento de elevación a todo el contenido */}
       <div className={`transition-transform duration-300 ease-in-out ${
         isElevated ? '-translate-y-[8%]' : 'translate-y-0'
@@ -70,7 +72,7 @@ export const PlayingCard: React.FC<PlayingCardProps> = ({
             draggable={draggable && !disabled}
             onDragStart={handleDragStart}
             className={`w-auto object-contain rounded-md transition-all ${
-              disabled ? 'opacity-70 grayscale cursor-not-allowed' : 'opacity-90'
+              disabled ? 'opacity-70 grayscale cursor-not-allowed' : 'opacity-100'
             } ${
               !disabled && onClick ? 'cursor-pointer hover:brightness-110' : ''
             } ${

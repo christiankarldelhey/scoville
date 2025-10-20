@@ -48,6 +48,7 @@ export interface PlayingCard {
 export interface RoomCard {
     id: number,
     image_url: string,
+    image_nb_url?: string,
     quality: number,
     owner: PlayerId | null,
     state: State,
@@ -78,6 +79,7 @@ export interface TablePlay {
     played_cards: PlayingCard[];
     allowed_cards: Initial[];
     meld_score: number;
+    room_card: RoomCard | null;
 }
 
 export const ROUND_PHASE_ORDER: readonly RoundPhase[] = [

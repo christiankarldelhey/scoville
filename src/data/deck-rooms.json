@@ -1,7 +1,8 @@
 [
     {
         "id": 1,
-        "image_url": "1-azul.jpg",
+        "image_url": "1.png",
+        "image_nb_url": "1-nb.png",
         "quality": 1,
         "owner": "player_1",
         "guest": {
@@ -19,7 +20,8 @@
     },
     {
         "id": 2,
-        "image_url": "2-azul.jpg",
+        "image_url": "2.png",
+        "image_nb_url": "2-nb.png",
         "quality": 2,
         "owner": "player_1",
         "guest": {
@@ -37,14 +39,16 @@
     },
     {
         "id": 3,
-        "image_url": "3-azul.jpg",
+        "image_url": "3.png",
+        "image_nb_url": "3-nb.png",
         "quality": 3,
         "owner": "player_1",
         "guest": null
     },
     {
         "id": 4,
-        "image_url": "4-azul.jpg",
+        "image_url": "4.png",
+        "image_nb_url": "4-nb.png",
         "quality": 4,
         "owner": "player_1",
         "guest": {
@@ -62,14 +66,16 @@
     },
     {
         "id": 5,
-        "image_url": "1-verde.jpg",
+        "image_url": "1.png",
+        "image_nb_url": "1-nb.png",
         "quality": 1,
         "owner": "player_2",
         "guest": null
     },
     {
         "id": 6,
-        "image_url": "2-verde.jpg",
+        "image_url": "2.png",
+        "image_nb_url": "2-nb.png",
         "quality": 2,
         "owner": "player_2",
         "guest": {
@@ -87,14 +93,16 @@
     },
     {
         "id": 7,
-        "image_url": "3-verde.jpg",
+        "image_url": "3.png",
+        "image_nb_url": "3-nb.png",
         "quality": 3,
         "owner": "player_2",
         "guest": null
     },
     {
         "id": 8,
-        "image_url": "4-verde.jpg",
+        "image_url": "4.png",
+        "image_nb_url": "4-nb.png",
         "quality": 4,
         "owner": "player_2",
         "guest": {
@@ -112,7 +120,8 @@
     },
     {
         "id": 9,
-        "image_url": "1-pardo.jpg",
+        "image_url": "1.png",
+        "image_nb_url": "1-nb.png",
         "quality": 1,
         "owner": "player_3",
         "guest": {
@@ -130,14 +139,16 @@
     },
     {
         "id": 10,
-        "image_url": "2-pardo.jpg",
+        "image_url": "2.png",
+        "image_nb_url": "2-nb.png",
         "quality": 2,
         "owner": "player_3",
         "guest": null
     },
     {
         "id": 11,
-        "image_url": "3-pardo.jpg",
+        "image_url": "3.png",
+        "image_nb_url": "3-nb.png",
         "quality": 3,
         "owner": "player_3",
         "guest": {
@@ -155,21 +166,24 @@
     },
     {
         "id": 12,
-        "image_url": "4-pardo.jpg",
+        "image_url": "4.png",
+        "image_nb_url": "4-nb.png",
         "quality": 4,
         "owner": "player_3",
         "guest": null
     },
     {
         "id": 13,
-        "image_url": "1-rojo.jpg",
+        "image_url": "1.png",
+        "image_nb_url": "1-nb.png",
         "quality": 1,
         "owner": "player_4",
         "guest": null
     },
     {
         "id": 14,
-        "image_url": "2-rojo.jpg",
+        "image_url": "2.png",
+        "image_nb_url": "2-nb.png",
         "quality": 2,
         "owner": "player_4",
         "guest": {
@@ -187,14 +201,16 @@
     },
     {
         "id": 15,
-        "image_url": "3-rojo.jpg",
+        "image_url": "3.png",
+        "image_nb_url": "3-nb.png",
         "quality": 3,
         "owner": "player_4",
         "guest": null
     },
     {
         "id": 16,
-        "image_url": "4-rojo.jpg",
+        "image_url": "4.png",
+        "image_nb_url": "4-nb.png",
         "quality": 4,
         "owner": "player_4",
         "guest": {

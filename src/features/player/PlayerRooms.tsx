@@ -9,10 +9,6 @@ import te from '../../assets/simbolos/te.png';
 import torta from '../../assets/simbolos/torta.png';
 import whisky from '../../assets/simbolos/whisky.png';
 import discount from '../../assets/simbolos/dinero.png';
-import roomCard1 from '../../assets/room-cards/1.png';
-import roomCard2 from '../../assets/room-cards/2.png';
-import roomCard3 from '../../assets/room-cards/3.png';
-import roomCard4 from '../../assets/room-cards/4.png';
 
 interface PlayerRoomsProps {
   rooms: RoomCard[];
@@ -37,12 +33,6 @@ const PRODUCT_SYMBOLS: Record<string, string> = {
   'discount': discount,
 };
 
-const ROOM_CARD_IMAGES: Record<number, string> = {
-  1: roomCard1,
-  2: roomCard2,
-  3: roomCard3,
-  4: roomCard4,
-};
 
 const PlayerRooms = ({ rooms }: PlayerRoomsProps) => {
   const sortedRooms = [...rooms].sort((a, b) => a.quality - b.quality);
@@ -67,7 +57,7 @@ const PlayerRooms = ({ rooms }: PlayerRoomsProps) => {
               isEmptyRoom ? 'grayscale hover:grayscale-0' : ''
             }`}
             style={{
-              backgroundImage: isEmptyRoom ? `url(${ROOM_CARD_IMAGES[position]})` : undefined,
+              backgroundImage: isEmptyRoom ? `url(/src/assets/room-cards/${room?.image_url})` : undefined,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
