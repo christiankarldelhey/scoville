@@ -23,17 +23,17 @@
         "quality": 2,
         "owner": "player_1",
         "guest": {
-            "id": 2,
-            "name": "Charlotte Pemberton",
-            "used_nights": 1,
-            "total_nights": 2,
-            "product": "comida",
-            "suit": "nobles",
-            "image_url": "l-comida.jpg",
-            "portrait_url": "8.png",
-            "state": "in_deck",
-            "owner": null
-        }
+        "id": 23,
+        "name": "Edmund Fairchild",
+        "used_nights": 0,
+        "total_nights": 3,
+        "product": "fuego",
+        "suit": "travelers",
+        "image_url": "v-fuego.jpg",
+        "portrait_url": "25.png",
+        "state": "in_deck",
+        "owner": null
+    }
     },
     {
         "id": 3,
@@ -48,17 +48,17 @@
         "quality": 4,
         "owner": "player_1",
         "guest": {
-            "id": 4,
-            "name": "Eleanor Ashford",
-            "used_nights": 0,
-            "total_nights": 3,
-            "product": "juegos",
-            "suit": "travelers",
-            "image_url": "l-juegos.jpg",
-            "portrait_url": "6.png",
-            "state": "in_deck",
-            "owner": null
-        }
+        "id": 30,
+        "name": "Rosalind Fairweather",
+        "used_nights": 0,
+        "total_nights": 3,
+        "product": "discount",
+        "suit": "travelers",
+        "image_url": "v-descuento.jpg",
+        "portrait_url": "2.png",
+        "state": "in_deck",
+        "owner": null
+    }
     },
     {
         "id": 5,

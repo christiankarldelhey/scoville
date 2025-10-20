@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import type { Player } from '../../types/types'
 import { PlayingCard } from '../../components/common/PlayingCard'
 import { useGameStore } from '../../store/gameStore'
+import PlayerRooms from './PlayerRooms'
 import PlayerControls from './PlayerControls'
 import type { Initial } from '../../types/types'
 
@@ -75,6 +76,7 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
   return (
     <div className="relative flex-[1.2] w-full bg-transparent">
       <div className="flex flex-row gap-2 h-full items-center justify-center bg-[#697b8f]/40 border border-[#697b8f]/10 rounded-t-md px-8 w-fit mx-auto">
+        <PlayerRooms rooms={player.rooms} />
         <div 
           ref={handRef}
           className="flex gap-2 p-4 overflow-x-auto items-center justify-center"
@@ -83,7 +85,7 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
             <PlayingCard 
               key={card.id} 
               card={card} 
-              height={180}
+              height={200}
               onClick={() => handleCardClick(card.id)}
               onMarkerClick={handleMarkerClick}
               draggable={true}
@@ -92,7 +94,7 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
             />
           ))}
         </div>
-        <PlayerControls rooms={player.rooms} />
+        <PlayerControls player={player} />
       </div>
     </div>
   )
