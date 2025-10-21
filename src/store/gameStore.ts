@@ -351,9 +351,13 @@ export const useGameStore = create<GameState>()(
           }]
           
           // Calcular allowed_cards contando ocurrencias de cada initial
+          // Las cartas tipo 'discount' son comodines y no contribuyen al conteo
           const initialCounts: Record<string, number> = {}
           
           updatedPlayedCards.forEach(card => {
+            // Ignorar cartas discount en el cálculo de allowed_cards
+            if (card.suit === 'discount') return
+            
             const firstRow = card.first_row as Initial
             const secondRow = card.second_row as Initial
             
@@ -361,13 +365,18 @@ export const useGameStore = create<GameState>()(
             initialCounts[secondRow] = (initialCounts[secondRow] || 0) + 1
           })
           
-          // Encontrar la cantidad máxima
-          const maxCount = Math.max(...Object.values(initialCounts))
+          // Si solo hay cartas discount, no hay restricciones
+          let newAllowedCards: Initial[] = []
           
-          // Filtrar solo las iniciales con la cantidad máxima
-          const newAllowedCards = Object.entries(initialCounts)
-            .filter(([_, count]) => count === maxCount)
-            .map(([initial, _]) => initial as Initial)
+          if (Object.keys(initialCounts).length > 0) {
+            // Encontrar la cantidad máxima
+            const maxCount = Math.max(...Object.values(initialCounts))
+            
+            // Filtrar solo las iniciales con la cantidad máxima
+            newAllowedCards = Object.entries(initialCounts)
+              .filter(([_, count]) => count === maxCount)
+              .map(([initial, _]) => initial as Initial)
+          }
           
           // Calcular meld_score sumando todos los pointsInThisBid
           const meldScore = updatedPlayedCards.reduce((sum, card) => {
