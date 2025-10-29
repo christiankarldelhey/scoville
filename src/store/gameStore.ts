@@ -5,8 +5,8 @@ import { AVAILABLE_PLAYERS, ROUND_PHASE_ORDER } from '../types/types'
 import deckData from '../data/deck-inn.json'
 import roomsData from '../data/deck-rooms.json'
 import guestDeckData from '../data/deck-characters.json'
-import type { RoomCard } from '../types/types'
-import { PlayerScoreExample } from '../data/player-score-example'
+import eventsData from '../data/events.json'
+import type { RoomCard, Event } from '../types/types'
 
 interface GameState {
   // Estado del juego
@@ -76,9 +76,60 @@ const updateAllPlayersCardPoints = (
   return updatedPlayers
 }
 
+// Verificar si un conjunto de cartas puede completar un evento
+const checkCompletableEvents = (hand: PlayingCard[]): Event[] | null => {
+  const events = eventsData as Event[]
+  const completableEvents: Event[] = []
+  
+  console.log('🔍 checkCompletableEvents - hand:', hand.length, 'cartas')
+  
+  // Agrupar cartas por letra en has_coincidence
+  const cardsByInitial: Record<string, PlayingCard[]> = {}
+  
+  hand.forEach(card => {
+    if (card.has_coincidence && card.has_coincidence.length > 0) {
+      card.has_coincidence.forEach(initial => {
+        if (!cardsByInitial[initial]) {
+          cardsByInitial[initial] = []
+        }
+        cardsByInitial[initial].push(card)
+      })
+    }
+  })
+  
+  // Para cada letra que tenga 3 o más cartas, verificar eventos
+  Object.entries(cardsByInitial).forEach(([initial, cards]) => {
+    if (cards.length >= 3) {
+      // Buscar eventos con esta inicial
+      const eventsWithInitial = events.filter(event => event.initial === initial)
+      
+      eventsWithInitial.forEach(event => {
+        // Obtener todos los productos disponibles en las cartas
+        const availableProducts = cards.map(card => card.product)
+        
+        // Verificar si todos los requirements del evento están en las cartas
+        const canComplete = event.requirements.every(requirement => 
+          availableProducts.includes(requirement)
+        )
+        
+        if (canComplete) {
+          completableEvents.push(event)
+        }
+      })
+    }
+  })
+  
+  return completableEvents.length > 0 ? completableEvents : null
+}
+
 // Crear el score inicial vacío para un jugador
 const createInitialScore = (): PlayerScore => ({
-  ...PlayerScoreExample
+  former_guests: [],
+  events: [],
+  secret_objective: { suit: 'locals', product: [] },
+  secret_score: 0,
+  score: 0,
+  can_score_event: null
 })
 
 // Inicializar los 4 jugadores
@@ -185,7 +236,6 @@ export const useGameStore = create<GameState>()(
 
       // Seleccionar una carta y calcular coincidencias
       selectCard: (playerId: PlayerId, cardId: number, initials?: Initial[]) => {
-        console.log(playerId, cardId, initials)
         set((state) => {
           const player = state.players[playerId]
           const selectedCard = player.hand.find(c => c.id === cardId)
@@ -248,12 +298,19 @@ export const useGameStore = create<GameState>()(
             }
           })
           
+          // Verificar eventos completables
+          const completableEvents = checkCompletableEvents(updatedHand)
+          
           return {
             players: {
               ...state.players,
               [playerId]: {
                 ...player,
-                hand: updatedHand
+                hand: updatedHand,
+                score: {
+                  ...player.score,
+                  can_score_event: completableEvents
+                }
               }
             }
           }

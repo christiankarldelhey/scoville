@@ -84,5 +84,6 @@ export const PlayerScoreExample = {
         "secret_objective": {
             "suit": "locals",
             "product": ["cerveza", "comida"]
-        }
+        },
+        "can_score_event": null
     }

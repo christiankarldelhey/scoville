@@ -133,6 +133,7 @@ export interface PlayerScore {
     secret_objective: {suit: Suit, product: Product[]},
     secret_score: number,
     score: number,
+    can_score_event: Event[] | null,
 }
 
 
