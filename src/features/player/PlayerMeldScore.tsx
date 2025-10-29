@@ -3,7 +3,7 @@ import type { Initial } from '../../types/types'
 import ScoreDisplay from '../../components/ui/ScoreDisplay'
 
 interface PlayerMeldScoreProps {
-  allowedCards: Initial[]
+  allowedCards: Initial[] | null
   meldScore: number
 }
 
@@ -24,13 +24,19 @@ export const PlayerMeldScore: React.FC<PlayerMeldScoreProps> = ({
         </div>
       
       {/* Allowed Cards */}
-      {allowedCards.length > 0 && (
+      {allowedCards === null ? (
+        <div className="flex flex-col items-center">
+          <span className="text-white text-sm" style={{ fontFamily: 'Old Standard TT, serif' }}>
+            *
+          </span>
+        </div>
+      ) : allowedCards.length > 0 ? (
         <div className="flex flex-col items-center">
           <span className="text-white text-sm" style={{ fontFamily: 'Old Standard TT, serif' }}>
             {allowedCards.join(', ')}
           </span>
         </div>
-      )}
+      ) : null}
       
       {/* Meld Score */}
       <div className="flex-1 flex items-end justify-center pb-1">

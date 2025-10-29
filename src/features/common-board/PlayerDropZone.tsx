@@ -8,7 +8,7 @@ interface PlayerDropZoneProps {
   cards: PlayingCard[]
   position: 'top' | 'bottom' | 'left' | 'right'
   onCardDrop?: (playerId: string, cardId: number) => void
-  allowedCards?: Initial[]
+  allowedCards?: Initial[] | null
   meldScore?: number
 }
 
@@ -17,7 +17,7 @@ export const PlayerDropZone: React.FC<PlayerDropZoneProps> = ({
   cards,
   position,
   onCardDrop,
-  allowedCards = [],
+  allowedCards = null,
   meldScore = 0
 }) => {
   const handleDragOver = (e: React.DragEvent) => {

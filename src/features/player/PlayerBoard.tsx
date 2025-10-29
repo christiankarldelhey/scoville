@@ -20,7 +20,7 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
 
   // Obtener allowed_cards y played_cards del jugador actual
   const tablePlay = game.table_plays[player.player_id]
-  const allowedCards = tablePlay?.allowed_cards || []
+  const allowedCards = tablePlay?.allowed_cards ?? null
   const hasPlayedCards = (tablePlay?.played_cards.length || 0) > 0
 
   // Función para determinar si una carta debe estar deshabilitada
@@ -35,6 +35,12 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
     
     // Las cartas discount siempre están habilitadas (a menos que ya haya 3 cartas)
     if (card.suit === 'discount') return false
+    
+    // Si allowed_cards es null, todas las cartas están habilitadas (estado comodín)
+    if (allowedCards === null) return false
+    
+    // Si allowed_cards es un array vacío, ninguna carta está habilitada
+    if (allowedCards.length === 0) return true
     
     // La carta está habilitada si alguno de sus initials está en allowed_cards
     const hasAllowedInitial = allowedCards.includes(card.first_row as Initial) || 

@@ -6,7 +6,7 @@ import type { PlayingCard, Initial } from '../../types/types'
 interface PlayerPlayArea {
   playerId: string
   cards: PlayingCard[]
-  allowedCards: Initial[]
+  allowedCards: Initial[] | null
   meldScore: number
 }
 

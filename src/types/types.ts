@@ -2,7 +2,7 @@ export type PlayerId =  'player_1' | 'player_2' | 'player_3' | 'player_4'
 export type Suit = 'locals' | 'nobles' | 'travelers' | 'discount'
 export type Initial = 'J' | 'C' | 'R' | 'A' | 'T' | 'F'
 export type Product = 'cerveza' | 'comida' | 'fuego' | 'juegos' | 'musica' | 'sofa' | 'te' | 'torta' | 'whisky'
-export type State = 'in_deck' | 'in_table' | 'in_hand' | 'in_discard_pile'
+export type State = 'in_deck' | 'unconfirmed_in_table' | 'confirmed_in_table' | 'in_hand' | 'in_discard_pile'
 
 
 export const AVAILABLE_PLAYERS = [
@@ -77,7 +77,7 @@ export type RoundPhase = 'game_preparation' | 'checkout' | 'guest_selection' | '
 
 export interface TablePlay {
     played_cards: PlayingCard[];
-    allowed_cards: Initial[];
+    allowed_cards: Initial[] | null;
     meld_score: number;
     room_card: RoomCard | null;
 }

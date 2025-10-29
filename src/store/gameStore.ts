@@ -23,6 +23,8 @@ interface GameState {
   updateBid: (newBid: GuestCard[] | null) => void
   calculateCardPoints: (card: PlayingCard, bid: GuestCard | null) => 1 | 2 | 3 | 4
   nextTurn: () => void
+  confirmTableCards: (playerId: PlayerId) => void
+  returnUnconfirmedCards: (playerId: PlayerId) => void
 }
 
 const getRoomsFromPlayer = (player_id: PlayerId): RoomCard[] => {
@@ -184,7 +186,8 @@ export const useGameStore = create<GameState>()(
             ...card,
             is_selected: false,
             has_coincidence: null,
-            pointsInThisBid: 1
+            pointsInThisBid: 1 as 1 | 2 | 3 | 4,
+            state: 'in_deck' as const
           }))
           const shuffledGuestDeck = shuffleArray(guestDeckData as GuestCard[])
           
@@ -214,7 +217,8 @@ export const useGameStore = create<GameState>()(
           state.game.active_players.forEach((playerId) => {
             const dealtCards = remainingDeck.slice(0, cardsPerPlayer).map(card => ({
               ...card,
-              pointsInThisBid: calculateCardPoints(card, bidCard)
+              pointsInThisBid: calculateCardPoints(card, bidCard),
+              state: 'in_hand' as const
             }))
             remainingDeck = remainingDeck.slice(cardsPerPlayer)
             
@@ -377,6 +381,115 @@ export const useGameStore = create<GameState>()(
         })
       },
 
+      // Devolver cartas no confirmadas a la mano del jugador
+      returnUnconfirmedCards: (playerId: PlayerId) => {
+        set((state) => {
+          const currentTablePlay = state.game.table_plays[playerId]
+          const player = state.players[playerId]
+          
+          if (!currentTablePlay) return state
+          
+          // Separar cartas confirmadas de no confirmadas
+          const confirmedCards = currentTablePlay.played_cards.filter(
+            card => card.state === 'confirmed_in_table'
+          )
+          const unconfirmedCards = currentTablePlay.played_cards.filter(
+            card => card.state === 'unconfirmed_in_table'
+          )
+          
+          // Devolver cartas no confirmadas a la mano con estado in_hand
+          const cardsToReturn = unconfirmedCards.map(card => ({
+            ...card,
+            state: 'in_hand' as const,
+            is_selected: false,
+            has_coincidence: null
+          }))
+          
+          // Actualizar la mano del jugador
+          const updatedHand = [...player.hand, ...cardsToReturn]
+          
+          // Recalcular allowed_cards y meld_score solo con cartas confirmadas
+          const initialCounts: Record<string, number> = {}
+          
+          confirmedCards.forEach(card => {
+            if (card.suit === 'discount') return
+            
+            const firstRow = card.first_row as Initial
+            const secondRow = card.second_row as Initial
+            
+            initialCounts[firstRow] = (initialCounts[firstRow] || 0) + 1
+            initialCounts[secondRow] = (initialCounts[secondRow] || 0) + 1
+          })
+          
+          // Si solo hay cartas discount, allowed_cards es null (se puede jugar cualquier carta)
+          let newAllowedCards: Initial[] | null = null
+          
+          if (Object.keys(initialCounts).length > 0) {
+            const maxCount = Math.max(...Object.values(initialCounts))
+            newAllowedCards = Object.entries(initialCounts)
+              .filter(([_, count]) => count === maxCount)
+              .map(([initial, _]) => initial as Initial)
+          }
+          
+          const meldScore = confirmedCards.reduce((sum, card) => {
+            return sum + (card.pointsInThisBid || 0)
+          }, 0)
+          
+          // Si no hay cartas confirmadas, eliminar el TablePlay
+          const updatedTablePlay = confirmedCards.length > 0 ? {
+            played_cards: confirmedCards,
+            allowed_cards: newAllowedCards,
+            meld_score: meldScore,
+            room_card: currentTablePlay.room_card
+          } : null
+          
+          return {
+            game: {
+              ...state.game,
+              table_plays: {
+                ...state.game.table_plays,
+                [playerId]: updatedTablePlay
+              }
+            },
+            players: {
+              ...state.players,
+              [playerId]: {
+                ...player,
+                hand: updatedHand
+              }
+            }
+          }
+        })
+      },
+
+      // Confirmar las cartas jugadas en la mesa (cambiar estado a confirmed_in_table)
+      confirmTableCards: (playerId: PlayerId) => {
+        set((state) => {
+          const currentTablePlay = state.game.table_plays[playerId]
+          
+          if (!currentTablePlay) return state
+          
+          // Cambiar el estado de todas las cartas a confirmed_in_table
+          const confirmedCards = currentTablePlay.played_cards.map(card => ({
+            ...card,
+            state: 'confirmed_in_table' as const
+          }))
+          
+          return {
+            game: {
+              ...state.game,
+              table_plays: {
+                ...state.game.table_plays,
+                [playerId]: {
+                  ...currentTablePlay,
+                  played_cards: confirmedCards
+                }
+              }
+            }
+          }
+        })
+      },
+
       // Jugar una carta (moverla de hand a table_plays)
       playCard: (playerId: PlayerId, cardId: number) => {
         set((state) => {
@@ -404,7 +517,7 @@ export const useGameStore = create<GameState>()(
             ...cardToPlay,
             is_selected: false,
             has_coincidence: null,
-            state: 'in_table' as const
+            state: 'unconfirmed_in_table' as const
           }]
           
           // Calcular allowed_cards contando ocurrencias de cada initial
@@ -422,8 +535,9 @@ export const useGameStore = create<GameState>()(
             initialCounts[secondRow] = (initialCounts[secondRow] || 0) + 1
           })
           
-          // Si solo hay cartas discount, no hay restricciones
-          let newAllowedCards: Initial[] = []
+          // Si solo hay cartas discount, allowed_cards es null (se puede jugar cualquier carta)
+          // Si hay cartas no-discount, calcular las iniciales permitidas
+          let newAllowedCards: Initial[] | null = null
           
           if (Object.keys(initialCounts).length > 0) {
             // Encontrar la cantidad máxima
@@ -443,7 +557,8 @@ export const useGameStore = create<GameState>()(
           const updatedTablePlay: TablePlay = {
             played_cards: updatedPlayedCards,
             allowed_cards: newAllowedCards,
-            meld_score: meldScore
+            meld_score: meldScore,
+            room_card: currentTablePlay?.room_card || null
           }
           
           return {
