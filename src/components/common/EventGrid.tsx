@@ -12,6 +12,7 @@ import type { Event, Product } from '../../types/types';
 
 interface EventGridProps {
   events: Event[];
+  suggestions?: Event[] | null;
 }
 
 // Mapeo de productos a símbolos
@@ -50,19 +51,34 @@ const Cell = ({ w, h, border, opacity, children }: {
   </div>
 );
 
-const TopLabel = ({ char, active }: { char: string; active: boolean }) => (
-  <span className={labelTop} style={{ opacity: active ? 1 : 0.5 }}>{char}</span>
+const TopLabel = ({ char, active, suggested }: { char: string; active: boolean; suggested?: boolean }) => (
+  <span 
+    className={`${labelTop} ${suggested && !active ? 'animate-pulse-glow' : ''}`} 
+    style={{ opacity: active ? 1 : suggested ? 0.8 : 0.5 }}
+  >
+    {char}
+  </span>
 );
 
-const LeftLabel = ({ char, active }: { char: string; active: boolean }) => (
-  <span className={labelLeft} style={{ opacity: active ? 1 : 0.5 }}>{char}</span>
+const LeftLabel = ({ char, active, suggested }: { char: string; active: boolean; suggested?: boolean }) => (
+  <span 
+    className={`${labelLeft} ${suggested && !active ? 'animate-pulse-glow' : ''}`} 
+    style={{ opacity: active ? 1 : suggested ? 0.8 : 0.5 }}
+  >
+    {char}
+  </span>
 );
 
-const Icon = ({ src, alt, active }: { src: string; alt: string; active: boolean }) => (
-  <img src={src} alt={alt} className={icon} style={{ opacity: active ? 1 : 0.5 }} />
+const Icon = ({ src, alt, active, suggested }: { src: string; alt: string; active: boolean; suggested?: boolean }) => (
+  <img 
+    src={src} 
+    alt={alt} 
+    className={`${icon} ${suggested && !active ? 'animate-pulse-glow-icon' : ''}`} 
+    style={{ opacity: active ? 1 : suggested ? 0.7 : 0.5 }} 
+  />
 );
 
-const EventGrid = ({ events }: EventGridProps) => {
+const EventGrid = ({ events, suggestions }: EventGridProps) => {
   // Función para verificar si un producto está activo horizontalmente
   const isProductActiveHorizontal = (product: Product, rowLabel: string): boolean => {
     return events.some(event => 
@@ -95,6 +111,32 @@ const EventGrid = ({ events }: EventGridProps) => {
     return events.some(event => event.completed && event.initial === columnLabel);
   };
 
+  // Funciones para verificar sugerencias (eventos posibles pero no completados)
+  const isProductSuggestedHorizontal = (product: Product, rowLabel: string): boolean => {
+    return suggestions?.some(event => 
+      event.initial === rowLabel && 
+      event.requirements.includes(product)
+    ) || false;
+  };
+
+  const isProductSuggestedVertical = (product: Product, colIndex: number): boolean => {
+    const columnLabel = columnLabels[colIndex];
+    return suggestions?.some(event => {
+      if (event.initial !== columnLabel) return false;
+      const columnProducts = gridStructure.map(([_, products]) => products[colIndex]);
+      return event.requirements.includes(product) && columnProducts.includes(product);
+    }) || false;
+  };
+
+  const isRowLabelSuggested = (rowLabel: string): boolean => {
+    return suggestions?.some(event => event.initial === rowLabel) || false;
+  };
+
+  const isColumnLabelSuggested = (colIndex: number): boolean => {
+    const columnLabel = columnLabels[colIndex];
+    return suggestions?.some(event => event.initial === columnLabel) || false;
+  };
+
   // Dimensiones de celdas por fila
   const rowHeights = ['h-[30px]', 'h-[40px]', 'h-[40px]'];
   const colWidths = ['w-[30px]', 'w-[40px]', 'w-[40px]'];
@@ -106,7 +148,11 @@ const EventGrid = ({ events }: EventGridProps) => {
         <Cell w="w-[20px]" h="h-[30px]" />
         {columnLabels.map((label, idx) => (
           <Cell key={label} w={colWidths[idx]} h="h-[30px]">
-            <TopLabel char={label} active={isColumnLabelActive(idx)} />
+            <TopLabel 
+              char={label} 
+              active={isColumnLabelActive(idx)} 
+              suggested={isColumnLabelSuggested(idx)}
+            />
           </Cell>
         ))}
         <Cell w="w-[30px]" h="h-[30px]" />
@@ -116,35 +162,56 @@ const EventGrid = ({ events }: EventGridProps) => {
       {gridStructure.map(([rowLabel, products], rowIdx) => (
         <div key={rowLabel} className="flex flex-row gap-0">
           <Cell w="w-[20px]" h={rowHeights[rowIdx]}>
-            <LeftLabel char={rowLabel} active={isRowLabelActive(rowLabel)} />
+            <LeftLabel 
+              char={rowLabel} 
+              active={isRowLabelActive(rowLabel)} 
+              suggested={isRowLabelSuggested(rowLabel)}
+            />
           </Cell>
           {products.map((product, colIdx) => {
             const isHorizontalActive = isProductActiveHorizontal(product, rowLabel);
             const isVerticalActive = isProductActiveVertical(product, colIdx);
             const isActive = isHorizontalActive || isVerticalActive;
             
+            const isHorizontalSuggested = isProductSuggestedHorizontal(product, rowLabel);
+            const isVerticalSuggested = isProductSuggestedVertical(product, colIdx);
+            const isSuggested = isHorizontalSuggested || isVerticalSuggested;
+            
             // Opacidad separada para cada borde
-            const bottomOpacity = isHorizontalActive ? 1 : 0;
-            const rightOpacity = isVerticalActive ? 1 : 0;
+            const bottomOpacity = isHorizontalActive ? 1 : isHorizontalSuggested ? 0.6 : 0;
+            const rightOpacity = isVerticalActive ? 1 : isVerticalSuggested ? 0.6 : 0;
             
             return (
               <div 
                 key={product}
-                className={`${cell} ${colWidths[colIdx]} ${rowHeights[rowIdx]} border-b border-r relative`}
+                className={`${cell} ${colWidths[colIdx]} ${rowHeights[rowIdx]} border-b border-r relative ${
+                  isHorizontalSuggested && !isHorizontalActive ? 'animate-border-pulse-bottom' : ''
+                } ${
+                  isVerticalSuggested && !isVerticalActive ? 'animate-border-pulse-right' : ''
+                }`}
                 style={{
                   borderBottomColor: `rgba(255, 255, 255, ${bottomOpacity})`,
                   borderRightColor: `rgba(255, 255, 255, ${rightOpacity})`
                 }}
               >
-                <Icon src={symbolMap[product]} alt={product} active={isActive} />
+                <Icon 
+                  src={symbolMap[product]} 
+                  alt={product} 
+                  active={isActive}
+                  suggested={isSuggested}
+                />
               </div>
             );
           })}
-          <Cell 
-            w="w-[30px]" 
-            h={rowHeights[rowIdx]} 
-            border="border-b"
-            opacity={isRowLabelActive(rowLabel) ? 1 : 0}
+          <div 
+            className={`${cell} w-[30px] ${rowHeights[rowIdx]} border-b ${
+              isRowLabelSuggested(rowLabel) && !isRowLabelActive(rowLabel) ? 'animate-border-pulse-bottom' : ''
+            }`}
+            style={{
+              borderBottomColor: `rgba(255, 255, 255, ${
+                isRowLabelActive(rowLabel) ? 1 : isRowLabelSuggested(rowLabel) ? 0.6 : 0
+              })`
+            }}
           />
         </div>
       ))}
@@ -154,14 +221,17 @@ const EventGrid = ({ events }: EventGridProps) => {
         <Cell w="w-[20px]" h="h-[30px]" />
         {colWidths.map((width, idx) => {
           const isActive = isColumnLabelActive(idx);
-          const borderOpacity = isActive ? 1 : 0;
+          const isSuggested = isColumnLabelSuggested(idx);
+          const borderOpacity = isActive ? 1 : isSuggested ? 0.6 : 0;
           return (
-            <Cell 
+            <div 
               key={idx} 
-              w={width} 
-              h="h-[30px]" 
-              border="border-r"
-              opacity={borderOpacity}
+              className={`${cell} ${width} h-[30px] border-r ${
+                isSuggested && !isActive ? 'animate-border-pulse-right' : ''
+              }`}
+              style={{
+                borderRightColor: `rgba(255, 255, 255, ${borderOpacity})`
+              }}
             />
           );
         })}

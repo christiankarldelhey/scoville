@@ -54,7 +54,7 @@ export const CommonBoard = () => {
         onCardDrop={handleCardDrop}
       />
       <PlayerScore Myscore={players[bottomPlayerId].score} />
-      <EventScore events={players[bottomPlayerId].score.events} />
+      <EventScore score={players[bottomPlayerId].score} />
     </div>
   )
 }

@@ -13,20 +13,24 @@ export const PlayerControls: React.FC<PlayerControlsProps> = ({
 }) => {
   const nextTurn = useGameStore((state) => state.nextTurn)
 
-  const handleButtonClick = () => {
+  const handlePlayButtonClick = () => {
+    nextTurn()
+  }
+
+  const handlePassButtonClick = () => {
     nextTurn()
   }
 
   return (
     <div className="flex flex-col gap-4 h-[200px] justify-center">
       <button 
-        onClick={handleButtonClick}
+        onClick={handlePlayButtonClick}
         className="w-[90px] h-[90px] transition-all grayscale hover:grayscale-0"
       >
         <img src={playBtnImg} alt="Aceptar" className="w-full h-full object-contain rounded-md" />
       </button>
       <button 
-        onClick={handleButtonClick}
+        onClick={handlePassButtonClick}
         className="w-[90px] h-[90px] transition-all grayscale hover:grayscale-0 rounded-md"
       >
         <img src={passBtnImg} alt="Pasar" className="w-full h-full object-contain rounded-md" />
