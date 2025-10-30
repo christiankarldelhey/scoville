@@ -2,10 +2,16 @@ import PlayerScore from '../player/PlayerScore'
 import { OtherPlayerHand } from './OtherPlayerHand'
 import EventScore from '../player/EventScore'
 import { useGameStore } from '../../store/gameStore'
+import { useCardManagement } from '../../store/hooks/useCardManagement'
 import { PlayZone } from './PlayZone'
 
 export const CommonBoard = () => {
-  const { players, game, playCard } = useGameStore()
+  // Estado (solo lectura)
+  const players = useGameStore((state) => state.players)
+  const game = useGameStore((state) => state.game)
+  
+  // Acciones a través del hook
+  const { playCard } = useCardManagement()
   
   const handleCardDrop = (playerId: string, cardId: number) => {
     playCard(playerId as any, cardId)
@@ -13,7 +19,7 @@ export const CommonBoard = () => {
   
   // Calcular las posiciones de los jugadores basándose en player_turn
   // El jugador con el turno siempre es bottom, los demás rotan en sentido horario
-  const currentTurnIndex = game.active_players.indexOf(game.player_turn)
+  const currentTurnIndex = game.player_turn ? game.active_players.indexOf(game.player_turn) : 0
   
   // Rotación: bottom -> left -> top -> right -> bottom
   const bottomPlayerId = game.active_players[currentTurnIndex]

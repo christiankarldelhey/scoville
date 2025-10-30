@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import type { Player } from '../../types/types'
 import { PlayingCard } from '../../components/common/PlayingCard'
 import { useGameStore } from '../../store/gameStore'
+import { useCardManagement } from '../../store/hooks/useCardManagement'
 import PlayerRooms from './PlayerRooms'
 import PlayerControls from './PlayerControls'
 import type { Initial } from '../../types/types'
@@ -13,10 +14,12 @@ interface PlayerBoardProps {
 export const PlayerBoard: React.FC<PlayerBoardProps> = ({ 
   player,
 }) => {
-  const selectCard = useGameStore((state) => state.selectCard)
-  const deselectCards = useGameStore((state) => state.deselectCards)
+  // Estado (solo lectura)
   const game = useGameStore((state) => state.game)
   const handRef = useRef<HTMLDivElement>(null)
+  
+  // Acciones a través del hook
+  const { selectCard, deselectCards } = useCardManagement()
 
   // Obtener allowed_cards y played_cards del jugador actual
   const tablePlay = game.table_plays[player.player_id]

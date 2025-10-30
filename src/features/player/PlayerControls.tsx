@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react'
 import type { Player } from '../../types/types'
 import { useGameStore } from '../../store/gameStore'
+import { useCardManagement } from '../../store/hooks/useCardManagement'
+import { useTurnManagement } from '../../store/hooks/useTurnManagement'
 import playBtnImg from '../../assets/game-controls/play_btn.png'
 import passBtnImg from '../../assets/game-controls/pass_btn.png'
 
@@ -11,10 +13,12 @@ interface PlayerControlsProps {
 export const PlayerControls: React.FC<PlayerControlsProps> = ({
   player,
 }) => {
-  const nextTurn = useGameStore((state) => state.nextTurn)
-  const confirmTableCards = useGameStore((state) => state.confirmTableCards)
-  const returnUnconfirmedCards = useGameStore((state) => state.returnUnconfirmedCards)
+  // Estado (solo lectura)
   const tablePlays = useGameStore((state) => state.game.table_plays)
+  
+  // Acciones a través de hooks
+  const { confirmTableCards, returnUnconfirmedCards } = useCardManagement()
+  const { nextTurn } = useTurnManagement()
   
   // Calcular si el botón de play debe estar disabled 
   const isPlayButtonDisabled = useMemo(() => {

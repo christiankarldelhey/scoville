@@ -1,5 +1,5 @@
-import { useGameStore } from './gameStore'
-import type { PlayerId } from '../types/types'
+import { useGameStore } from '../gameStore'
+import type { PlayerId } from '../../types/types'
 
 /**
  * Hook para manejar la fase de Checkout y Deal de cada ronda
