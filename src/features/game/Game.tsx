@@ -8,7 +8,7 @@ export const Game = () => {
   const { game, players, initializeGame, dealCardsToAllPlayers } = useGameStore()
   
   // El jugador actual es el que tiene el turno
-  const currentPlayer = players[game.player_turn]
+  const currentPlayer = game.player_turn ? players[game.player_turn] : players.player_1
 
   // Inicializar el juego al montar el componente
   useEffect(() => {

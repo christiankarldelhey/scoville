@@ -27,3 +27,6 @@ export const useGameActions = () => {
     initializeDeck: state.initializeDeck
   }))
 }
+
+// Re-exportar el hook de checkout
+export { useCheckoutAndDeal } from './useCheckoutAndDeal'

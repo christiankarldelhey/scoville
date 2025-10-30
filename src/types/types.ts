@@ -73,7 +73,7 @@ export type PlayerColor = AvailablePlayer['color'];
 
 // GAME
 
-export type RoundPhase = 'game_preparation' | 'checkout' | 'guest_selection' | 'bid' | 'scoring';
+export type RoundPhase = 'game_preparation' | 'checkout' | 'guest_selection' | 'room_bid' | 'guest_bid_1' | 'guest_bid_2' | 'scoring';
 
 export interface TablePlay {
     played_cards: PlayingCard[];
@@ -83,10 +83,11 @@ export interface TablePlay {
 }
 
 export const ROUND_PHASE_ORDER: readonly RoundPhase[] = [
-    'game_preparation',
     'checkout',
     'guest_selection',
-    'bid',
+    'room_bid',
+    'guest_bid_1',
+    'guest_bid_2',
     'scoring'
 ] as const;
 
@@ -96,10 +97,13 @@ export interface Game {
     roundPhase: RoundPhase,
     active_players: PlayerId[],
     key_owner: PlayerId,
-    player_turn: PlayerId,
+    player_turn: PlayerId | null,
+    players_ready: Record<PlayerId, boolean>,
     deck: PlayingCard[],
     discard_pile: PlayingCard[],
     guest_deck: GuestCard[],
+    cards_to_deal: Record<PlayerId, number>,
+    points_to_assign: Record<PlayerId, number>,
     bid: GuestCard[] | null,
     table_plays: Record<PlayerId, TablePlay | null>;
 }

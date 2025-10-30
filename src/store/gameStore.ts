@@ -164,9 +164,27 @@ export const useGameStore = create<GameState>()(
         active_players: ['player_1', 'player_2', 'player_3', 'player_4'],
         key_owner: 'player_1',
         player_turn: 'player_1',
+        players_ready: {
+          player_1: false,
+          player_2: false,
+          player_3: false,
+          player_4: false
+        },
         deck: [],
         discard_pile: [],
         guest_deck: [],
+        cards_to_deal: {
+          player_1: 0,
+          player_2: 0,
+          player_3: 0,
+          player_4: 0
+        },
+        points_to_assign: {
+          player_1: 0,
+          player_2: 0,
+          player_3: 0,
+          player_4: 0
+        },
         bid: null,
         table_plays: {
           player_1: null,
