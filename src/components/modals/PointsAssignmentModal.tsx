@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import type { PlayerId } from '../../types/types'
-import { useCheckoutAndDeal } from '../../store/useCheckoutAndDeal'
+import { useCheckoutAndDeal } from '../../store/hooks/useCheckoutAndDeal'
+import { useGameStore } from '../../store/gameStore'
+import { useTurnManagement } from '../../store/hooks/useTurnManagement'
+import { useGame } from '../../store/hooks/useGame'
+import { GuestCard } from '../common/GuestCard'
 
 interface PointsAssignmentModalProps {
   playerId: PlayerId
@@ -19,6 +23,12 @@ export const PointsAssignmentModal = ({
   const [pointsToScore, setPointsToScore] = useState(totalPoints)
   const [pointsToCards, setPointsToCards] = useState(0)
   const { assignPoints } = useCheckoutAndDeal()
+  const { nextTurn } = useTurnManagement()
+  const { setPlayerReady } = useGame()
+  
+  // Obtener los guests completados del jugador
+  const player = useGameStore((state) => state.players[playerId])
+  const completedGuests = player.score.former_guests.slice(-totalPoints) // Últimos guests completados
 
   const handleScoreChange = (value: number) => {
     const newPointsToScore = Math.max(0, Math.min(totalPoints, value))
@@ -33,83 +43,96 @@ export const PointsAssignmentModal = ({
   }
 
   const handleConfirm = () => {
+    console.log('✅ Confirmando asignación de puntos para', playerId)
+    
+    // 1. Asignar puntos
     assignPoints(playerId, pointsToScore, pointsToCards)
+    
+    // 2. Marcar jugador como listo
+    setPlayerReady(playerId, true)
+    
+    // 3. Cerrar modal
     onClose()
+    
+    // 4. Pasar al siguiente turno
+    console.log('🔄 Pasando al siguiente turno...')
+    nextTurn()
   }
 
   if (totalPoints === 0) return null
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 max-w-md w-full shadow-xl">
-        <h2 className="text-2xl font-bold mb-4">Asignar Puntos</h2>
+      <div 
+        className="bg-white rounded-lg p-6 max-w-2xl w-full shadow-xl"
+        style={{ fontFamily: '"Old Standard TT", serif' }}
+      >
+        <h2 className="text-3xl font-bold mb-4 text-center" style={{ fontFamily: '"Old Standard TT", serif' }}>
+          Checkout Completado
+        </h2>
         
-        <p className="text-gray-600 mb-6">
-          Has recibido <span className="font-bold text-blue-600">{totalPoints}</span> punto{totalPoints !== 1 ? 's' : ''} 
-          por tus huéspedes. Decide cómo distribuirlos:
-        </p>
-
-        <div className="space-y-4 mb-6">
-          {/* Puntos a Score */}
-          <div className="border rounded-lg p-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Puntos al Score
-            </label>
-            <div className="flex items-center gap-3">
-              <input
-                type="range"
-                min="0"
-                max={totalPoints}
-                value={pointsToScore}
-                onChange={(e) => handleScoreChange(Number(e.target.value))}
-                className="flex-1"
-              />
-              <input
-                type="number"
-                min="0"
-                max={totalPoints}
-                value={pointsToScore}
-                onChange={(e) => handleScoreChange(Number(e.target.value))}
-                className="w-16 px-2 py-1 border rounded text-center"
-              />
-            </div>
-          </div>
-
-          {/* Puntos a Cartas */}
-          <div className="border rounded-lg p-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Puntos a Cartas Adicionales
-            </label>
-            <div className="flex items-center gap-3">
-              <input
-                type="range"
-                min="0"
-                max={totalPoints}
-                value={pointsToCards}
-                onChange={(e) => handleCardsChange(Number(e.target.value))}
-                className="flex-1"
-              />
-              <input
-                type="number"
-                min="0"
-                max={totalPoints}
-                value={pointsToCards}
-                onChange={(e) => handleCardsChange(Number(e.target.value))}
-                className="w-16 px-2 py-1 border rounded text-center"
-              />
-            </div>
-          </div>
+        
+        <div className="bg-blue-50 rounded-lg p-3 mb-6">
+          <p className="text-gray-700 text-center text-sm">
+            Has recibido <span className="font-bold text-blue-600 text-xl">{totalPoints}</span> punto{totalPoints !== 1 ? 's' : ''}. Decide cómo distribuirlos:
+          </p>
         </div>
 
-        {/* Resumen */}
-        <div className="bg-gray-50 rounded-lg p-4 mb-6">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-gray-600">Score directo:</span>
-            <span className="font-bold text-green-600">+{pointsToScore}</span>
+        {/* Layout horizontal: Score | Guest | Cartas */}
+        <div className="flex items-center justify-between gap-6 mb-6">
+          {/* Columna izquierda - Puntos al Score */}
+          <div className="flex-1 flex flex-col items-center">
+            <div className="text-center mb-3">
+              <p className="text-sm font-medium text-gray-700 mb-1">Puntos al Score</p>
+              <div className="text-4xl font-bold text-green-600">{pointsToScore}</div>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleScoreChange(pointsToScore - 1)}
+                disabled={pointsToScore === 0}
+                className="w-10 h-10 bg-red-500 hover:bg-red-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg font-bold text-xl transition-colors"
+              >
+                −
+              </button>
+              <button
+                onClick={() => handleScoreChange(pointsToScore + 1)}
+                disabled={pointsToScore === totalPoints}
+                className="w-10 h-10 bg-green-500 hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg font-bold text-xl transition-colors"
+              >
+                +
+              </button>
+            </div>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">Cartas adicionales:</span>
-            <span className="font-bold text-blue-600">+{pointsToCards}</span>
+
+          {/* Columna central - Guest Card */}
+          <div className="flex-shrink-0">
+            {completedGuests.length > 0 && (
+              <GuestCard guest={completedGuests[0]} height={200} />
+            )}
+          </div>
+
+          {/* Columna derecha - Cartas Adicionales */}
+          <div className="flex-1 flex flex-col items-center">
+            <div className="text-center mb-3">
+              <p className="text-sm font-medium text-gray-700 mb-1">Cartas Adicionales</p>
+              <div className="text-4xl font-bold text-blue-600">{pointsToCards}</div>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleCardsChange(pointsToCards - 1)}
+                disabled={pointsToCards === 0}
+                className="w-10 h-10 bg-red-500 hover:bg-red-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg font-bold text-xl transition-colors"
+              >
+                −
+              </button>
+              <button
+                onClick={() => handleCardsChange(pointsToCards + 1)}
+                disabled={pointsToCards === totalPoints}
+                className="w-10 h-10 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg font-bold text-xl transition-colors"
+              >
+                +
+              </button>
+            </div>
           </div>
         </div>
 

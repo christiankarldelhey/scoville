@@ -11,6 +11,7 @@ import whisky from '../../assets/simbolos/whisky.png';
 import discount from '../../assets/simbolos/dinero.png';
 import type { Suit, PlayerScore } from '../../types/types';
 import ScoreDisplay from '../../components/ui/ScoreDisplay';
+import { useMemo } from 'react';
 
 interface PlayerScoreProps {
   Myscore: PlayerScore;
@@ -34,8 +35,9 @@ export default function PlayerScore({ Myscore }: PlayerScoreProps) {
   const guests = Myscore.former_guests;
   return guests
     .filter((guest) => guest.suit === suit)
-    .map((guest) => guest.value);
+    .map((guest) => guest.product);
   }
+
 
   return (
     <div className="fixed top-0 left-0 flex flex-col items-start gap-2 pt-4 pr-2 opacity-80">

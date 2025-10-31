@@ -13,7 +13,7 @@ const shuffleArray = <T,>(items: T[]): T[] => {
   return shuffled
 }
 
-// Calcular puntos de una carta basándose en el bid
+// Calcular puntos de todas las cartas repartidas basándose en el huesped actual
 const calculateCardPoints = (card: PlayingCard, bid: GuestCard | null): 1 | 2 | 3 | 4 => {
   if (!bid) return 1
   
