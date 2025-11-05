@@ -16,7 +16,7 @@
         "guest": {
             "id": 101,
             "name": "Oliver Callaway",
-            "used_nights": 1,
+            "used_nights": 0,
             "total_nights": 2,
             "product": "cerveza",
             "suit": "locals",

@@ -5,7 +5,9 @@ import { useGameStore } from '../../store/gameStore'
 import { useGamePreparation } from '../../store/hooks/useGamePreparation'
 import { useGame } from '../../store/hooks/useGame'
 import { useCheckoutAndDeal } from '../../store/hooks/useCheckoutAndDeal'
+import { useGuestSelection } from '../../store/hooks/useGuestSelection'
 import { PointsAssignmentModal } from '../../components/modals/PointsAssignmentModal'
+import { GuestSelectionModal } from '../../components/modals/GuestSelectionModal'
 import { CommonBoard } from '../common-board/CommonBoard'
 
 export const Game = () => {
@@ -17,10 +19,13 @@ export const Game = () => {
   const { initializeGame, dealCardsToAllPlayers } = useGamePreparation()
   const { nextPhase, currentPhase, allPlayersReady, resetPlayersReady } = useGame()
   const { executeCheckout, getPointsToAssign } = useCheckoutAndDeal()
+  const { cleanBidAndPrepareGuestSelection, selectGuest } = useGuestSelection()
   
-  // Estado para controlar el modal
+  // Estado para controlar los modales
   const [showPointsModal, setShowPointsModal] = useState(false)
+  const [showGuestSelectionModal, setShowGuestSelectionModal] = useState(false)
   const [checkoutExecuted, setCheckoutExecuted] = useState(false)
+  const [guestSelectionPrepared, setGuestSelectionPrepared] = useState(false)
   
   // El jugador actual es el que tiene el turno
   const currentPlayer = game.player_turn ? players[game.player_turn] : players.player_1
@@ -107,6 +112,23 @@ export const Game = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPhase, checkoutExecuted, game.players_ready])
 
+  // Ejecutar preparación de guest_selection cuando entramos a la fase
+  useEffect(() => {
+    if (currentPhase === 'guest_selection' && !guestSelectionPrepared) {
+      console.log('🎲 Entrando a fase guest_selection, preparando...')
+      cleanBidAndPrepareGuestSelection()
+      setGuestSelectionPrepared(true)
+      setShowGuestSelectionModal(true)
+    }
+    
+    // Resetear el flag cuando salimos de guest_selection
+    if (currentPhase !== 'guest_selection' && guestSelectionPrepared) {
+      setGuestSelectionPrepared(false)
+      setShowGuestSelectionModal(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPhase, guestSelectionPrepared])
+
   return (
     <div 
       className="w-screen h-screen max-w-screen max-h-screen overflow-hidden bg-cover bg-center bg-no-repeat relative before:content-[''] before:absolute before:inset-0 before:bg-black/50 before:z-0 before:pointer-events-none"
@@ -125,6 +147,18 @@ export const Game = () => {
           playerId={currentPlayer.player_id}
           totalPoints={getPointsToAssign(currentPlayer.player_id)}
           onClose={() => setShowPointsModal(false)}
+        />
+      )}
+      
+      {/* Modal de selección de invitados */}
+      {showGuestSelectionModal && game.guests_to_bid && game.guests_to_bid.length > 0 && (
+        <GuestSelectionModal
+          guests={game.guests_to_bid}
+          onSelect={(guest) => {
+            selectGuest(currentPlayer.player_id, guest)
+            setShowGuestSelectionModal(false)
+          }}
+          onClose={() => setShowGuestSelectionModal(false)}
         />
       )}
     </div>

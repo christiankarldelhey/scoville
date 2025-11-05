@@ -47,16 +47,16 @@ export const useGamePreparation = () => {
     }))
     const shuffledGuestDeck = shuffleArray(guestDeckData as GuestCard[])
     
-    // Repartir la primera carta del guest deck al bid
-    const bidCard = shuffledGuestDeck.length > 0 ? shuffledGuestDeck[0] : null
-    const remainingGuestDeck = shuffledGuestDeck.slice(1)
+    // Repartir las primeras 2 cartas del guest deck al bid
+    const bidCards = shuffledGuestDeck.slice(0, 2)
+    const remainingGuestDeck = shuffledGuestDeck.slice(2)
     
     useGameStore.setState((state) => ({
       game: {
         ...state.game,
         deck: shuffledDeck,
         guest_deck: remainingGuestDeck,
-        bid: bidCard ? [bidCard] : null
+        bid: bidCards.length === 2 ? bidCards : null
       }
     }))
   }

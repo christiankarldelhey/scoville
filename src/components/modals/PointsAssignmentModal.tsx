@@ -5,6 +5,7 @@ import { useGameStore } from '../../store/gameStore'
 import { useTurnManagement } from '../../store/hooks/useTurnManagement'
 import { useGame } from '../../store/hooks/useGame'
 import { GuestCard } from '../common/GuestCard'
+import Room from '../common/Room'
 
 interface PointsAssignmentModalProps {
   playerId: PlayerId
@@ -29,6 +30,15 @@ export const PointsAssignmentModal = ({
   // Obtener los guests completados del jugador
   const player = useGameStore((state) => state.players[playerId])
   const completedGuests = player.score.former_guests.slice(-totalPoints) // Últimos guests completados
+  
+  // Obtener y ordenar las habitaciones del jugador
+  const sortedRooms = [...player.rooms].sort((a, b) => a.quality - b.quality)
+  const roomsByQuality = [
+    sortedRooms.find(r => r.quality === 1),
+    sortedRooms.find(r => r.quality === 2),
+    sortedRooms.find(r => r.quality === 3),
+    sortedRooms.find(r => r.quality === 4),
+  ]
 
   const handleScoreChange = (value: number) => {
     const newPointsToScore = Math.max(0, Math.min(totalPoints, value))
@@ -43,7 +53,6 @@ export const PointsAssignmentModal = ({
   }
 
   const handleConfirm = () => {
-    console.log('✅ Confirmando asignación de puntos para', playerId)
     
     // 1. Asignar puntos
     assignPoints(playerId, pointsToScore, pointsToCards)
@@ -76,6 +85,36 @@ export const PointsAssignmentModal = ({
           <p className="text-gray-700 text-center text-sm">
             Has recibido <span className="font-bold text-blue-600 text-xl">{totalPoints}</span> punto{totalPoints !== 1 ? 's' : ''}. Decide cómo distribuirlos:
           </p>
+        </div>
+
+        {/* Habitaciones del jugador */}
+        <div className="mb-6">
+          <p className="text-sm font-medium text-gray-700 mb-2 text-center">Tus Habitaciones</p>
+          <div className="flex gap-0 justify-center">
+            {roomsByQuality.map((room, index) => {
+              const position = index + 1
+              const hasGuest = room?.guest?.portrait_url
+              const isEmptyRoom = !hasGuest
+
+              return (
+                <div
+                  key={position}
+                  className={`w-[100px] h-[100px] border border-gray-400 flex items-center justify-center bg-gray-100 relative ${
+                    isEmptyRoom ? 'grayscale' : ''
+                  }`}
+                  style={{
+                    backgroundImage: isEmptyRoom ? `url(/src/assets/room-cards/${room?.image_url})` : undefined,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                >
+                  {hasGuest && room.guest ? (
+                    <Room guest={room.guest} />
+                  ) : null}
+                </div>
+              )
+            })}
+          </div>
         </div>
 
         {/* Layout horizontal: Score | Guest | Cartas */}

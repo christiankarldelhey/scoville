@@ -7,22 +7,55 @@ import type { PlayerId, GuestCard } from '../../types/types'
  */
 export const useGuestSelection = () => {
   const game = useGameStore((state) => state.game)
-  const players = useGameStore((state) => state.players)
+
+  /**
+   * Limpia el bid y prepara 3 cartas de guest para la selección
+   * Esta función se ejecuta al entrar a la fase guest_selection
+   */
+  const cleanBidAndPrepareGuestSelection = () => {
+    useGameStore.setState((state) => {
+      // Tomar 3 cartas random del guest_deck
+      const shuffledDeck = [...state.game.guest_deck].sort(() => Math.random() - 0.5)
+      const selectedGuests = shuffledDeck.slice(0, 3)
+      const remainingDeck = shuffledDeck.slice(3)
+      
+      return {
+        game: {
+          ...state.game,
+          bid: null, // Limpiar el bid
+          guests_to_bid: selectedGuests, // Asignar las 3 cartas para selección
+          guest_deck: remainingDeck // Actualizar el deck
+        }
+      }
+    })
+  }
 
   /**
    * Saca cartas de guests del deck para que los jugadores elijan
-   * TODO: Implementar
    */
   const drawGuestCards = (count: number) => {
     console.log('drawGuestCards - Por implementar', count)
   }
 
   /**
-   * Un jugador selecciona un guest
-   * TODO: Implementar
+   * Un jugador selecciona un guest y lo añade a su mano
    */
   const selectGuest = (playerId: PlayerId, guestCard: GuestCard) => {
-    console.log('selectGuest - Por implementar', playerId, guestCard)
+    useGameStore.setState((state) => {
+      const player = state.players[playerId]
+      
+      return {
+        players: {
+          ...state.players,
+          [playerId]: {
+            ...player,
+            hand: [...player.hand, guestCard]
+          }
+        }
+      }
+    })
+    
+    console.log('✅ Guest seleccionado y añadido a la mano de', playerId, ':', guestCard.name)
   }
 
   /**
@@ -45,8 +78,10 @@ export const useGuestSelection = () => {
   return {
     // Estado
     guestDeck: game.guest_deck,
+    guestsToBid: game.guests_to_bid,
     
     // Métodos
+    cleanBidAndPrepareGuestSelection,
     drawGuestCards,
     selectGuest,
     assignGuestToRoom,

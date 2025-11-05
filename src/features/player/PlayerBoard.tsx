@@ -1,11 +1,11 @@
 import React, { useRef, useEffect } from 'react'
-import type { Player } from '../../types/types'
+import type { Player, PlayingCard as PlayingCardType, GuestCard as GuestCardType, Initial } from '../../types/types'
 import { PlayingCard } from '../../components/common/PlayingCard'
+import { GuestCard } from '../../components/common/GuestCard'
 import { useGameStore } from '../../store/gameStore'
 import { useCardManagement } from '../../store/hooks/useCardManagement'
 import PlayerRooms from './PlayerRooms'
 import PlayerControls from './PlayerControls'
-import type { Initial } from '../../types/types'
 
 interface PlayerBoardProps {
   player: Player
@@ -26,8 +26,15 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
   const allowedCards = tablePlay?.allowed_cards ?? null
   const hasPlayedCards = (tablePlay?.played_cards.length || 0) > 0
 
+  // Helper para determinar si una carta es PlayingCard
+  const isPlayingCard = (card: PlayingCardType | GuestCardType): card is PlayingCardType => {
+    return 'suit' in card
+  }
+
   // Función para determinar si una carta debe estar deshabilitada
   const isCardDisabled = (card: typeof player.hand[0]) => {
+    // Las GuestCards nunca están deshabilitadas en la mano
+    if (!isPlayingCard(card)) return false
     const playedCardsCount = tablePlay?.played_cards.length || 0
     
     // Si ya hay 3 cartas jugadas, todas están deshabilitadas
@@ -91,16 +98,24 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
           className="flex gap-2 p-4 overflow-x-auto items-center justify-center"
         >
           {player.hand.map((card) => (
-            <PlayingCard 
-              key={card.id} 
-              card={card} 
-              height={200}
-              onClick={() => handleCardClick(card.id)}
-              onMarkerClick={handleMarkerClick}
-              draggable={true}
-              onDragStart={handleDragStart}
-              disabled={isCardDisabled(card)}
-            />
+            isPlayingCard(card) ? (
+              <PlayingCard 
+                key={card.id} 
+                card={card} 
+                height={200}
+                onClick={() => handleCardClick(card.id)}
+                onMarkerClick={handleMarkerClick}
+                draggable={true}
+                onDragStart={handleDragStart}
+                disabled={isCardDisabled(card)}
+              />
+            ) : (
+              <GuestCard 
+                key={card.id} 
+                guest={card} 
+                height={200}
+              />
+            )
           ))}
         </div>
       <PlayerControls player={player} />

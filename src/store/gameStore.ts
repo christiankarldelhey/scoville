@@ -83,6 +83,7 @@ export const useGameStore = create<GameState>()(
           player_4: 0
         },
         bid: null,
+        guests_to_bid: null,
         table_plays: {
           player_1: null,
           player_2: null,
