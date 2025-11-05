@@ -5,6 +5,8 @@ import { useGameStore } from '../../store/gameStore'
 import { useTurnManagement } from '../../store/hooks/useTurnManagement'
 import { useGame } from '../../store/hooks/useGame'
 import { GuestCard } from '../common/GuestCard'
+import puntaje from '../../assets/simbolos/puntaje.png'
+import reverse from '../../assets/reverse.png'
 import Room from '../common/Room'
 
 interface PointsAssignmentModalProps {
@@ -21,8 +23,8 @@ export const PointsAssignmentModal = ({
   totalPoints, 
   onClose 
 }: PointsAssignmentModalProps) => {
-  const [pointsToScore, setPointsToScore] = useState(totalPoints)
-  const [pointsToCards, setPointsToCards] = useState(0)
+  // Estado: Set de IDs de habitaciones toggleadas (punto a carta en vez de score)
+  const [toggledRooms, setToggledRooms] = useState<Set<number>>(new Set())
   const { assignPoints } = useCheckoutAndDeal()
   const { nextTurn } = useTurnManagement()
   const { setPlayerReady } = useGame()
@@ -40,22 +42,27 @@ export const PointsAssignmentModal = ({
     sortedRooms.find(r => r.quality === 4),
   ]
 
-  const handleScoreChange = (value: number) => {
-    const newPointsToScore = Math.max(0, Math.min(totalPoints, value))
-    setPointsToScore(newPointsToScore)
-    setPointsToCards(totalPoints - newPointsToScore)
-  }
+  // Calcular puntos basado en habitaciones toggleadas
+  const emptyRoomsCount = roomsByQuality.filter(room => !room?.guest).length
+  const cardsNextRound = emptyRoomsCount + toggledRooms.size
+  const pointsToScore = totalPoints - toggledRooms.size
 
-  const handleCardsChange = (value: number) => {
-    const newPointsToCards = Math.max(0, Math.min(totalPoints, value))
-    setPointsToCards(newPointsToCards)
-    setPointsToScore(totalPoints - newPointsToCards)
+  const handleRoomToggle = (roomId: number) => {
+    setToggledRooms(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(roomId)) {
+        newSet.delete(roomId)
+      } else {
+        newSet.add(roomId)
+      }
+      return newSet
+    })
   }
 
   const handleConfirm = () => {
     
     // 1. Asignar puntos
-    assignPoints(playerId, pointsToScore, pointsToCards)
+    assignPoints(playerId, pointsToScore, toggledRooms.size)
     
     // 2. Marcar jugador como listo
     setPlayerReady(playerId, true)
@@ -77,13 +84,14 @@ export const PointsAssignmentModal = ({
         style={{ fontFamily: '"Old Standard TT", serif' }}
       >
         <h2 className="text-3xl font-bold mb-4 text-center" style={{ fontFamily: '"Old Standard TT", serif' }}>
-          Checkout Completado
+          Checkout
         </h2>
         
         
         <div className="bg-blue-50 rounded-lg p-3 mb-6">
           <p className="text-gray-700 text-center text-sm">
-            Has recibido <span className="font-bold text-blue-600 text-xl">{totalPoints}</span> punto{totalPoints !== 1 ? 's' : ''}. Decide cómo distribuirlos:
+            Ha pasado una nueva noche, y has recibido {totalPoints} puntos de tus huespedes. <br /> 
+            Clickea en una habitacion con el simbolo de <img src={puntaje} alt="puntaje" className="w-4 h-4 text-black" /> para convertir un punto en una carta adicional en la proxima ronda.
           </p>
         </div>
 
@@ -99,8 +107,8 @@ export const PointsAssignmentModal = ({
               return (
                 <div
                   key={position}
-                  className={`w-[100px] h-[100px] border border-gray-400 flex items-center justify-center bg-gray-100 relative ${
-                    isEmptyRoom ? 'grayscale' : ''
+                  className={`w-[100px] h-[100px] border-2 flex items-center justify-center bg-gray-100 relative transition-all ${
+                    isEmptyRoom ? 'grayscale border-gray-400' : 'border-white shadow-lg animate-pulse-border'
                   }`}
                   style={{
                     backgroundImage: isEmptyRoom ? `url(/src/assets/room-cards/${room?.image_url})` : undefined,
@@ -108,9 +116,12 @@ export const PointsAssignmentModal = ({
                     backgroundPosition: 'center',
                   }}
                 >
-                  {hasGuest && room.guest ? (
-                    <Room guest={room.guest} />
-                  ) : null}
+                  <Room 
+                    guest={room?.guest} 
+                    isPointAssignment={true}
+                    isToggled={room ? toggledRooms.has(room.id) : false}
+                    onClick={room?.guest ? () => handleRoomToggle(room.id) : undefined}
+                  />
                 </div>
               )
             })}
@@ -121,25 +132,17 @@ export const PointsAssignmentModal = ({
         <div className="flex items-center justify-between gap-6 mb-6">
           {/* Columna izquierda - Puntos al Score */}
           <div className="flex-1 flex flex-col items-center">
-            <div className="text-center mb-3">
-              <p className="text-sm font-medium text-gray-700 mb-1">Puntos al Score</p>
-              <div className="text-4xl font-bold text-green-600">{pointsToScore}</div>
-            </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => handleScoreChange(pointsToScore - 1)}
-                disabled={pointsToScore === 0}
-                className="w-10 h-10 bg-red-500 hover:bg-red-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg font-bold text-xl transition-colors"
-              >
-                −
-              </button>
-              <button
-                onClick={() => handleScoreChange(pointsToScore + 1)}
-                disabled={pointsToScore === totalPoints}
-                className="w-10 h-10 bg-green-500 hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg font-bold text-xl transition-colors"
-              >
-                +
-              </button>
+            <p className="text-sm font-medium text-gray-700 mb-2 text-center">Puntos al Score</p>
+            <div className="relative w-20 h-20 flex items-center justify-center">
+              <img
+                src={puntaje}
+                alt="Score"
+                className="w-full h-full object-contain"
+                style={{ filter: 'brightness(0) saturate(100%)' }}
+              />
+              <span className="absolute text-black text-3xl font-bold">
+                {pointsToScore}
+              </span>
             </div>
           </div>
 
@@ -150,27 +153,18 @@ export const PointsAssignmentModal = ({
             )}
           </div>
 
-          {/* Columna derecha - Cartas Adicionales */}
+          {/* Columna derecha - Cartas Próxima Ronda */}
           <div className="flex-1 flex flex-col items-center">
-            <div className="text-center mb-3">
-              <p className="text-sm font-medium text-gray-700 mb-1">Cartas Adicionales</p>
-              <div className="text-4xl font-bold text-blue-600">{pointsToCards}</div>
-            </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => handleCardsChange(pointsToCards - 1)}
-                disabled={pointsToCards === 0}
-                className="w-10 h-10 bg-red-500 hover:bg-red-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg font-bold text-xl transition-colors"
-              >
-                −
-              </button>
-              <button
-                onClick={() => handleCardsChange(pointsToCards + 1)}
-                disabled={pointsToCards === totalPoints}
-                className="w-10 h-10 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg font-bold text-xl transition-colors"
-              >
-                +
-              </button>
+            <p className="text-sm font-medium text-gray-700 mb-2 text-center">Cartas Próxima Ronda</p>
+            <div className="relative w-20 h-20 flex items-center justify-center">
+              <img
+                src={reverse}
+                alt="Cards"
+                className="w-full h-full object-contain"
+              />
+              <span className="absolute text-gray-800 text-3xl font-bold">
+                {cardsNextRound}
+              </span>
             </div>
           </div>
         </div>

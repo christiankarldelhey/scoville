@@ -1,6 +1,6 @@
 import React from 'react'
-import cardBack from '../../assets/reverse.jpg'
-import rotatedCardBack from '../../assets/reverse-rotated.jpg'
+import cardBack from '../../assets/reverse.png'
+import rotatedCardBack from '../../assets/reverse-rotated.png'
 
 interface OtherPlayerHandProps {
   cardCount: number

@@ -9,9 +9,14 @@ import te from '../../assets/simbolos/te.png';
 import torta from '../../assets/simbolos/torta.png';
 import whisky from '../../assets/simbolos/whisky.png';
 import discount from '../../assets/simbolos/dinero.png';
+import reverse from '../../assets/reverse.png';
+import puntaje from '../../assets/simbolos/puntaje.png';
 
 interface RoomProps {
-  guest: GuestCard;
+  guest?: GuestCard | null;
+  isPointAssignment?: boolean;
+  isToggled?: boolean;
+  onClick?: () => void;
 }
 
 const SUIT_COLORS: Record<string, string> = {
@@ -33,7 +38,55 @@ const PRODUCT_SYMBOLS: Record<string, string> = {
   'discount': discount,
 };
 
-const Room = ({ guest }: RoomProps) => {
+const Room = ({ guest, isPointAssignment = false, isToggled = false, onClick }: RoomProps) => {
+  if (isPointAssignment) {
+    const hasGuest = !!guest;
+    
+    return (
+      <>
+        {hasGuest && guest && (
+          <img
+            src={`/src/assets/characters-portraits/${guest.portrait_url}`}
+            alt={guest.name || 'Guest'}
+            className="w-full h-full object-cover"
+          />
+        )}
+        {/* Capa de opacidad oscura */}
+        <div className={`absolute inset-0 bg-black ${hasGuest ? 'opacity-30' : 'opacity-60'}`} />
+        
+        {/* Elemento central */}
+        <div 
+          className={`absolute inset-0 flex items-center justify-center ${hasGuest ? 'cursor-pointer' : ''}`}
+          onClick={hasGuest ? onClick : undefined}
+        >
+          {!hasGuest || isToggled ? (
+            // Sin guest o toggleado: mostrar reverse.png
+            <img
+              src={reverse}
+              alt="Empty room"
+              className="opacity-90 h-14 object-contain"
+            />
+          ) : (
+            // Con guest y no toggleado: mostrar puntaje.png con número 1
+            <div className="relative w-16 h-16 flex items-center justify-center">
+              <img
+                src={puntaje}
+                alt="Score"
+                className="w-full h-full object-contain"
+              />
+              <span className="absolute text-white text-2xl font-bold">
+                1
+              </span>
+            </div>
+          )}
+        </div>
+      </>
+    );
+  }
+
+  // Comportamiento normal (sin isPointAssignment)
+  if (!guest) return null;
+  
   return (
     <>
       <img

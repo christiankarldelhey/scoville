@@ -32,7 +32,18 @@
         "image_nb_url": "3-nb.png",
         "quality": 3,
         "owner": "player_1",
-        "guest": null
+        "guest": {
+            "id": 103,
+            "name": "Thomas Blackwood",
+            "used_nights": 1,
+            "total_nights": 4,
+            "product": "fuego",
+            "suit": "travelers",
+            "image_url": "t-fuego.jpg",
+            "portrait_url": "5.png",
+            "state": "in_room",
+            "owner": "player_1"
+        }
     },
     {
         "id": 4,
@@ -67,8 +78,8 @@
         "guest": {
             "id": 102,
             "name": "Charlotte Pemberton",
-            "used_nights": 1,
-            "total_nights": 2,
+            "used_nights": 0,
+            "total_nights": 3,
             "product": "comida",
             "suit": "locals",
             "image_url": "l-comida.jpg",
@@ -111,7 +122,7 @@
             "id": 103,
             "name": "Thomas Blackwood",
             "used_nights": 1,
-            "total_nights": 2,
+            "total_nights": 4,
             "product": "fuego",
             "suit": "travelers",
             "image_url": "t-fuego.jpg",
