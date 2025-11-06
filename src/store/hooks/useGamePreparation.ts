@@ -14,7 +14,7 @@ const shuffleArray = <T,>(items: T[]): T[] => {
 }
 
 // Calcular puntos de todas las cartas repartidas basándose en el huesped actual
-const calculateCardPoints = (card: PlayingCard, bid: GuestCard | null): 1 | 2 | 3 | 4 => {
+export const calculateCardPoints = (card: PlayingCard, bid: GuestCard | null): 1 | 2 | 3 | 4 => {
   if (!bid) return 1
   
   const suitMatches = card.suit === bid.suit
@@ -47,16 +47,17 @@ export const useGamePreparation = () => {
     }))
     const shuffledGuestDeck = shuffleArray(guestDeckData as GuestCard[])
     
-    // Repartir las primeras 2 cartas del guest deck al bid
-    const bidCards = shuffledGuestDeck.slice(0, 2)
-    const remainingGuestDeck = shuffledGuestDeck.slice(2)
+    // Tomar solo 1 carta para bid_next_round
+    const bidNextRoundCard = shuffledGuestDeck.slice(0, 1)
+    const remainingGuestDeck = shuffledGuestDeck.slice(1)
     
     useGameStore.setState((state) => ({
       game: {
         ...state.game,
         deck: shuffledDeck,
         guest_deck: remainingGuestDeck,
-        bid: bidCards.length === 2 ? bidCards : null
+        bid: null, // Empieza vacío
+        bid_next_round: bidNextRoundCard.length === 1 ? bidNextRoundCard : null
       }
     }))
   }

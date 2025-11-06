@@ -12,7 +12,7 @@ export const PlayerMeldScore: React.FC<PlayerMeldScoreProps> = ({
   meldScore
 }) => {
   return (
-    <div className="flex flex-col items-center gap-3 h-[140px] w-[60px] bg-[#262d37] opacity-80 rounded-md py-2">
+    <div className="flex flex-col items-center gap-3 h-[140px] w-[60px] bg-[#1c2a33] opacity-80 rounded-md py-2">
 
       {/* Room Card */}
         <div className="flex h-12 flex-col grayscale items-center">

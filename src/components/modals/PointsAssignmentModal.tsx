@@ -91,7 +91,7 @@ export const PointsAssignmentModal = ({
         <div className="bg-blue-50 rounded-lg p-3 mb-6">
           <p className="text-gray-700 text-center text-sm">
             Ha pasado una nueva noche, y has recibido {totalPoints} puntos de tus huespedes. <br /> 
-            Clickea en una habitacion con el simbolo de <img src={puntaje} alt="puntaje" className="w-4 h-4 text-black" /> para convertir un punto en una carta adicional en la proxima ronda.
+            Clickea en una habitacion con el simbolo de <span> <img src={puntaje} alt="puntaje" style={{ filter: 'brightness(0) saturate(100%)' }} className="w-4 h-4 text-black" /> </span> para convertir un punto en una carta adicional en la proxima ronda.
           </p>
         </div>
 

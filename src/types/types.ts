@@ -105,6 +105,7 @@ export interface Game {
     cards_to_deal: Record<PlayerId, number>,
     points_to_assign: Record<PlayerId, number>,
     bid: GuestCard[] | null,
+    bid_next_round: GuestCard[] | null,
     guests_to_bid: GuestCard[] | null,
     table_plays: Record<PlayerId, TablePlay | null>;
 }

@@ -9,7 +9,8 @@ export const useGuestSelection = () => {
   const game = useGameStore((state) => state.game)
 
   /**
-   * Limpia el bid y prepara 3 cartas de guest para la selección
+   * Prepara 3 cartas de guest para la selección
+   * Mueve bid_next_round al inicio del array bid
    * Esta función se ejecuta al entrar a la fase guest_selection
    */
   const cleanBidAndPrepareGuestSelection = () => {
@@ -19,10 +20,17 @@ export const useGuestSelection = () => {
       const selectedGuests = shuffledDeck.slice(0, 3)
       const remainingDeck = shuffledDeck.slice(3)
       
+      // Mover bid_next_round al inicio del array bid
+      let updatedBid = state.game.bid ? [...state.game.bid] : []
+      if (state.game.bid_next_round && state.game.bid_next_round.length > 0) {
+        updatedBid.unshift(...state.game.bid_next_round)
+      }
+      
       return {
         game: {
           ...state.game,
-          bid: null, // Limpiar el bid
+          bid: updatedBid.length > 0 ? updatedBid : null,
+          bid_next_round: null, // Limpiar bid_next_round
           guests_to_bid: selectedGuests, // Asignar las 3 cartas para selección
           guest_deck: remainingDeck // Actualizar el deck
         }

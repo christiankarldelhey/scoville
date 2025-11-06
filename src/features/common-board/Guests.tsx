@@ -10,7 +10,10 @@ export const Guests = () => {
       {/* Mostrar el bid (compartido por todos los jugadores) */}
       {bid && bid.length > 0 && (
         <>
-          {bid[0] && <GuestCard guest={bid[0]} height={230} />}
+          {/* Primera carta del bid - tamaño completo */}
+          <GuestCard guest={bid[0]} height={230} />
+          
+          {/* Segunda carta del bid si existe */}
           {bid[1] && <GuestCard opacity={0.5} guest={bid[1]} height={190} />}
         </>
       )}

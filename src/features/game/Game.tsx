@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react'
 import backgroundImage from '../../assets/ background.jpg'
 import { PlayerBoard } from '../player/PlayerBoard'
 import { useGameStore } from '../../store/gameStore'
-import { useGamePreparation } from '../../store/hooks/useGamePreparation'
+import { useGamePreparation, calculateCardPoints } from '../../store/hooks/useGamePreparation'
 import { useGame } from '../../store/hooks/useGame'
 import { useCheckoutAndDeal } from '../../store/hooks/useCheckoutAndDeal'
 import { useGuestSelection } from '../../store/hooks/useGuestSelection'
 import { PointsAssignmentModal } from '../../components/modals/PointsAssignmentModal'
 import { GuestSelectionModal } from '../../components/modals/GuestSelectionModal'
 import { CommonBoard } from '../common-board/CommonBoard'
+import type { GuestCard, PlayingCard } from '../../types/types'
 
 export const Game = () => {
   // Estado del juego (solo lectura)
@@ -129,6 +130,61 @@ export const Game = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPhase, guestSelectionPrepared])
 
+  // Handler para confirmar la selección de invitados
+  const handleGuestSelectionConfirm = (playThisRound: GuestCard, playNextRound: GuestCard, returnToDeck: GuestCard) => {
+    console.log('✅ Confirmando selección de invitados:')
+    console.log('  - Jugar esta ronda:', playThisRound.name)
+    console.log('  - Jugar próxima ronda:', playNextRound.name)
+    console.log('  - Devolver al mazo:', returnToDeck.name)
+
+    useGameStore.setState((state) => {
+      // Mezclar el guest_deck con la carta devuelta
+      const updatedGuestDeck = [...state.game.guest_deck, returnToDeck].sort(() => Math.random() - 0.5)
+
+      // Agregar playThisRound al final del array bid
+      const updatedBidArray = state.game.bid ? [...state.game.bid] : []
+      updatedBidArray.push(playThisRound)
+
+      // Recalcular puntos de todas las cartas en las manos de los jugadores
+      // Usamos el primer elemento del bid actualizado (bid[0])
+      const updatedPlayers = { ...state.players }
+      state.game.active_players.forEach((playerId) => {
+        const player = updatedPlayers[playerId]
+        updatedPlayers[playerId] = {
+          ...player,
+          hand: player.hand.map((card) => {
+            // Solo recalcular si es una PlayingCard (no GuestCard)
+            if ('product' in card && 'suit' in card && 'pointsInThisBid' in card) {
+              return {
+                ...card,
+                pointsInThisBid: calculateCardPoints(card as any, updatedBidArray[0])
+              }
+            }
+            return card
+          })
+        }
+      })
+
+      console.log('🔄 Puntos recalculados para todas las cartas con el nuevo bid')
+
+      return {
+        game: {
+          ...state.game,
+          bid: updatedBidArray, // Agregar carta al final del array bid
+          bid_next_round: [playNextRound], // Reemplazar con carta para próxima ronda
+          guest_deck: updatedGuestDeck, // Devolver carta al mazo y mezclar
+          guests_to_bid: null // Limpiar las cartas de selección
+        },
+        players: updatedPlayers
+      }
+    })
+
+    // Cerrar modal y avanzar a room_bid
+    setShowGuestSelectionModal(false)
+    console.log('🚀 Avanzando a room_bid...')
+    nextPhase()
+  }
+
   return (
     <div 
       className="w-screen h-screen max-w-screen max-h-screen overflow-hidden bg-cover bg-center bg-no-repeat relative before:content-[''] before:absolute before:inset-0 before:bg-black/50 before:z-0 before:pointer-events-none"
@@ -159,6 +215,7 @@ export const Game = () => {
             setShowGuestSelectionModal(false)
           }}
           onClose={() => setShowGuestSelectionModal(false)}
+          onConfirm={handleGuestSelectionConfirm}
         />
       )}
     </div>
