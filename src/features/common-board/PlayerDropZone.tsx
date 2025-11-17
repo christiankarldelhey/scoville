@@ -1,5 +1,5 @@
 import React from 'react'
-import type { PlayingCard, Initial } from '../../types/types'
+import type { PlayingCard, Initial, RoomCard } from '../../types/types'
 import { PlayingCard as PlayingCardComponent } from '../../components/common/PlayingCard'
 import { PlayerMeldScore } from '../player/PlayerMeldScore'
 
@@ -10,6 +10,7 @@ interface PlayerDropZoneProps {
   onCardDrop?: (playerId: string, cardId: number) => void
   allowedCards?: Initial[] | null
   meldScore?: number
+  roomCard?: RoomCard | null
 }
 
 export const PlayerDropZone: React.FC<PlayerDropZoneProps> = ({
@@ -18,7 +19,8 @@ export const PlayerDropZone: React.FC<PlayerDropZoneProps> = ({
   position,
   onCardDrop,
   allowedCards = null,
-  meldScore = 0
+  meldScore = 0,
+  roomCard = null
 }) => {
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
@@ -45,7 +47,8 @@ export const PlayerDropZone: React.FC<PlayerDropZoneProps> = ({
     ? 'w-[650px] h-[150px]'
     : 'w-[500px] h-[150px]'
 
-  const hasPlayedCards = cards.length > 0
+  // Mostrar PlayerMeldScore si hay cartas jugadas O si hay una room_card seleccionada
+  const shouldShowMeldScore = cards.length > 0 || roomCard !== null
 
   return (
     <div className={positionStyles[position]}>
@@ -55,8 +58,12 @@ export const PlayerDropZone: React.FC<PlayerDropZoneProps> = ({
         onDrop={handleDrop}
       >
         {/* Sidebar izquierdo con allowed cards y meld score */}
-        {hasPlayedCards && (
-          <PlayerMeldScore allowedCards={allowedCards} meldScore={meldScore} />
+        {shouldShowMeldScore && (
+          <PlayerMeldScore 
+            allowedCards={allowedCards} 
+            meldScore={meldScore} 
+            roomCard={roomCard}
+          />
         )}
 
         {/* Cards area */}

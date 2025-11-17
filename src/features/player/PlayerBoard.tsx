@@ -4,6 +4,7 @@ import { PlayingCard } from '../../components/common/PlayingCard'
 import { GuestCard } from '../../components/common/GuestCard'
 import { useGameStore } from '../../store/gameStore'
 import { useCardManagement } from '../../store/hooks/useCardManagement'
+import { useRoomBid } from '../../store/hooks/useRoomBid'
 import PlayerRooms from './PlayerRooms'
 import PlayerControls from './PlayerControls'
 
@@ -18,13 +19,17 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
   const game = useGameStore((state) => state.game)
   const handRef = useRef<HTMLDivElement>(null)
   
-  // Acciones a través del hook
+  // Acciones a través de los hooks
   const { selectCard, deselectCards } = useCardManagement()
+  const { selectRoom } = useRoomBid()
 
   // Obtener allowed_cards y played_cards del jugador actual
   const tablePlay = game.table_plays[player.player_id]
   const allowedCards = tablePlay?.allowed_cards ?? null
   const hasPlayedCards = (tablePlay?.played_cards.length || 0) > 0
+  
+  // Verificar si es el turno del jugador actual
+  const isCurrentPlayerTurn = game.player_turn === player.player_id
 
   // Helper para determinar si una carta es PlayingCard
   const isPlayingCard = (card: PlayingCardType | GuestCardType): card is PlayingCardType => {
@@ -35,6 +40,10 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
   const isCardDisabled = (card: typeof player.hand[0]) => {
     // Las GuestCards nunca están deshabilitadas en la mano
     if (!isPlayingCard(card)) return false
+    
+    // Durante room_bid, todas las PlayingCards están deshabilitadas
+    if (game.roundPhase === 'room_bid') return true
+    
     const playedCardsCount = tablePlay?.played_cards.length || 0
     
     // Si ya hay 3 cartas jugadas, todas están deshabilitadas
@@ -57,6 +66,11 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
                                allowedCards.includes(card.second_row as Initial)
     
     return !hasAllowedInitial
+  }
+  
+  // Manejar click en una habitación
+  const handleRoomClick = (roomId: number) => {
+    selectRoom(player.player_id, roomId)
   }
 
   // Manejar click en una carta
@@ -92,7 +106,12 @@ export const PlayerBoard: React.FC<PlayerBoardProps> = ({
   return (
     <div className="relative flex-[1.2] w-full bg-transparent">
       <div className="flex flex-row gap-2 h-full items-center justify-center bg-[#697b8f]/40 border border-[#697b8f]/10 rounded-t-md px-8 w-fit mx-auto">
-      <PlayerRooms rooms={player.rooms} />
+      <PlayerRooms 
+        rooms={player.rooms} 
+        onRoomClick={handleRoomClick}
+        roundPhase={game.roundPhase}
+        isCurrentPlayerTurn={isCurrentPlayerTurn}
+      />
         <div 
           ref={handRef}
           className="flex gap-2 p-4 overflow-x-auto items-center justify-center"

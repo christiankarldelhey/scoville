@@ -1,27 +1,31 @@
 import React from 'react'
-import type { Initial } from '../../types/types'
+import type { Initial, RoomCard } from '../../types/types'
 import ScoreDisplay from '../../components/ui/ScoreDisplay'
 
 interface PlayerMeldScoreProps {
   allowedCards: Initial[] | null
   meldScore: number
+  roomCard: RoomCard | null
 }
 
 export const PlayerMeldScore: React.FC<PlayerMeldScoreProps> = ({
   allowedCards,
-  meldScore
+  meldScore,
+  roomCard
 }) => {
   return (
-    <div className="flex flex-col items-center gap-3 h-[140px] w-[60px] bg-[#1c2a33] opacity-80 rounded-md py-2">
+    <div className="flex flex-col items-center border border-[#3c424a] gap-3 h-[140px] w-[60px] bg-[#1c2a33] opacity-90 rounded-md py-2">
 
       {/* Room Card */}
+      {roomCard && (
         <div className="flex h-12 flex-col grayscale items-center">
           <img
-            src={`/src/assets/room-cards/1_no_bg.png`}
-            alt={"room-card"}
+            src={`/src/assets/room-cards/${roomCard.image_nb_url}`}
+            alt={`room-card-${roomCard.quality}`}
             className="object-cover w-[30px]"
           />
         </div>
+      )}
       
       {/* Allowed Cards */}
       {allowedCards === null ? (

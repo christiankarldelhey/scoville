@@ -50,10 +50,26 @@ export const useGame = () => {
       
       // Avanzar a la siguiente fase
       const nextPhase = ROUND_PHASE_ORDER[currentIndex + 1]
+      
+      // Si la siguiente fase es room_bid, limpiar las room_card de todos los table_plays
+      let updatedTablePlays = state.game.table_plays
+      if (nextPhase === 'room_bid') {
+        console.log('🧹 Limpiando room_cards antes de entrar a room_bid')
+        console.log('Table plays antes:', state.game.table_plays)
+        updatedTablePlays = Object.fromEntries(
+          Object.entries(state.game.table_plays).map(([playerId, tablePlay]) => [
+            playerId,
+            tablePlay ? { ...tablePlay, room_card: null } : null
+          ])
+        ) as typeof state.game.table_plays
+        console.log('Table plays después:', updatedTablePlays)
+      }
+      
       return {
         game: {
           ...state.game,
-          roundPhase: nextPhase
+          roundPhase: nextPhase,
+          table_plays: updatedTablePlays
         }
       }
     })

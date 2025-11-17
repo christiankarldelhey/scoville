@@ -37,25 +37,29 @@ export const CommonBoard = () => {
           playerId: topPlayerId, 
           cards: game.table_plays[topPlayerId]?.played_cards || [],
           allowedCards: game.table_plays[topPlayerId]?.allowed_cards ?? null,
-          meldScore: game.table_plays[topPlayerId]?.meld_score || 0
+          meldScore: game.table_plays[topPlayerId]?.meld_score || 0,
+          roomCard: game.table_plays[topPlayerId]?.room_card ?? null
         }}
         bottomPlayer={{ 
           playerId: bottomPlayerId, 
           cards: game.table_plays[bottomPlayerId]?.played_cards || [],
           allowedCards: game.table_plays[bottomPlayerId]?.allowed_cards ?? null,
-          meldScore: game.table_plays[bottomPlayerId]?.meld_score || 0
+          meldScore: game.table_plays[bottomPlayerId]?.meld_score || 0,
+          roomCard: game.table_plays[bottomPlayerId]?.room_card ?? null
         }}
         leftPlayer={{ 
           playerId: leftPlayerId, 
           cards: game.table_plays[leftPlayerId]?.played_cards || [],
           allowedCards: game.table_plays[leftPlayerId]?.allowed_cards ?? null,
-          meldScore: game.table_plays[leftPlayerId]?.meld_score || 0
+          meldScore: game.table_plays[leftPlayerId]?.meld_score || 0,
+          roomCard: game.table_plays[leftPlayerId]?.room_card ?? null
         }}
         rightPlayer={{ 
           playerId: rightPlayerId, 
           cards: game.table_plays[rightPlayerId]?.played_cards || [],
           allowedCards: game.table_plays[rightPlayerId]?.allowed_cards ?? null,
-          meldScore: game.table_plays[rightPlayerId]?.meld_score || 0
+          meldScore: game.table_plays[rightPlayerId]?.meld_score || 0,
+          roomCard: game.table_plays[rightPlayerId]?.room_card ?? null
         }}
         onCardDrop={handleCardDrop}
       />
